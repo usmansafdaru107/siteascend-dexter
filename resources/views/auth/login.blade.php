@@ -18,12 +18,15 @@
 							<div class="p-30">
 								<form action="{{ route('login') }}" method="post">
 									@csrf
+									@if($errors->any())
+										<p class="text-danger text-center font-weight-bold">The provided credentials do not match our records.</p>
+									@endif
 									<div class="form-group">
 										<div class="input-group mb-3">
 											<div class="input-group-prepend">
 												<span class="input-group-text bg-transparent text-white"><i class="ti-email"></i></span>
 											</div>
-											<input type="email" name="email" class="form-control pl-15 bg-transparent text-white plc-white" placeholder="Email">
+											<input type="email" class="form-control pl-15 bg-transparent text-white plc-white" name="email" value="{{ old('email') }}" required placeholder="Email" autofocus>
 										</div>
 									</div>
 									<div class="form-group">
@@ -31,7 +34,7 @@
 											<div class="input-group-prepend">
 												<span class="input-group-text  bg-transparent text-white"><i class="ti-lock"></i></span>
 											</div>
-											<input type="password" name="password" class="form-control pl-15 bg-transparent text-white plc-white" placeholder="Password">
+											<input type="password" class="form-control pl-15 bg-transparent text-white plc-white" name="password" required placeholder="Password">
 										</div>
 									</div>
 									  <div class="row">
@@ -42,11 +45,11 @@
 										  </div>
 										</div>
 										<!-- /.col -->
-										<div class="col-6">
+										<!-- <div class="col-6">
 										 <div class="fog-pwd text-right">
 											<a href="javascript:void(0)" class="text-white hover-warning"><i class="ion ion-locked"></i> Forgot pwd?</a><br>
 										  </div>
-										</div>
+										</div> -->
 										<!-- /.col -->
 										<div class="col-12 text-center">
 										  <button type="submit" class="btn btn-danger btn-rounded mt-10">SIGN IN</button>

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class EnsureUserHasAdminRole
 {
 
-    protected $notAdminRedirectRouteName = "dgr.home";
+    protected $notAdminRedirectRouteName = "dgr.dashboard";
     /**
      * Handle an incoming request.
      *
