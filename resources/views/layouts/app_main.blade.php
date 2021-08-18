@@ -1,27 +1,42 @@
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="{{ asset('theme/images/favicon.ico') }}">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <head>
+        
+        <meta charset="utf-8" />
+        <title>@yield('title') | {{ config('app.name', 'Laravel') }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="" name="description" />
+        <meta content="" name="author" />
+        <!-- App favicon -->
+        <link rel="icon" href="{{ asset('assets/images/favicon.ico') }}">
 
-    <title>@yield('title') | {{ config('app.name', 'Laravel') }}</title>
+        <!-- jquery.vectormap css -->
+        <link href="{{ asset('assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css') }}" rel="stylesheet" type="text/css" />
 
-    <!-- Vendors Style-->
-	<link rel="stylesheet" href="{{ asset('theme/main/css/vendors_css.css') }}">
-	  
-    <!-- Style-->  
-    <link rel="stylesheet" href="{{ asset('theme/main/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('theme/main/css/skin_color.css') }}">
-</head>
-    <body class="hold-transition light-skin sidebar-mini theme-primary fixed">
-        <div class="wrapper">
+        <!-- DataTables -->
+        <link href="{{ asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+        
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/libs/toastr/build/toastr.min.css') }}">
+
+        <!-- Responsive datatable examples -->
+        <link href="{{ asset('assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />  
+
+        @yield('css_styles')
+
+        <!-- Bootstrap Css -->
+        <link href="{{ asset('assets/css/bootstrap-dark.min.css') }}" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{{ asset('assets/css/app-dark.min.css') }}" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    <body data-sidebar="dark">
+    
+        <div id="layout-wrapper">
 
             @extends('layouts.navbar')
 
@@ -29,21 +44,56 @@
 
             @yield('content')
 
+            @extends('layouts.footer')
+
+
         </div>
-        <!-- Vendor JS -->
-        <script src="{{ asset('theme/main/js/vendors.min.js') }}"></script>
 
-        <script src="{{ asset('theme/assets/vendor_components/apexcharts-bundle/irregular-data-series.js') }}"></script>
-        <script src="{{ asset('theme/assets/vendor_components/apexcharts-bundle/dist/apexcharts.js') }}"></script>	
-        <script src="{{ asset('theme/assets/vendor_components/progressbar.js-master/dist/progressbar.js') }}"></script>
-        <script src="{{ asset('theme/assets/vendor_components/chart.js-master/Chart.min.js') }}"></script>
-        <script src="{{ asset('theme/assets/vendor_components/zingchart_branded_version/zingchart.min.js') }}"></script>	
-        <script src="{{ asset('theme/assets/vendor_components/datatable/datatables.min.js') }}"></script>
+        <!-- JAVASCRIPT -->
+        <script src="{{ asset('assets/libs/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/metismenu/metisMenu.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/simplebar/simplebar.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/node-waves/waves.min.js') }}"></script>
+
         
-        <!-- Lotus Admin App -->
-        <script src="{{ asset('theme/main/js/template.js') }}"></script>
-        <script src="{{ asset('theme/main/js/pages/dashboard.js') }}"></script>
-        <script src="{{ asset('theme/main/js/pages/data-table.js') }}"></script>
+        <!-- apexcharts -->
+        <!-- <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script> -->
 
+        <!-- jquery.vectormap map -->
+        <script src="{{ asset('assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js') }}"></script>
+
+        <!-- Required datatable js -->
+        <script src="{{ asset('assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+        
+        <!-- Responsive examples -->
+        <script src="{{ asset('assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
+
+        <!-- <script src="{{ asset('assets/js/pages/dashboard.init.js') }}"></script> -->
+        <!-- toastr plugin -->
+        <script src="{{ asset('assets/libs/toastr/build/toastr.min.js') }}"></script>
+        @yield('js_scripts')
+
+        <!-- App js -->
+        <script src="{{ asset('assets/js/app.js') }}" defer></script>
+        <script>
+            $(document).ready(function(){
+                setTimeout(() => {
+                    $("#message_success").hide('slow');
+                }, 5000);
+                setTimeout(() => {
+                    $("#message_error").hide('slow');
+                }, 5000);
+            });
+        </script>
+        <script>
+            // setTimeout(() => {
+            //     toastr["error"]("My name is Inigo Montoya. You killed my father. Prepare to die!");
+            // }, 3000);
+        </script>
     </body>
+
 </html>

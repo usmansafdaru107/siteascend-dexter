@@ -1,80 +1,219 @@
-<header class="main-header">
-	<div class="d-flex align-items-center logo-box pl-20">		
-		<a href="#" class="waves-effect waves-light nav-link rounded d-none d-md-inline-block" data-toggle="push-menu" role="button">
-			<i class="nav-link-icon mdi mdi-menu text-white"></i>
-		</a>
-		<!-- Logo -->
-		<a href="index.html" class="logo">
-		  <!-- logo-->
-		  <div class="logo-lg">
-			  <span class="light-logo"><img src="{{ asset('theme/images/logo-light-text.png') }}" alt="logo"></span>
-			  <span class="dark-logo"><img src="{{ asset('theme/images/logo-dark-text.png') }}" alt="logo"></span>
-		  </div>
-		</a>
-	</div>  
-    <!-- Header Navbar -->
-    <nav class="navbar navbar-static-top pl-10">
-      <!-- Sidebar toggle button-->
-	  <div class="app-menu">
-		<ul class="header-megamenu nav">
-			<li class="btn-group nav-item d-md-none">
-				<a href="#" class="waves-effect waves-light nav-link rounded" data-toggle="push-menu" role="button">
-					<i class="nav-link-icon mdi mdi-menu"></i>
-			    </a>
-			</li>
-			
-			<li class="btn-group nav-item d-xl-inline-flex d-none">
-				<a href="{{ route('home') }}" class="waves-effect waves-light nav-link rounded" data-toggle="dropdown" aria-expanded="false">
-					<i class="nav-link-icon mdi mdi-home-outline mx-5 mx-lg-0"> </i>
-					<span class="d-xl-inline-block d-none">Home
-				</a>
-			</li>			
-		</ul> 
-	  </div>
-		
-      <div class="navbar-custom-menu r-side">
-        <ul class="nav navbar-nav">
-	      	
-	      <!-- User Account-->
-          <li class="dropdown user user-menu">
-            <a href="#" class="waves-effect waves-light dropdown-toggle p-5" data-toggle="dropdown" title="User">
+<header id="page-topbar">
+                <div class="navbar-header">
+                    <div class="d-flex">
+                        <!-- LOGO -->
+                        <div class="navbar-brand-box">
+                            <a href="index.html" class="logo logo-dark">
+                                <span class="logo-sm">
+                                    <img src="{{ asset('assets/images/logo-sm-dark.png') }}" alt="logo-sm-dark" height="22">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="{{ asset('assets/images/logo-dark.png') }}" alt="logo-dark" height="20">
+                                </span>
+                            </a>
+
+                            <a href="index.html" class="logo logo-light">
+                                <span class="logo-sm">
+                                    <img src="{{ asset('assets/images/logo-sm-light.png') }}" alt="logo-sm-light" height="22">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="{{ asset('assets/images/logo-light.png') }}" alt="logo-light" height="20">
+                                </span>
+                            </a>
+                        </div>
+
+                        <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
+                            <i class="ri-menu-2-line align-middle"></i>
+                        </button>
+
+                        <!-- App Search-->
+                        <!-- <form class="app-search d-none d-lg-block">
+                            <div class="position-relative">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="ri-search-line"></span>
+                            </div>
+                        </form> -->
+
+                        <div class="dropdown dropdown-mega d-none d-lg-block ms-2">
+                            <button type="button" class="btn header-item waves-effect" data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                                Mega Menu
+                                <i class="mdi mdi-chevron-down"></i> 
+                            </button>
+                            <div class="dropdown-menu dropdown-megamenu">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <h5 class="font-size-14">UI Components</h5>
+                                                <ul class="list-unstyled megamenu-list">
+                                                    <li>
+                                                        <a href="javascript:void(0);">Lightbox</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Range Slider</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Sweet Alert</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Rating</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Forms</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Tables</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Charts</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <h5 class="font-size-14">Applications</h5>
+                                                <ul class="list-unstyled megamenu-list">
+                                                    <li>
+                                                        <a href="javascript:void(0);">Ecommerce</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Calendar</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Email</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Projects</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Tasks</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Contacts</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <h5 class="font-size-14">Extra Pages</h5>
+                                                <ul class="list-unstyled megamenu-list">
+                                                    <li>
+                                                        <a href="javascript:void(0);">Light Sidebar</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Compact Sidebar</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Horizontal layout</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Maintenance</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Coming Soon</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Timeline</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">FAQs</a>
+                                                    </li>
+                                        
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <h5 class="font-size-14">UI Components</h5>
+                                                <ul class="list-unstyled megamenu-list">
+                                                    <li>
+                                                        <a href="javascript:void(0);">Lightbox</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Range Slider</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Sweet Alert</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Rating</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Forms</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Tables</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);">Charts</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="col-sm-5">
+                                                <div>
+                                                    <img src="{{ asset('assets/images/megamenu-img.png') }}" alt="megamenu-img" class="img-fluid mx-auto d-block">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex">
+
+                        <div class="dropdown d-inline-block d-lg-none ms-2">
+                            <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="ri-search-line"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                                aria-labelledby="page-header-search-dropdown">
+                    
+                                <form class="p-3">
+                                    <div class="mb-3 m-0">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Search ...">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="submit"><i class="ri-search-line"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="dropdown d-inline-block user-dropdown">
+                            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="rounded-circle header-profile-user" src="https://ui-avatars.com/api/?name={{ Auth::user()->firstName() }}"
+                                    alt="Header Avatar">
+                                <span class="d-none d-xl-inline-block ms-1">{{ Auth::user()->firstName() }}</span>
+                                <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <!-- item-->
+                                <a class="dropdown-item" href="#"><i class="ri-user-line align-middle me-1"></i> Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
+                                    <button class="dropdown-item text-danger" type="submit"><i class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="dropdown d-none d-lg-inline-block ms-1">
+                            <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
+                                <i class="ri-fullscreen-line"></i>
+                            </button>
+                        </div>
             
-				<img src="https://ui-avatars.com/api/?name=John&background=fff&color=000" class="rounded" alt="" />
-            </a>
-            <ul class="dropdown-menu animated flipInX">
-              <!-- User image -->
-              <li class="user-header bg-img" style="background-image: url(../images/user-info.jpg)" data-overlay="3">
-				  <div class="flexbox align-self-center">					  
-				  	<img src="https://ui-avatars.com/api/?name=John&background=fff&color=000" class="float-left rounded-circle" alt="User Image">					  
-					<h4 class="user-name align-self-center">
-					  <span>Samuel Brus</span>
-					  <small>samuel@gmail.com</small>
-					</h4>
-				  </div>
-              </li>
-              <!-- Menu Body -->
-              <li class="user-body">
-				    <a class="dropdown-item" href="javascript:void(0)"><i class="ion ion-person"></i> My Profile</a>
-					<a class="dropdown-item" href="javascript:void(0)"><i class="ion ion-bag"></i> My Balance</a>
-					<a class="dropdown-item" href="javascript:void(0)"><i class="ion ion-email-unread"></i> Inbox</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="javascript:void(0)"><i class="ion ion-settings"></i> Account Setting</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="javascript:void(0)"><i class="ion-log-out"></i> Logout</a>
-					<div class="dropdown-divider"></div>
-					<div class="p-10"><a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-success">View Profile</a></div>
-              </li>
-            </ul>
-          </li>	
-		  
-          <!-- Control Sidebar Toggle Button -->
-            <li class="btn-group nav-item">
-				<a href="#" data-provide="fullscreen" class="waves-effect waves-light nav-link rounded" title="Full Screen">
-					<i class="nav-link-icon mdi mdi-crop-free"></i>
-			    </a>
-			</li>
-			
-        </ul>
-      </div>
-    </nav>
-  </header>
+                    </div>
+                </div>
+            </header>

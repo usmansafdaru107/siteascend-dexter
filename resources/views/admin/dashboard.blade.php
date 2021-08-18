@@ -3,95 +3,116 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-	  <div class="container-full">
-		<div class="content-header">
-			<div class="d-flex align-items-center">
-				<div class="mr-auto">
-					<h3 class="page-title">Dashboard</h3>					
-				</div>
-				<div class="right-title">
-					<div class="d-inline-block align-items-center">
-						<nav>
-							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-								<li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-							</ol>
-						</nav>
+	<div class="main-content">
+
+		<div class="page-content">
+			<div class="container-fluid">
+				
+				<!-- start page title -->
+				<div class="row">
+					<div class="col-12">
+						<div class="page-title-box d-sm-flex align-items-center justify-content-between">
+							<h4 class="mb-sm-0">Dashboard</h4>
+
+							<div class="page-title-right">
+								<ol class="breadcrumb m-0">
+									<li class="breadcrumb-item"><a href="javascript: void(0);"><i class="ri-home-2-line"></i></a></li>
+									<li class="breadcrumb-item active">Dashboard</li>
+								</ol>
+							</div>
+
+						</div>
 					</div>
 				</div>
+				<!-- end page title -->
+
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="row">
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-body">
+										<div class="d-flex">
+											<div class="flex-1 overflow-hidden">
+												<p class="text-truncate font-size-14 mb-2">Total Campaigns</p>
+												<h4 class="mb-0">{{ $stats['totalCampaigns'] }}</h4>
+											</div>
+											<div class="text-primary ms-auto">
+												<i class="ri-stack-line font-size-24"></i>
+											</div>
+										</div>
+									</div>
+
+									<!-- <div class="card-body border-top py-3">
+										<div class="text-truncate">
+											<span class="badge badge-soft-success font-size-11"><i class="mdi mdi-menu-up"> </i> 2.4% </span>
+											<span class="text-muted ms-2">From previous period</span>
+										</div>
+									</div> -->
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-body">
+										<div class="d-flex">
+											<div class="flex-1 overflow-hidden">
+												<p class="text-truncate font-size-14 mb-2">Total Companies</p>
+												<h4 class="mb-0">{{ $stats['totalCompanies'] }}</h4>
+											</div>
+											<div class="text-primary ms-auto">
+												<i class="ri-building-2-line font-size-24"></i>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-body">
+										<div class="d-flex">
+											<div class="flex-1 overflow-hidden">
+												<p class="text-truncate font-size-14 mb-2">System Admins</p>
+												<h4 class="mb-0">{{ $stats['totalAdmins'] }}</h4>
+												
+											</div>
+											<div class="text-primary ms-auto">
+												<i class="ri-admin-fill font-size-24"></i>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-body">
+										<div class="d-flex">
+											<div class="flex-1 overflow-hidden">
+												<p class="text-truncate font-size-14 mb-2">System DGR Users</p>
+												<h4 class="mb-0">{{ $stats['totalDGRUsers'] }}</h4>
+											</div>
+											<div class="text-primary ms-auto">
+												<i class="ri-user-fill font-size-24"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end row -->
+
+					</div>
+
+				</div>
+				<!-- end row -->
+
 			</div>
+			
 		</div>
-		<!-- Main content -->
-		<section class="content">
-			<div class="row">
-				
-				<div class="col-xl-3 col-lg-6 col-12">
-					<div class="box">
-						<div class="box-body">
-							<div class="text-center py-30">
-								<div class="icon mb-15">
-									<i class="fa fa-bullhorn bg-success-light mr-0"></i>
-								</div>
-								<div>
-									<h1 class="font-weight-400">{{ $stats['totalCampaigns'] }}</h1>
-									<p class="text-fade mb-0">Total Campaigns</p>						
-								</div>
-							</div>
-						</div>
-					</div>					
-				</div>
-				<div class="col-xl-3 col-lg-6 col-12">
-					<div class="box">
-						<div class="box-body">
-							<div class="text-center py-30">
-								<div class="icon mb-15">
-									<i class="fa fa-bullhorn bg-success-light mr-0"></i>
-								</div>
-								<div>
-									<h1 class="font-weight-400">{{ $stats['totalCompanies'] }}</h1>
-									<p class="text-fade mb-0">Total Companies</p>						
-								</div>
-							</div>
-						</div>
-					</div>					
-				</div>
-                <div class="col-xl-3 col-lg-6 col-12">
-					<div class="box">
-						<div class="box-body">
-							<div class="text-center py-30">
-								<div class="icon mb-15">
-									<i class="fa fa-bullhorn bg-success-light mr-0"></i>
-								</div>
-								<div>
-									<h1 class="font-weight-400">{{ $stats['totalAdmins'] }}</h1>
-									<p class="text-fade mb-0">Total Admins</p>						
-								</div>
-							</div>
-						</div>
-					</div>					
-				</div>
-                <div class="col-xl-3 col-lg-6 col-12">
-					<div class="box">
-						<div class="box-body">
-							<div class="text-center py-30">
-								<div class="icon mb-15">
-									<i class="fa fa-bullhorn bg-success-light mr-0"></i>
-								</div>
-								<div>
-									<h1 class="font-weight-400">{{ $stats['totalDGRUsers'] }}</h1>
-									<p class="text-fade mb-0">Total DGRs</p>						
-								</div>
-							</div>
-						</div>
-					</div>					
-				</div>
-				
-			</div>
-		</section>
-		<!-- /.content -->
-	  </div>
-  </div>
-  <!-- /.content-wrapper -->
+		<!-- End Page-content -->
+		
+		
+		
+	</div>
 @stop

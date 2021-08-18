@@ -37,4 +37,16 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function firstName()
+    {
+        return explode(' ', $this->name, 2)[0];
+
+    }
+
+    public function lastName()
+    {
+        return explode(' ', $this->name, 2)[1];
+
+    }
+
 }

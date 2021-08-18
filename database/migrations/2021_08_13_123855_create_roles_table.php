@@ -19,9 +19,6 @@ class CreateRolesTable extends Migration
             $table->timestamps();
         });
     }
-    // 2014_10_12_000000_create_users_table
-    // 2021_08_13_123855_create_roles_table
-
     /**
      * Reverse the migrations.
      *

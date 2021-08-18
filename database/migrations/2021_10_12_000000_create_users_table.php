@@ -33,4 +33,9 @@ class CreateUsersTable extends Migration
     {
         Schema::dropIfExists('users');
     }
+
+    public function campaigns()
+    {
+        return $this->belongsToMany(Campaign::class, 'users_campaigns');
+    }
 }
