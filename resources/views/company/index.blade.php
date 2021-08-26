@@ -30,7 +30,7 @@
 			<div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body" style="overflow-x: scroll;">
 
                             @if(session()->has('success'))
                                 <div class="alert alert-success" id="message_success">
@@ -43,8 +43,8 @@
                                     {{ session()->get('error') }}
                                 </div>
                             @endif
-                            <div class="mb-2" style="float: right">
-                                <a class="btn btn-dark btn-sm page-title-right" href="{{ route('admin.company.create') }}">Add New Company</a>
+                            <div class="mb-3" style="float: right">
+                                <a class="btn btn-outline-dark btn-sm page-title-right" href="{{ route('admin.company.create') }}">Add New Company</a>
                             </div>
 
                             <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -52,6 +52,21 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Employees Count</th>
+                                    <th>Company HQ Phone</th>
+                                    <th>Revenue (in 000s)</th>
+                                    <th>Revenue Range</th>
+                                    <th>Est. Marketing Department Budget (in 000s)</th>
+                                    <th>Est. Finance Department Budget (in 000s)</th>
+                                    <th>Est. IT Department Budget (in 000s)</th>
+                                    <th>Est. HR Department Budget (in 000s)</th>
+                                    <th>Employees</th>
+                                    <th>Employee Range</th>
+                                    <th>Primary Industry</th>
+                                    <th>Primary Sub-Industry</th>
+                                    <th>Visit Zoominfo Company Profile</th>
+                                    <th>Visit Linkedin Company Profile</th>
+                                    <th>Ownership Type</th>
+                                    <th>Business Model</th>
                                     <th>Street Address</th>
                                     <th>City</th>
                                     <th>State</th>
@@ -69,6 +84,21 @@
                                         <tr>
                                             <td>{{ $company->name }}</td>
                                             <td>{{ $company->contacts()->count() }}</td>
+                                            <td>{{ $company->hq_phone }}</td>
+                                            <td>{{ $company->revenue }}</td>
+                                            <td>{{ $company->revenue_range }}</td>
+                                            <td>{{ $company->marketing_dept_budget }}</td>
+                                            <td>{{ $company->finance_dept_budget }}</td>
+                                            <td>{{ $company->it_dept_budget }}</td>
+                                            <td>{{ $company->hr_dept_budget }}</td>
+                                            <td>{{ $company->employees }}</td>
+                                            <td>{{ $company->employees_range }}</td>
+                                            <td>{{ $company->primary_industry }}</td>
+                                            <td>{{ $company->primary_sub_industry }}</td>
+                                            <td><a href="{{ $contact->zoominfo_company_profile_url ?? "#" }}" target="_blank"><i class="ri-external-link-line"></i></a></td>
+                                            <td><a href="{{ $contact->linkedin_company_profile_url ?? "#" }}" target="_blank"><i class="ri-external-link-line"></i></a></td>
+                                            <td>{{ $company->ownership_type }}</td>
+                                            <td>{{ $company->business_model }}</td>
                                             <td>{{ $company->street_address }}</td>
                                             <td>{{ $company->city }}</td>
                                             <td>{{ $company->state }}</td>

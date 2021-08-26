@@ -43,16 +43,16 @@
                                     {{ session()->get('error') }}
                                 </div>
                             @endif
-                            <div class="mb-2" style="float: right">
-                                <a class="btn btn-dark btn-sm page-title-right" href="{{ route('admin.campaign.create') }}">Add New Campaign</a>
+                            <div class="mb-3" style="float: right">
+                                <a class="btn btn-outline-dark btn-sm page-title-right" href="{{ route('admin.campaign.create') }}">Add New Campaign</a>
                             </div>
 
                             <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Total Companies</th>
-                                    <th>Created At</th>
+                                    <th>Total Companies in Campaign</th>
+                                    <th>Start Date</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
@@ -62,7 +62,7 @@
                                 <tbody>
                                     @foreach ($campaigns as $campaign)
                                         <tr>
-                                            <td>{{ $campaign->name }}</td>
+                                            <td title="Click to view companies in tha campaign"><a href="{{ route('admin.campaign.company', ["campaign" => $campaign->id]) }}"><i class="ri-links-fill"></i> {{ $campaign->name }}</a></td>
                                             <td>{{ $campaign->companies->count() }}</td>
                                             <td>{{ $campaign->created_at }}</td>
                                             <td>

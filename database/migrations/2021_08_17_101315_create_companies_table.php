@@ -16,29 +16,29 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->string("street_address");
-            $table->string("city");
-            $table->string("state");
-            $table->string("zip");
-            $table->string("country");
-            $table->string("hq_phone");
-            $table->string("ticker");
-            $table->string("revenue");
-            $table->string("revenue_range");
-            $table->string("marketing_dept_budget");
-            $table->string("finance_dept_budget");
-            $table->string("it_dept_budget");
-            $table->string("hr_dept_budget");
-            $table->string("employees");
-            $table->string("employees_range");
-            $table->string("primary_industry");
-            $table->string("primary_sub_industry");
-            $table->string("all_industries");
-            $table->string("all_sub_industries");
-            $table->string("zoominfo_company_profile_url");
-            $table->string("linkedin_company_profile_url");
-            $table->string("ownership_type");
-            $table->string("business_model");
+            $table->string("street_address")->nullable();
+            $table->string("city")->nullable();
+            $table->string("state")->nullable();
+            $table->string("zip")->nullable();
+            $table->string("country")->nullable();
+            $table->string("hq_phone")->nullable();
+            $table->string("ticker")->nullable();
+            $table->string("revenue")->nullable();
+            $table->string("revenue_range")->nullable();
+            $table->string("marketing_dept_budget")->nullable();
+            $table->string("finance_dept_budget")->nullable();
+            $table->string("it_dept_budget")->nullable();
+            $table->string("hr_dept_budget")->nullable();
+            $table->string("employees")->nullable();
+            $table->string("employees_range")->nullable();
+            $table->string("primary_industry")->nullable();
+            $table->string("primary_sub_industry")->nullable();
+            $table->string("all_industries")->nullable();
+            $table->string("all_sub_industries")->nullable();
+            $table->string("zoominfo_company_profile_url")->nullable();
+            $table->string("linkedin_company_profile_url")->nullable();
+            $table->string("ownership_type")->nullable();
+            $table->string("business_model")->nullable();
             $table->timestamps();
         });
     }
@@ -53,8 +53,4 @@ class CreateCompaniesTable extends Migration
         Schema::dropIfExists('companies');
     }
 
-    public function campaigns()
-    {
-        return $this->belongsToMany(Campaign::class, 'campaigns_companies');
-    }
 }

@@ -15,28 +15,28 @@ class CreateContactsTable extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('company_id')->nullable()->constrained()->onDelete('set null')->onUpdate('cascade');
             $table->string("first_name");
             $table->string("last_name");
-            $table->string("middle_name");
-            $table->string("salutation");
-            $table->string("suffix");
-            $table->string("management_level");
-            $table->string("department");
-            $table->string("job_function");
-            $table->string("job_title");
-            $table->string("direct_phone_number");
-            $table->string("mobile_phone");
-            $table->string("email_address");
-            $table->string("supplemental_email");
-            $table->string("zoominfo_contact_profile_url");
-            $table->string("linkedin_contact_profile_url");
-            $table->string("street");
-            $table->string("city");
-            $table->string("state");
-            $table->string("zip");
-            $table->string("country");
-            $table->string("email_domain");
+            $table->string("middle_name")->nullable();
+            $table->string("salutation")->nullable();
+            $table->string("suffix")->nullable();
+            $table->string("management_level")->nullable();
+            $table->string("department")->nullable();
+            $table->string("job_function")->nullable();
+            $table->string("job_title")->nullable();
+            $table->string("direct_phone_number")->nullable();
+            $table->string("mobile_phone")->nullable();
+            $table->string("email_address")->nullable();
+            $table->string("supplemental_email")->nullable();
+            $table->string("zoominfo_contact_profile_url")->nullable();
+            $table->string("linkedin_contact_profile_url")->nullable();
+            $table->string("street")->nullable();
+            $table->string("city")->nullable();
+            $table->string("state")->nullable();
+            $table->string("zip")->nullable();
+            $table->string("country")->nullable();
+            $table->string("email_domain")->nullable();
             $table->timestamps();
         });
     }

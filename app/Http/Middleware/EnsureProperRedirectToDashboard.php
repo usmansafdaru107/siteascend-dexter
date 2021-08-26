@@ -19,7 +19,11 @@ class EnsureProperRedirectToDashboard
     public function handle(Request $request, Closure $next)
     {
         if (Auth::check()) {
-            return redirect()->route($request->user()->role->name . ".dashboard");
+            if($request->user()->role->name != "admin") {
+                return redirect()->route("user.dashboard");
+            } else {
+                return redirect()->route("admin.dashboard");
+            }
         }
         return $next($request);
     }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Campaign;
-use App\Models\CampaignCompany;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,43 +28,52 @@ class CampaignController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'campaignName' => 'required|min:3|max:255'
+        ]);
         DB::beginTransaction();
         try {
             $campaign = Campaign::create([
                 'name' => $request->campaignName,
             ]);
+
+            $campaign->companies()->attach($request->companies);
     
-            foreach ($request->companies as $key => $value) {
-                CampaignCompany::create([
-                    "campaign_id" => $campaign->id,
-                    "company_id" => $value
-                ]);
-            }
             DB::commit();
     
             return redirect()->back()->with('success', 'New Campaign created successfully!');
         } catch (\Exception $e) {
-            // dd($e);
             DB::rollBack();
             return view("errors.500");
         }
     }
 
-    public function edit(Request $request, Campaign $campaign)
+    public function edit(Campaign $campaign)
     {
 
+        $data = [
+            'companies' => Company::all(),
+            'campaign' => $campaign
+        ];
+
+        return view("campaign.edit", $data);
+    }
+
+    public function update(Request $request, Campaign $campaign)
+    {
+        $request->validate([
+            'campaignName' => 'required|min:3|max:255'
+        ]);
+        
         DB::beginTransaction();
         try {
-            $campaign = Campaign::create([
+            
+            $campaign->update([
                 'name' => $request->campaignName,
             ]);
+
+            $campaign->companies()->sync($request->companies);
     
-            foreach ($request->companies as $key => $value) {
-                CampaignCompany::create([
-                    "campaign_id" => $campaign->id,
-                    "company_id" => $value
-                ]);
-            }
             DB::commit();
     
             return redirect()->route("admin.campaign.index")->with('success', 'Campaign Updated successfully!');
@@ -76,15 +84,26 @@ class CampaignController extends Controller
         }
     }
 
-    public function update(Request $request)
-    {
-        dd($request);
-        // return view("user.create");
-    }
-
     public function destroy(Campaign $campaign)
     {
         $campaign->delete();
         return redirect()->back()->with('success', 'Campaign delete successfully!');
+    }
+
+    public function companyCampaigns(Campaign $campaign)
+    {
+        $data = [
+            'campaign' => $campaign,
+            'companies' => $campaign->companies
+        ];
+        return view('campaign.campaign_companies', $data);
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $campaign  = Campaign::find($request->campaignId)->first()->companies()->updateExistingPivot($request->companyId, [
+            'status' => $request->status,
+        ]);
+        return response()->json(['success'=>'Record Updated!']);
     }
 }

@@ -36,60 +36,92 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+
+                            @if(session()->has('success'))
+                                <div class="alert alert-success" id="message_success">
+                                    {{ session()->get('success') }}
+                                </div>
+                            @endif
+
+                            @if(session()->has('error'))
+                                <div class="alert alert-danger" id="message_error">
+                                    {{ session()->get('error') }}
+                                </div>
+                            @endif
                             <h4 class="card-title mb-4 text-center">Create User</h4>
-                            <form>
+                            <form action="{{ route('admin.user.store') }}" method="POST">
+                                @csrf
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="mb-4">
-                                            <label class="form-label" for="firstName">First Name</label>
-                                            <input type="text" name="firstName" id="firstName" class="form-control" value="{{ old('firstName') }}" required maxlength="255">
-                                            <div class="invalid-feedback">
-                                                Please select a valid state.
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="mb-4">
-                                            <label class="form-label" for="lastName">Last Name</label>
-                                            <input type="text" name="lastName" id="lastName" class="form-control" value="{{ old('lastName') }}" required maxlength="255">
-                                            <div class="invalid-feedback">
-                                                Please select a valid state.
-                                            </div>
+                                            <label class="form-label" for="name">Full Name</label>
+                                            <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" required maxlength="255">
+                                            @error('name')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                            
                                         </div>
                                     </div>
 
                                     <div class="col-lg-6">
                                         <div class="mb-4">
                                             <label class="form-label" for="email">Email</label>
-                                            <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" required maxlength="255">
-                                            <div class="invalid-feedback">
-                                                Please select a valid state.
-                                            </div>
+                                            <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required maxlength="255">
+                                            @error('email')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                     </div>
 
                                     <div class="col-lg-6">
                                         <div class="mb-4">
-                                            <label class="form-label" for="password">Password</label>
-                                            <input type="password" name="password" id="password" class="form-control" required maxlength="255">
-                                            <div class="invalid-feedback">
-                                                Please select a valid state.
-                                            </div>
+                                            <label class="form-label" for="password">Password (minimum 8 characters)</label>
+                                            <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" required maxlength="255">
+                                            @error('password')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="mb-4">
+                                            <label class="form-label" for="role">Select User Role</label>
+                                            <select class="select2 form-control @error('role') is-invalid @enderror" name="role" required data-placeholder="Choose User Role">
+                                                @foreach ($roles as $role)
+                                                    @if (old('role') == $role->id)
+                                                        <option value="{{ $role->id }}" selected>{{ Str::upper($role->name) }}</option>
+                                                    @else
+                                                        <option value="{{ $role->id }}">{{ Str::upper($role->name) }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                            @error('role')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                     </div>
 
                                     <div class="col-lg-12">
                                         <div class="mb-4">
-                                            <label class="form-label" for="password">Select Multiple Campaigns</label>
-                                            <select class="select2 form-control select2-multiple" multiple="multiple" data-placeholder="Choose campaigns for user">
+                                            <label class="form-label" for="password">Select Multiple Campaigns (You can type to search campaigns)</label>
+                                            <select class="select2 form-control select2-multiple @error('campaigns') is-invalid @enderror" name="campaigns[]" multiple="multiple" required data-placeholder="Choose campaigns for user">
                                                 @foreach ($campaigns as $campaign)
                                                     <option value="{{ $campaign->id }}">{{ $campaign->name }}</option>
                                                 @endforeach
                                             </select>
-                                            <div class="invalid-feedback">
-                                                Please select a valid state.
-                                            </div>
+                                            @error('campaigns')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                     </div>
 

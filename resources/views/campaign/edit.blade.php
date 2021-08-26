@@ -37,22 +37,26 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title mb-4 text-center">Edit Campaign</h4>
-                            <form>
+                            <form action="{{ route('admin.campaign.update', $campaign->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="mb-4">
                                             <label class="form-label" for="campaignName">Campaign Name</label>
-                                            <input type="text" name="campaignName" id="campaignName" class="form-control" value="{{ old('campaignName', $campaign->name) }}" required maxlength="255">
-                                            <div class="invalid-feedback">
-                                                Invalid campaign name.
-                                            </div>
+                                            <input type="text" name="campaignName" id="campaignName" class="form-control @error('campaignName') is-invalid @enderror" value="{{ old('campaignName', $campaign->name) }}" required maxlength="255">
+                                            @error('campaignName')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                     </div>
 
                                     <div class="col-lg-12">
                                         <div class="mb-4">
-                                            <label class="form-label" for="password">Select Multiple Companies</label>
-                                            <select class="select2 form-control select2-multiple" multiple="multiple" data-placeholder="Choose company for campaign">
+                                            <label class="form-label" for="password">Select Multiple Companies (You can type to search in companies)</label>
+                                            <select class="select2 form-control select2-multiple" multiple="multiple" name="companies[]" required data-placeholder="Choose company for campaign">
                                                 @foreach ($companies as $company)
                                                     <option value="{{ $company->id }}" {{ ($campaign->companies->contains($company->id))? "selected" : "" }}>{{ $company->name }}</option>
                                                 @endforeach
@@ -66,7 +70,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-0 text-center">
                                             <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
-                                                Create
+                                                Update
                                             </button>
                                         </div>
                                     </div>

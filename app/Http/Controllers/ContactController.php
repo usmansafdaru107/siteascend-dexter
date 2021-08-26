@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\HeadingRowImport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ContactImport;
 
 class ContactController extends Controller
 {
@@ -106,16 +109,18 @@ class ContactController extends Controller
 
     public function upload(Request $request)
     {
+        // Validate if csv
+        $this->validate($request, array(
+            'csv_file'   => 'required|mimes:csv,txt',
+        ));
 
-        if ($request->hasFile('csv_file')) {
-            dd($request->csv_file);
-        }
-        dd($request->csv_file);
-        if( $request->file('file') ) {
-            $path =$request->file('csv_file')->getRealPath();
-            dd($path);
-        }
-        // $path = $request->file('file')->getRealPath();
-        dd("Error");
+        // Get Headers
+        $headings = (new HeadingRowImport)->toArray(request()->file('csv_file'));
+        // dd($headings[0][0]);
+        if(!isset($headings[0][0]) || count($headings[0][0]) < 22)
+            return redirect()->back()->with('error', 'Invalid file selected!');
+
+        Excel::import(new ContactImport, request()->file('csv_file'));
+        return redirect()->back()->with('success', 'Records uploaded successfully!');
     }
 }

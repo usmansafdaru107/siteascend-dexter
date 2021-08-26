@@ -43,6 +43,10 @@ class Company extends Model
 
     public function campaigns()
     {
-        return $this->belongsToMany(Campaign::class, "campaigns_companies");
+        return $this->belongsToMany(Campaign::class, "campaigns_companies")->withPivot('status')->withTimestamps();
+    }
+
+    public function getCreatedAtAttribute($value) {
+        return \Carbon\Carbon::parse($value)->format('l jS F Y h:i:s A');
     }
 }

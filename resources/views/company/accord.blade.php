@@ -44,7 +44,7 @@
                                 </div>
                             @endif
                             <div class="mb-2" style="float: right">
-                                <a class="btn btn-dark btn-sm page-title-right" href="{{ route('admin.company.create') }}">Add New Company</a>
+                                <a class="btn btn-outline-dark btn-sm page-title-right" href="{{ route('admin.company.create') }}">Add New Company</a>
                             </div>
         
                                 <h4 class="card-title">Accordion example</h4>
@@ -69,21 +69,19 @@
                                                     aria-labelledby="headingOne" data-bs-parent="#accordion">
                                                 <div class="card-body">
                                                     
+                                                <p class="text-center text-white font-weight-bold">{{ $company->name . " Contacts" }}</p>
                                                 <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                     <thead>
                                                     <tr>
                                                         <th>Name</th>
                                                         <th>Street Address</th>
-                                                        <th>city</th>
-                                                        <th>state</th>
-                                                        <th>country</th>
-                                                        <th>zip</th>
+                                                        <th>City</th>
+                                                        <th>State</th>
+                                                        <th>Country</th>
+                                                        <th>Zip Code</th>
                                                         <th>Created At</th>
-                                                        <th>Edit</th>
-                                                        <th>Delete</th>
                                                     </tr>
                                                     </thead>
-
 
                                                     <tbody>
                                                         @foreach ($company->contacts as $contact)
@@ -95,20 +93,6 @@
                                                                 <td>{{ $contact->country }}</td>
                                                                 <td>{{ $contact->zip }}</td>
                                                                 <td>{{ $contact->created_at }}</td>
-                                                                <td>
-                                                                    <a href="{{ route('admin.contact.edit', ['contact' => $contact->id]) }}" class="btn btn-outline-secondary btn-sm edit" title="Edit Company">
-                                                                        <i class="fas fa-pencil-alt"></i>
-                                                                    </a>
-                                                                </td>
-                                                                <td>
-                                                                    <form action="{{ route('admin.contact.destroy', ['contact' => $contact->id]) }}" method="POST">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button class="btn btn-outline-secondary btn-sm edit" type="submit" title="Delete Company">
-                                                                            <i class="fas fa-trash-alt"></i>
-                                                                        </button>
-                                                                    </form>
-                                                                </td>
                                                             </tr>
                                                         @endforeach
                                                     

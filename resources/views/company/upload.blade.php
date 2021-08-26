@@ -32,28 +32,44 @@
 			<!-- end page title -->
 
             <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body">
-        
-                                        <div>
-                                            <form action="{{ route('admin.company.upload') }}" class="" method="POST" enctype="multipart/form-data">
-                                                @csrf
-                                                <div class="fallback">
-                                                    <input type="file" name="csv_file" required>
-                                                </div>
-                                                
-                                                <div class="text-center mt-4">
-                                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Upload</button>
-                                                </div>
-                                            </form>
-                                        </div>
-        
-                                       
-                                    </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            @if(session()->has('success'))
+                                <div class="alert alert-success" id="message_success">
+                                    {{ session()->get('success') }}
                                 </div>
-                            </div> <!-- end col -->
-                        </div> <!-- end row -->
+                            @endif
+
+                            @if(session()->has('error'))
+                                <div class="alert alert-danger" id="message_error">
+                                    {{ session()->get('error') }}
+                                </div>
+                            @endif
+                            
+                            <div>
+                                <form action="{{ route('admin.company.upload') }}" class="" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <label class="form-label" for="csv_file">Select CSV File</label>
+                                    <input type="file" name="csv_file" id="csv_file" class="form-control @error('csv_file') is-invalid @enderror" required>
+                                    @error('csv_file')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                    
+                                    <div class="text-center mt-4">
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light">Upload</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->
 		</div>
 	</div>
 </div>

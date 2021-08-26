@@ -35,6 +35,9 @@ Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(fun
     Route::put("/campaign/{campaign}", [CampaignController::class, "update"])->name("campaign.update");
     Route::delete("/campaign/{campaign}", [CampaignController::class, "destroy"])->name("campaign.destroy");
 
+    Route::get("/campaign/{campaign}/companies", [CampaignController::class, "companyCampaigns"])->name("campaign.company");
+    Route::post('/campaign/updateStatus', [CampaignController::class, 'updateStatus'])->name('campaign.updateStatus');
+    
     // Company
     Route::get("/company", [CompanyController::class, "index"])->name("company.index");
     Route::get("/company/create", [CompanyController::class, "create"])->name("company.create");
@@ -42,9 +45,9 @@ Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(fun
     Route::get("/company/{company}/edit", [CompanyController::class, "edit"])->name("company.edit");
     Route::put("/company/{company}", [CompanyController::class, "update"])->name("company.update");
     Route::delete("/company/{company}", [CompanyController::class, "destroy"])->name("company.destroy");
-    Route::get("/company/bulkUpload", [CompanyController::class, "bulkUpload"])->name("company.bulkUpload");
-    Route::post("/company/bulkUpload", [CompanyController::class, "upload"])->name("company.upload");
-    Route::get("/company/accordview", [CompanyController::class, "accordview"])->name("company.accordview");
+    Route::get("/company/upload", [CompanyController::class, "bulkUpload"])->name("company.bulkUpload");
+    Route::post("/company/upload", [CompanyController::class, "upload"])->name("company.upload");
+    Route::get("/company/accord", [CompanyController::class, "accordview"])->name("company.accordview");
 
     // Contact
     Route::get("/contact", [ContactController::class, "index"])->name("contact.index");
@@ -53,8 +56,8 @@ Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(fun
     Route::get("/contact/{contact}/edit", [ContactController::class, "edit"])->name("contact.edit");
     Route::put("/contact/{contact}", [ContactController::class, "update"])->name("contact.update");
     Route::delete("/contact/{contact}", [ContactController::class, "destroy"])->name("contact.destroy");
-    Route::get("/contact/bulkUpload", [ContactController::class, "bulkUpload"])->name("contact.bulkUpload");
-    Route::post("/contact/bulkUpload", [ContactController::class, "upload"])->name("contact.upload");
+    Route::get("/contact/upload", [ContactController::class, "bulkUpload"])->name("contact.bulkUpload");
+    Route::post("/contact/upload", [ContactController::class, "upload"])->name("contact.upload");
     
 });
 

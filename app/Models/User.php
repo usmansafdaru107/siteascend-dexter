@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id',
     ];
 
     /**
@@ -37,6 +38,11 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function campaigns()
+    {
+        return $this->belongsToMany(Campaign::class, "users_campaigns")->withTimestamps();
+    }
+
     public function firstName()
     {
         return explode(' ', $this->name, 2)[0];
@@ -47,6 +53,10 @@ class User extends Authenticatable
     {
         return explode(' ', $this->name, 2)[1];
 
+    }
+
+    public function getCreatedAtAttribute($value) {
+        return \Carbon\Carbon::parse($value)->format('l jS F Y h:i:s A');
     }
 
 }

@@ -32,14 +32,26 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <div class="mb-2" style="float: right">
-                                <a class="btn btn-dark page-title-right" href="{{ route('admin.user.create') }}">Add New User</a>
+                            @if(session()->has('success'))
+                                <div class="alert alert-success" id="message_success">
+                                    {{ session()->get('success') }}
+                                </div>
+                            @endif
+
+                            @if(session()->has('error'))
+                                <div class="alert alert-danger" id="message_error">
+                                    {{ session()->get('error') }}
+                                </div>
+                            @endif
+                            <div class="mb-3" style="float: right">
+                                <a class="btn btn-outline-dark btn-sm page-title-right" href="{{ route('admin.user.create') }}">Add New User</a>
                             </div>
 
                             <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Campaigns Assigned</th>
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th>Created At</th>
@@ -53,6 +65,7 @@
                                     @foreach ($users as $user)
                                         <tr>
                                             <td>{{ $user->name }}</td>
+                                            <td>{{ $user->campaigns->count() }}</td>
                                             <td>{{ $user->email }}</td>
                                             <td>{{ Str::upper($user->role->name) }}</td>
                                             <td>{{ $user->created_at }}</td>

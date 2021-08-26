@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Models\Contact;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\HeadingRowImport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\CompanyImport;
 
 class CompanyController extends Controller
 {
@@ -113,12 +116,15 @@ class CompanyController extends Controller
                 'ownership_type' => $request->ownershipType,
                 'business_model' => $request->businessModel,
             ]);
-    
-            foreach ($request->contacts as $key => $value) {
-                Contact::find($value)->update([
-                    "company_id" => $company->id
-                ]);
+
+            if($request->contacts !== null) {
+                foreach ($request->contacts as $key => $value) {
+                    Contact::find($value)->update([
+                        "company_id" => $company->id
+                    ]);
+                }
             }
+            
             DB::commit();
     
             return redirect()->route("admin.company.index")->with('success', 'Company Updated successfully!');
@@ -142,17 +148,19 @@ class CompanyController extends Controller
 
     public function upload(Request $request)
     {
+        // Validate if csv
+        $this->validate($request, array(
+            'csv_file'   => 'required|mimes:csv,txt',
+          ));
 
-        if ($request->hasFile('csv_file')) {
-            dd($request->csv_file);
-        }
-        dd($request->csv_file);
-        if( $request->file('file') ) {
-            $path =$request->file('csv_file')->getRealPath();
-            dd($path);
-        }
-        // $path = $request->file('file')->getRealPath();
-        dd("Error");
+        // Get Headers
+        $headings = (new HeadingRowImport)->toArray(request()->file('csv_file'));
+        if(!isset($headings[0][0]) || count($headings[0][0]) < 24)
+            return redirect()->back()->with('error', 'Invalid file selected!');
+
+        Excel::import(new CompanyImport, request()->file('csv_file'));
+        return redirect()->back()->with('success', 'Records uploaded successfully!');
+        
     }
 
     public function accordview()

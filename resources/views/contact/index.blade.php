@@ -30,7 +30,7 @@
 			<div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body"  style="overflow-x: scroll;">
 
                             @if(session()->has('success'))
                                 <div class="alert alert-success" id="message_success">
@@ -43,19 +43,28 @@
                                     {{ session()->get('error') }}
                                 </div>
                             @endif
-                            <div class="mb-2" style="float: right">
-                                <a class="btn btn-dark btn-sm page-title-right" href="{{ route('admin.contact.create') }}">Add New Contact</a>
+                            <div class="mb-3" style="float: right">
+                                <a class="btn btn-outline-dark btn-sm page-title-right" href="{{ route('admin.contact.create') }}">Add New Contact</a>
                             </div>
 
-                            <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <table id="datatable" class="table table-bordered table-responsive">
                                 <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Company Name</th>
+                                    <th>Management Level</th>
+                                    <th>Department</th>
+                                    <th>Job Function</th>
+                                    <th>Job Title</th>
+                                    <th>Direct Phone Number</th>
+                                    <th>Email Address</th>
+                                    <th>Visit Zoominfo Profile</th>
+                                    <th>Visit Linkedin Profile</th>
                                     <th>Street Address</th>
-                                    <th>city</th>
-                                    <th>state</th>
-                                    <th>country</th>
-                                    <th>zip</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Country</th>
+                                    <th>Zip Code</th>
                                     <th>Created At</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
@@ -67,6 +76,15 @@
                                     @foreach ($contacts as $contact)
                                         <tr>
                                             <td>{{ $contact->name() }}</td>
+                                            <td>{{ $contact->company->name ?? "" }}</td>
+                                            <td>{{ $contact->management_level }}</td>
+                                            <td>{{ $contact->department }}</td>
+                                            <td>{{ $contact->job_function }}</td>
+                                            <td>{{ $contact->job_title }}</td>
+                                            <td>{{ $contact->direct_phone_number }}</td>
+                                            <td>{{ $contact->email_address }}</td>
+                                            <td><a href="{{ $contact->zoominfo_contact_profile_url ?? "#" }}" target="_blank"><i class="ri-external-link-line"></i></a></td>
+                                            <td><a href="{{ $contact->linkedin_contact_profile_url ?? "#" }}" target="_blank"><i class="ri-external-link-line"></i></a></td>
                                             <td>{{ $contact->street }}</td>
                                             <td>{{ $contact->city }}</td>
                                             <td>{{ $contact->state }}</td>

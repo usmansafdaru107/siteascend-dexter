@@ -44,4 +44,8 @@ class Contact extends Model
     {
         return $this->first_name ." ". $this->last_name;
     }
+
+    public function getCreatedAtAttribute($value) {
+        return \Carbon\Carbon::parse($value)->format('l jS F Y h:i:s A');
+    }
 }

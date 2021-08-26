@@ -7,6 +7,7 @@
         <meta charset="utf-8" />
         <title>@yield('title') | {{ config('app.name', 'Laravel') }}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta content="" name="description" />
         <meta content="" name="author" />
         <!-- App favicon -->
@@ -18,8 +19,10 @@
         <!-- DataTables -->
         <link href="{{ asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
         
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/libs/toastr/build/toastr.min.css') }}">
-
+        <!-- Toast CSS -->
+        <!-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/libs/toastr/build/toastr.min.css') }}"> -->
+        <!-- Sweet Alert-->
+        <link href="{{ asset('assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- Responsive datatable examples -->
         <link href="{{ asset('assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />  
 
@@ -72,9 +75,10 @@
         <script src="{{ asset('assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
         <script src="{{ asset('assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
 
-        <!-- <script src="{{ asset('assets/js/pages/dashboard.init.js') }}"></script> -->
         <!-- toastr plugin -->
-        <script src="{{ asset('assets/libs/toastr/build/toastr.min.js') }}"></script>
+        <!-- <script src="{{ asset('assets/libs/toastr/build/toastr.min.js') }}"></script> -->
+        <!-- Sweet Alerts js -->
+        <script src="{{ asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
         @yield('js_scripts')
 
         <!-- App js -->
@@ -89,11 +93,7 @@
                 }, 5000);
             });
         </script>
-        <script>
-            // setTimeout(() => {
-            //     toastr["error"]("My name is Inigo Montoya. You killed my father. Prepare to die!");
-            // }, 3000);
-        </script>
+        
     </body>
 
 </html>
