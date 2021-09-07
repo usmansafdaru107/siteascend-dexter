@@ -30,7 +30,7 @@
 			<div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body"  style="overflow-x: scroll;">
+                        <div class="card-body" style="overflow-x: scroll;">
 
                             @if(session()->has('success'))
                                 <div class="alert alert-success" id="message_success">
@@ -43,13 +43,54 @@
                                     {{ session()->get('error') }}
                                 </div>
                             @endif
-                            <div class="mb-3" style="float: right">
-                                <a class="btn btn-outline-dark btn-sm page-title-right" href="{{ route('admin.contact.create') }}">Add New Contact</a>
-                            </div>
 
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                        
+                                        <div class="dropdown mt-4 mt-sm-0">
+
+                                            <a href="#" class="btn btn-light btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span id="contact_selected_count">0</span> Selected <i class="mdi mdi-chevron-down"></i>
+                                            </a>
+
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="#" id="clear_all">Clear All</a>
+                                            </div>
+
+                                            <a href="#" class="btn btn-light btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Tag Contacts <i class="mdi mdi-chevron-down"></i>
+                                            </a>
+
+                                            <div class="dropdown-menu">
+                                                @foreach($tags as $tag)
+                                                    <a class="dropdown-item" href="#">
+                                                        <div class="form-check mb-3">
+                                                            <input class="form-check-input tag_checkbox" type="checkbox" id="checkbox_tag_{{ $tag->id }}" data-id="{{ $tag->id }}" data-name="{{ $tag->tag_name }}">
+                                                            <label class="form-check-label" for="checkbox_tag_{{ $tag->id }}">
+                                                                {{ $tag->tag_name }}
+                                                            </label>
+                                                        </div>
+                                                        
+                                                    </a>
+                                                @endforeach
+                                            </div>
+                                        </div>
+
+                                        <div class="page-title-right">
+                                            <div class="mb-1">
+                                                <a class="btn btn-outline-dark btn-sm page-title-right" href="{{ route('admin.contact.create') }}">Add New Contact</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                           
                             <table id="datatable" class="table table-bordered table-responsive">
                                 <thead>
                                 <tr>
+                                    <th>Tag</th>
                                     <th>Name</th>
                                     <th>Company Name</th>
                                     <th>Management Level</th>
@@ -71,10 +112,14 @@
                                 </tr>
                                 </thead>
 
-
                                 <tbody>
                                     @foreach ($contacts as $contact)
                                         <tr>
+                                            <td>
+                                                <div class="form-check mb-3">
+                                                    <input class="form-check-input contact_checkbox" type="checkbox" id="checkbox_contact_{{ $contact->id }}" data-id="{{ $contact->id }}">
+                                                </div>
+                                            </td>
                                             <td>{{ $contact->name() }}</td>
                                             <td>{{ $contact->company->name ?? "" }}</td>
                                             <td>{{ $contact->management_level }}</td>
@@ -83,8 +128,8 @@
                                             <td>{{ $contact->job_title }}</td>
                                             <td>{{ $contact->direct_phone_number }}</td>
                                             <td>{{ $contact->email_address }}</td>
-                                            <td><a href="{{ $contact->zoominfo_contact_profile_url ?? "#" }}" target="_blank"><i class="ri-external-link-line"></i></a></td>
-                                            <td><a href="{{ $contact->linkedin_contact_profile_url ?? "#" }}" target="_blank"><i class="ri-external-link-line"></i></a></td>
+                                            <td><a href="{{ $contact->zoominfo_contact_profile_url ?? '#' }}" target="_blank"><i class="ri-external-link-line"></i></a></td>
+                                            <td><a href="{{ $contact->linkedin_contact_profile_url ?? '#' }}" target="_blank"><i class="ri-external-link-line"></i></a></td>
                                             <td>{{ $contact->street }}</td>
                                             <td>{{ $contact->city }}</td>
                                             <td>{{ $contact->state }}</td>
@@ -119,4 +164,99 @@
 		</div>
 	</div>
 </div>
+@stop
+
+@section('js_scripts')
+    <script>
+        $(document).ready(function() {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            
+            const ids = {
+                checkbox_contact_: "checkbox_contact_",
+                checkbox_tag_: "checkbox_tag_",
+                contact_selected_count: "contact_selected_count",
+                clear_all: "clear_all"
+            };
+
+            const classes = {
+                contact_checkbox: "contact_checkbox",
+                tag_checkbox: "tag_checkbox"
+            }
+
+            var totalCount = 0;
+            updateSelectedCount(totalCount);
+
+            function updateSelectedCount() {
+                $("#" + ids.contact_selected_count).text(totalCount);
+            }
+
+            function uncheckAllWithClass(className) {
+                $('.' + className).each(function() { this.checked = false; });
+            }
+
+            // Uncheck all tags on click
+            $('.dropdown-toggle').click(function() {
+                // Clear all check in dropdown
+                uncheckAllWithClass(classes.tag_checkbox);
+            });
+
+            $("." + classes.tag_checkbox).on('click', function() {
+
+                if($(this).prop("checked") == true) {
+               
+                    var tagId = $(this).attr("data-id");
+                    var tagName = $(this).attr("data-name");
+                    var selectContactsCount = $('.'+classes.contact_checkbox +":checked").length;
+                    if(selectContactsCount <= 0) {
+                        toastr["error"]("Please select contacts first.");
+                    } else {
+                        var contactIds = [];
+                        $('.'+classes.contact_checkbox +":checked").each(function() {
+                            contactIds.push($(this).attr('data-id'));
+                        });
+
+                        // Ajax call
+                        $.ajax({
+                            type:'POST',
+                            url:"{{ route('admin.contact.tag.addStatusToContact') }}",
+                            data:{tagId:tagId, contactIds: contactIds},
+                            success:function(data) {
+                                // console.log(data);
+                                if(data.status == "success") {
+                                    toastr["success"](`<b>${tagName}</b> Tag added to ${totalCount} record(s).`);
+                                } else {
+                                    toastr["error"]("Something unexpected happened on server, please refresh page and try again!.");
+                                }
+                            },
+                            error: function(err) {
+                                toastr["error"]("Something unexpected happened on server, please refresh page and try again!.");
+                            }
+                        });
+
+                    }
+                }
+            });
+
+            $("#"+ids.clear_all).on('click', function() {
+                uncheckAllWithClass(classes.contact_checkbox);
+                totalCount = 0;
+                updateSelectedCount();
+            });
+
+            $("."+classes.contact_checkbox).on('click', function() {
+                if($(this).prop("checked") == true) {
+                    totalCount++;
+                    updateSelectedCount();
+                } else if($(this).prop("checked") == false){
+                    totalCount--;
+                    updateSelectedCount();
+                }
+            });
+        });
+    </script>
 @stop

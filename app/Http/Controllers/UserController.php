@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index()
     {
         $data = [
-            'users' => Role::where('name', 'dgr')->first()->users()->get()
+            'users' => Role::where('name', 'dgr')->first()->users()->with('role')->get(),
         ];
 
         return view("user.index", $data);
@@ -55,7 +55,6 @@ class UserController extends Controller
     
             return redirect()->back()->with('success', 'New User created successfully!');
         } catch (\Exception $e) {
-            dd($e);
             DB::rollBack();
             return view("errors.500");
         }

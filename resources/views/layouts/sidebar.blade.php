@@ -36,6 +36,8 @@
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{{ route('admin.campaign.index') }}">Campaign List</a></li>
                                     <li><a href="{{ route('admin.campaign.create') }}">Create New</a></li>
+                                    <li><a href="{{ route('admin.campaign.tag.index') }}">Tag List</a></li>
+                                    <li><a href="{{ route('admin.campaign.tag.create') }}">Create New Tag</a></li>
                                 </ul>
                             </li>
 
@@ -49,6 +51,8 @@
                                     <li><a href="{{ route('admin.company.index') }}">Company List</a></li>
                                     <li><a href="{{ route('admin.company.create') }}">Create New</a></li>
                                     <li><a href="{{ route('admin.company.bulkUpload') }}">Bulk Upload</a></li>
+                                    <li><a href="{{ route('admin.company.tag.index') }}">Tag List</a></li>
+                                    <li><a href="{{ route('admin.company.tag.create') }}">Create New Tag</a></li>
                                 </ul>
                             </li>
 
@@ -62,8 +66,11 @@
                                     <li><a href="{{ route('admin.contact.index') }}">Contact List</a></li>
                                     <li><a href="{{ route('admin.contact.create') }}">Create New</a></li>
                                     <li><a href="{{ route('admin.contact.bulkUpload') }}">Bulk Upload</a></li>
+                                    <li><a href="{{ route('admin.contact.tag.index') }}">Tag List</a></li>
+                                    <li><a href="{{ route('admin.contact.tag.create') }}">Create New Tag</a></li>
                                 </ul>
                             </li>
+
                         </ul>
                     </div>
                     <!-- Sidebar -->

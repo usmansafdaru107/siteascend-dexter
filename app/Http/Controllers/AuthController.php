@@ -28,7 +28,7 @@ class AuthController extends Controller
             return redirect()->intended($request->user()->role->name . ".dashboard");
         }
 
-        return back()->withErrors([
+        return back()->withInput($request->input())->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ]);
     }

@@ -7,13 +7,16 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\HeadingRowImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ContactImport;
+use App\Models\Tag;
 
 class ContactController extends Controller
 {
     public function index()
     {
         $data = [
-            'contacts' => Contact::all()
+            'contacts' => Contact::with('company')->get(),
+            'tags' => Tag::where('tag_category_id', 1)->get()
+
         ];
         return view("contact.index", $data);
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Campaign;
 use App\Models\Company;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,7 +13,8 @@ class CampaignController extends Controller
     public function index()
     {
         $data = [
-            'campaigns' => Campaign::all()
+            'campaigns' => Campaign::all(),
+            'tags' => Tag::where('tag_category_id', 3)->get()
         ];
         return view("campaign.index", $data);
     }
@@ -78,7 +80,6 @@ class CampaignController extends Controller
     
             return redirect()->route("admin.campaign.index")->with('success', 'Campaign Updated successfully!');
         } catch (\Exception $e) {
-            dd($e);
             DB::rollBack();
             return view("errors.500");
         }
@@ -96,13 +97,14 @@ class CampaignController extends Controller
             'campaign' => $campaign,
             'companies' => $campaign->companies
         ];
+
         return view('campaign.campaign_companies', $data);
     }
 
     public function updateStatus(Request $request)
     {
         $campaign  = Campaign::find($request->campaignId)->first()->companies()->updateExistingPivot($request->companyId, [
-            'status' => $request->status,
+            'status_id' => $request->status,
         ]);
         return response()->json(['success'=>'Record Updated!']);
     }

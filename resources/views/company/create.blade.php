@@ -52,7 +52,7 @@
                             <form action="{{ route('admin.company.store') }}" method="POST">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <div class="mb-4">
                                             <label class="form-label" for="campaignName">Company Name</label>
                                             <input type="text" name="companyName" id="companyName" class="form-control" value="{{ old('companyName') }}" required maxlength="255">
@@ -62,7 +62,17 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-3">
+                                        <div class="mb-4">
+                                            <label class="form-label" for="website">Website (www.example.com)</label>
+                                            <input type="text" name="website" id="website" class="form-control" value="{{ old('website') }}" required maxlength="255">
+                                            <div class="invalid-feedback">
+                                                Invalid company name.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
                                         <div class="mb-4">
                                             <label class="form-label" for="streetAddress">Street Address</label>
                                             <input type="text" name="streetAddress" id="streetAddress" class="form-control" value="{{ old('streetAddress') }}" required maxlength="255">

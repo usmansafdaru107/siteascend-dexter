@@ -20,7 +20,7 @@
         <link href="{{ asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
         
         <!-- Toast CSS -->
-        <!-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/libs/toastr/build/toastr.min.css') }}"> -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/libs/toastr/build/toastr.min.css') }}">
         <!-- Sweet Alert-->
         <link href="{{ asset('assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- Responsive datatable examples -->
@@ -76,7 +76,7 @@
         <script src="{{ asset('assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
 
         <!-- toastr plugin -->
-        <!-- <script src="{{ asset('assets/libs/toastr/build/toastr.min.js') }}"></script> -->
+        <script src="{{ asset('assets/libs/toastr/build/toastr.min.js') }}"></script>
         <!-- Sweet Alerts js -->
         <script src="{{ asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
         @yield('js_scripts')

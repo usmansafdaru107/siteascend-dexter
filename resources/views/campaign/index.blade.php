@@ -43,13 +43,54 @@
                                     {{ session()->get('error') }}
                                 </div>
                             @endif
-                            <div class="mb-3" style="float: right">
-                                <a class="btn btn-outline-dark btn-sm page-title-right" href="{{ route('admin.campaign.create') }}">Add New Campaign</a>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                        
+                                        <div class="dropdown mt-4 mt-sm-0">
+
+                                            <a href="#" class="btn btn-light btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span id="campaign_selected_count">0</span> Selected <i class="mdi mdi-chevron-down"></i>
+                                            </a>
+
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="#" id="clear_all">Clear All</a>
+                                            </div>
+
+                                            <a href="#" class="btn btn-light btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Tag Campaigns <i class="mdi mdi-chevron-down"></i>
+                                            </a>
+
+                                            <div class="dropdown-menu">
+                                                @foreach($tags as $tag)
+                                                    <a class="dropdown-item" href="#">
+                                                        <div class="form-check mb-3">
+                                                            <input class="form-check-input tag_checkbox" type="checkbox" id="checkbox_tag_{{ $tag->id }}" data-id="{{ $tag->id }}" data-name="{{ $tag->tag_name }}">
+                                                            <label class="form-check-label" for="checkbox_tag_{{ $tag->id }}">
+                                                                {{ $tag->tag_name }}
+                                                            </label>
+                                                        </div>
+                                                        
+                                                    </a>
+                                                @endforeach
+                                            </div>
+                                        </div>
+
+                                        <div class="page-title-right">
+                                            <div class="mb-1">
+                                                <a class="btn btn-outline-dark btn-sm page-title-right" href="{{ route('admin.campaign.create') }}">Add New Campaign</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
+                            
 
                             <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                 <tr>
+                                    <th>Tag</th>
                                     <th>Name</th>
                                     <th>Total Companies in Campaign</th>
                                     <th>Start Date</th>
@@ -62,7 +103,12 @@
                                 <tbody>
                                     @foreach ($campaigns as $campaign)
                                         <tr>
-                                            <td title="Click to view companies in tha campaign"><a href="{{ route('admin.campaign.company', ["campaign" => $campaign->id]) }}"><i class="ri-links-fill"></i> {{ $campaign->name }}</a></td>
+                                            <td>
+                                                <div class="form-check mb-3">
+                                                    <input class="form-check-input campaign_checkbox" type="checkbox" id="checkbox_campaign_{{ $campaign->id }}" data-id="{{ $campaign->id }}">
+                                                </div>
+                                            </td>
+                                            <td title="Click to view companies in tha campaign"><a href="{{ route('admin.campaign.company', ['campaign' => $campaign->id]) }}"><i class="ri-links-fill"></i> {{ $campaign->name }}</a></td>
                                             <td>{{ $campaign->companies->count() }}</td>
                                             <td>{{ $campaign->created_at }}</td>
                                             <td>
@@ -93,4 +139,100 @@
 		</div>
 	</div>
 </div>
+@stop
+
+
+@section('js_scripts')
+    <script>
+        $(document).ready(function() {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            
+            const ids = {
+                checkbox_campaign_: "checkbox_campaign_",
+                checkbox_tag_: "checkbox_tag_",
+                campaign_selected_count: "campaign_selected_count",
+                clear_all: "clear_all"
+            };
+
+            const classes = {
+                campaign_checkbox: "campaign_checkbox",
+                tag_checkbox: "tag_checkbox"
+            }
+
+            var totalCount = 0;
+            updateSelectedCount(totalCount);
+
+            function updateSelectedCount() {
+                $("#" + ids.campaign_selected_count).text(totalCount);
+            }
+
+            function uncheckAllWithClass(className) {
+                $('.' + className).each(function() { this.checked = false; });
+            }
+
+            // Uncheck all tags on click
+            $('.dropdown-toggle').click(function() {
+                // Clear all check in dropdown
+                uncheckAllWithClass(classes.tag_checkbox);
+            });
+
+            $("." + classes.tag_checkbox).on('click', function() {
+
+                if($(this).prop("checked") == true) {
+               
+                    var tagId = $(this).attr("data-id");
+                    var tagName = $(this).attr("data-name");
+                    var selectContactsCount = $('.'+classes.campaign_checkbox +":checked").length;
+                    if(selectContactsCount <= 0) {
+                        toastr["error"]("Please select campaign first.");
+                    } else {
+                        var campaignIds = [];
+                        $('.'+classes.campaign_checkbox +":checked").each(function() {
+                            campaignIds.push($(this).attr('data-id'));
+                        });
+
+                        // Ajax call
+                        $.ajax({
+                            type:'POST',
+                            url:"{{ route('admin.campaign.tag.addStatusToCampaign') }}",
+                            data:{tagId:tagId, campaignIds: campaignIds},
+                            success:function(data) {
+                                // console.log(data);
+                                if(data.status == "success") {
+                                    toastr["success"](`<b>${tagName}</b> Tag added to ${totalCount} record(s).`);
+                                } else {
+                                    toastr["error"]("Something unexpected happened on server, please refresh page and try again!.");
+                                }
+                            },
+                            error: function(err) {
+                                toastr["error"]("Something unexpected happened on server, please refresh page and try again!.");
+                            }
+                        });
+
+                    }
+                }
+            });
+
+            $("#"+ids.clear_all).on('click', function() {
+                uncheckAllWithClass(classes.campaign_checkbox);
+                totalCount = 0;
+                updateSelectedCount();
+            });
+
+            $("."+classes.campaign_checkbox).on('click', function() {
+                if($(this).prop("checked") == true) {
+                    totalCount++;
+                    updateSelectedCount();
+                } else if($(this).prop("checked") == false){
+                    totalCount--;
+                    updateSelectedCount();
+                }
+            });
+        });
+    </script>
 @stop

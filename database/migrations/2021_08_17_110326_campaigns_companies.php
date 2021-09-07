@@ -17,7 +17,9 @@ class CampaignsCompanies extends Migration
             $table->id();
             $table->foreignId('campaign_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('company_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->string('status')->default('active');
+            $table->unsignedBigInteger('status_id')->nullable()->default('1');
+            $table->foreign('status_id')->references('id')->on('campaign_company_statuses')->onUpdate('cascade')->onDelete('cascade');
+            // $table->string('status')->default('active');
             $table->timestamps();
         });
     }

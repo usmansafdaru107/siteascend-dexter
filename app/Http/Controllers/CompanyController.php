@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Models\Contact;
+use App\Models\Tag;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\HeadingRowImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -15,7 +16,8 @@ class CompanyController extends Controller
     public function index()
     {
         $data = [
-            'companies' => Company::all()
+            'companies' => Company::all(),
+            'tags' => Tag::where('tag_category_id', 2)->get()
         ];
         return view("company.index", $data);
     }
@@ -36,6 +38,7 @@ class CompanyController extends Controller
         try {
             $company = Company::create([
                 'name' => $request->companyName,
+                'website' => $request->website,
                 'street_address' => $request->streetAddress,
                 'city' => $request->city,
                 'state' => $request->state,
@@ -92,6 +95,7 @@ class CompanyController extends Controller
         try {
             $company->update([
                 'name' => $request->companyName,
+                'website' => $request->website,
                 'street_address' => $request->streetAddress,
                 'city' => $request->city,
                 'state' => $request->state,
@@ -155,7 +159,7 @@ class CompanyController extends Controller
 
         // Get Headers
         $headings = (new HeadingRowImport)->toArray(request()->file('csv_file'));
-        if(!isset($headings[0][0]) || count($headings[0][0]) < 24)
+        if(!isset($headings[0][0]) || count($headings[0][0]) < 26)
             return redirect()->back()->with('error', 'Invalid file selected!');
 
         Excel::import(new CompanyImport, request()->file('csv_file'));

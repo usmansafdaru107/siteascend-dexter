@@ -63,7 +63,12 @@
                                             <td>{{ $company->state }}</td>
                                             <td>{{ $company->country }}</td>
                                             <td>{{ $company->zip }}</td>
-                                            <td><a href="#" class="change-status" id="{{ $company->id }}" data-company-id="{{ $company->id }}" data-campaign-id="{{ $campaign->id }}">{{ Str::upper(Str::replace('-', ' ', $company->campaigns->find($campaign->id)->pivot->status))}}</a></td>
+                                            @php
+                                                // $statusId = $company->campaigns->find($campaign->id)->pivot->status_id;
+                                                // $statusId = $company->pivot->status_id;
+                                                $status = ($company->pivot->status_id) ? App\Models\CampaignCompanyStatus::find($company->pivot->status_id)->status_name : "";
+                                            @endphp
+                                            <td><a href="#" class="change-status" id="{{ $company->id }}" data-company-id="{{ $company->id }}" data-campaign-id="{{ $campaign->id }}" data-status-id="{{ $company->pivot->status_id }}">{{ Str::upper($status)}}</a></td>
                                             <td>{{ $company->created_at }}</td>
                                         </tr>
                                     @endforeach
@@ -83,11 +88,23 @@
 
 @section('js_scripts')
 <script>
+    var statusesObject = {};
     $(document).ready(function() {
 
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        // Get Statuses
+        $.ajax({
+            type:'GET',
+            url:"{{ route('admin.campaignCompanyStatuses.fetchAll') }}",
+            success:function(data) {
+                data.forEach(element => {
+                    statusesObject[element.id] = element.status_name.toUpperCase()
+                });
             }
         });
         
@@ -96,18 +113,13 @@
             e.preventDefault();
             var companyId = $(this).attr('data-company-id');
             var campaignId = $(this).attr('data-campaign-id');
+            var statusId = $(this).attr('data-status-id');
             var that = this;
 
             Swal.fire({
             title: 'Add Status to Company in a Campaign',
             input: 'select',
-            inputOptions: {
-                'active': 'Active',
-                'inactive': 'Inactive',
-                'meeting-set': 'Meeting Set',
-                'hot': 'Hot',
-                'priority': 'Priority',
-            },
+            inputOptions: statusesObject,
             inputPlaceholder: 'Please Select a Status',
             showCancelButton: true,
             inputValidator: function (value) {
@@ -119,7 +131,7 @@
                             data:{campaignId:campaignId, companyId: companyId, status: value},
                             success:function(data) {
                                 if(data.success) {
-                                    $(that).text(value.toUpperCase());
+                                    $(that).text(statusesObject[value].toUpperCase());
                                     resolve();
                                 } else {
                                     resolve('Something unexpected happened on server, please refresh and try again.');
@@ -135,15 +147,12 @@
                 if (result.isConfirmed) {
                     Swal.fire({
                         icon: 'success',
-                        html: 'Status updated to: ' + result.value.toUpperCase()
+                        html: 'Status updated successfully!'
                     });
                 }
             });
 
         });
     });
-        
-        // Swal.fire({title:"Any fool can use a computer",confirmButtonColor:"#5664d2"});
-    // $("#ajax-alert").click(function(){Swal.fire({title:"Submit email to run ajax request",input:"email",showCancelButton:!0,confirmButtonText:"Submit",showLoaderOnConfirm:!0,confirmButtonColor:"#5664d2",cancelButtonColor:"#ff3d60",preConfirm:function(n){return new Promise(function(t,e){setTimeout(function(){"taken@example.com"===n?e("This email is already taken."):t()},2e3)})},allowOutsideClick:!1}).then(function(t){Swal.fire({icon:"success",title:"Ajax request finished!",confirmButtonColor:"#5664d2",html:"Submitted email: "+t})})})
 </script>
 @stop

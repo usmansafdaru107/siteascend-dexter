@@ -11,6 +11,7 @@ class Company extends Model
 
     protected $fillable = [
         'name',
+        'website',
         'street_address',
         'city',
         'state',
@@ -43,7 +44,12 @@ class Company extends Model
 
     public function campaigns()
     {
-        return $this->belongsToMany(Campaign::class, "campaigns_companies")->withPivot('status')->withTimestamps();
+        return $this->belongsToMany(Campaign::class, "campaigns_companies")->withPivot('status_id')->withTimestamps();
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, "company_tags")->withTimestamps();
     }
 
     public function getCreatedAtAttribute($value) {

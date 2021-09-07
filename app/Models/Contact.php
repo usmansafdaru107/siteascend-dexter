@@ -40,6 +40,11 @@ class Contact extends Model
         return $this->belongsTo(Company::class);
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, "contact_tags")->withTimestamps();
+    }
+
     public function name()
     {
         return $this->first_name ." ". $this->last_name;

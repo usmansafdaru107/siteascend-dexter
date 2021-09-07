@@ -13,7 +13,12 @@ class Campaign extends Model
 
     public function companies()
     {
-        return $this->belongsToMany(Company::class, "campaigns_companies")->withTimestamps();
+        return $this->belongsToMany(Company::class, "campaigns_companies")->withPivot('status_id')->withTimestamps();
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, "campaign_tags")->withTimestamps();
     }
 
     public function users()
