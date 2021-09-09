@@ -63,6 +63,9 @@ class DatabaseSeeder extends Seeder
         \App\Models\CampaignCompanyStatus::factory()->create([
             'status_name' => 'call-back'
         ]);
+        \App\Models\CampaignCompanyStatus::factory()->create([
+            'status_name' => 'send-info'
+        ]);
 
         \App\Models\TagCategory::factory()->create([
             'category_name' => 'contact'

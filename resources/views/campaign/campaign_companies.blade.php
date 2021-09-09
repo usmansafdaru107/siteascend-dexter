@@ -66,8 +66,11 @@
                                             <td>{{ $company->state }}</td>
                                             <td>{{ $company->country }}</td>
                                             <td>{{ $company->zip }}</td>
-                                         
-                                            <td><a href="#" class="change-status" id="{{ $company->id }}" data-company-id="{{ $company->id }}" data-campaign-id="{{ $campaign->id }}" data-status-id="{{ $company->pivot->status_id }}">{{ Str::replace('-', ' ', Str::upper($status))}}</a></td>
+                                            <td>
+                                                <a href="#" class="change-status" id="{{ $company->id }}" data-company-id="{{ $company->id }}" data-campaign-id="{{ $campaign->id }}" data-status-id="{{ $company->pivot->status_id }}">
+                                                    {{ Str::replace('-', ' ', Str::upper($status))}}
+                                                </a>
+                                            </td>
                                             <td>{{ $company->created_at }}</td>
                                         </tr>
                                     @endforeach
@@ -108,8 +111,6 @@
                     statusesObjectArrayOrignal[element.status_name] = [];
                     statusesObject[element.id] = element.status_name.toUpperCase().replaceAll("-", " ");
                 });
-                console.log(statusesObject);
-                console.log(statusesObjectArray);
             }
         });
         
@@ -137,10 +138,7 @@
                             success:function(data) {
                                 if(data.success) {
                                     $(that).parent().parent().attr("data-status", statusesObject[value].toLowerCase().replaceAll(" ", "-"))
-                                    // console.log($(that).parent().parent().attr("data-status"));
-                                    // console.log(that);
                                     $(that).text(statusesObject[value].toUpperCase().replace("-", " "));
-                                    sortTable();
                                     resolve();
                                 } else {
                                     resolve('Something unexpected happened on server, please refresh and try again.');
@@ -154,60 +152,64 @@
             }
             }).then(function (result) {
                 if (result.isConfirmed) {
-                    Swal.fire({
-                        icon: 'success',
-                        html: 'Status updated successfully!'
-                    });
+                    toastr["success"](`Status Updated successfully!`);
+                    setTimeout(() => {
+                        window.location.href = "{{ route('admin.campaign.company', $campaign->id) }}";
+                    }, 1000);
+                    // Swal.fire({
+                    //     icon: 'success',
+                    //     html: 'Status updated successfully!'
+                    // });
                 }
             });
 
         });
 
-        function sortTable() {
-            //get the parent table for convenience
-            let tableBody = document.getElementById("campaign_companies_table_body");
+        // function sortTable() {
+        //     //get the parent table for convenience
+        //     let tableBody = document.getElementById("campaign_companies_table_body");
 
-            //1. get all rows
-            let rowsCollection = tableBody.querySelectorAll("tr");
-            // console.log(rowsCollection);
+        //     //1. get all rows
+        //     let rowsCollection = tableBody.querySelectorAll("tr");
+        //     // console.log(rowsCollection);
 
-            //2. convert to array
-            let rows = Array.from(rowsCollection);
+        //     //2. convert to array
+        //     let rows = Array.from(rowsCollection);
 
-            // console.log(rows);
-            //3. shuffle
-            shuffleArray(rows);
+        //     // console.log(rows);
+        //     //3. shuffle
+        //     shuffleArray(rows);
 
-            //4. add back to the DOM
-            for (const row of rows) {
-                tableBody.appendChild(row);
-            }
-        }
+        //     //4. add back to the DOM
+        //     for (const row of rows) {
+        //         tableBody.appendChild(row);
+        //     }
+        // }
 
 
-        /**
-         * Randomize array element order in-place.
-         * Using Durstenfeld shuffle algorithm.
-         * from: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array/12646864#12646864
-         */
-        async function shuffleArray(array) {
+        // /**
+        //  * Randomize array element order in-place.
+        //  * Using Durstenfeld shuffle algorithm.
+        //  * from: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array/12646864#12646864
+        //  */
+        // async function shuffleArray(array) {
            
-            statusesObjectArray = statusesObjectArrayOrignal
-            console.log(statusesObjectArray);
+        //     statusesObjectArray = statusesObjectArrayOrignal
+        //     console.log(statusesObjectArray);
 
-            for (var i = array.length - 1; i >= 0; i--) {
-                var status = $(array[i]).attr("data-status");
-                statusesObjectArray[status].push(array[i]);
-                // console.log(i);
-                // console.log(array[i]);
-                // console.log($(array[i]).attr("data-status"));
-                // var j = Math.floor(Math.random() * (i + 1));
-                // var temp = array[i];
-                // array[i] = array[j];
-                // array[j] = temp;
-            }
-            console.log(statusesObjectArray);
-        }
+        //     for (var i = array.length - 1; i >= 0; i--) {
+        //         var status = $(array[i]).attr("data-status");
+        //         statusesObjectArray[status].push(array[i]);
+        //         // console.log(i);
+        //         // console.log(array[i]);
+        //         // console.log($(array[i]).attr("data-status"));
+        //         // var j = Math.floor(Math.random() * (i + 1));
+        //         // var temp = array[i];
+        //         // array[i] = array[j];
+        //         // array[j] = temp;
+        //     }
+        //     console.log(statusesObjectArray);
+        // }
 
     });
 </script>

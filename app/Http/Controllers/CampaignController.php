@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Campaign;
+use App\Models\CampaignCompanyStatus;
 use App\Models\Company;
 use App\Models\Role;
 use App\Models\Tag;
@@ -202,6 +203,25 @@ class CampaignController extends Controller
             'companies' => $campaign->companies
         ];
 
+        $dataOrdered = [
+            "priority" => [],
+            "hot" => [],
+            "active" => [],
+            "call-back" => [],
+            "send-info" => [],
+            "meeting-set" => [],
+            "stay-out-sales-rep-request" => [],
+            "stay-out-already-customer" => [],
+        ];
+
+        if($data['companies']) {
+            foreach ($data['companies'] as $key => $company) {
+                $status = CampaignCompanyStatus::find($company->pivot->status_id)->status_name;
+                $dataOrdered[$status][] = $company;
+            }
+            $data['companies'] = call_user_func_array('array_merge', $dataOrdered);
+        }
+        
         return view('campaign.campaign_companies', $data);
     }
 
