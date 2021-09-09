@@ -10,6 +10,7 @@ use App\Http\Controllers\CampaignCompanyStatusController;
 use App\Http\Controllers\ContactTagController;
 use App\Http\Controllers\CompanyTagController;
 use App\Http\Controllers\CampaignTagController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DashboardController::class, "index"])->name('home')->middleware(["auth", "ensureProperRedirectToDashboard"]);
@@ -100,6 +101,8 @@ Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(fun
     
     Route::get("/tag/{tag}/campaigns", [CampaignTagController::class, "tagCampaigns"])->name("tag.campaign");
     
+    // Advanced filter
+    Route::get("advance/search", [SearchController::class, "index"])->name("advance.search");
 });
 
 // User (Demand Generation Representative) Routes

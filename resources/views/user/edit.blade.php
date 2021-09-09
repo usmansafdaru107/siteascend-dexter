@@ -93,9 +93,9 @@
                                             <select class="select2 form-control @error('role') is-invalid @enderror" name="role" required data-placeholder="Choose User Role">
                                                 @foreach ($roles as $role)
                                                     @if ($user->role->id == $role->id)
-                                                        <option value="{{ $role->id }}" selected>{{ Str::upper($role->name) }}</option>
+                                                        <option value="{{ $role->id }}" selected>{{ Str::upper($role->name) . ' - ' . $role->abbreviation }}</option>
                                                     @else
-                                                        <option value="{{ $role->id }}">{{ Str::upper($role->name) }}</option>
+                                                        <option value="{{ $role->id }}">{{ Str::upper($role->name) . ' - ' . $role->abbreviation }}</option>
                                                     @endif
                                                 @endforeach
                                             </select>
@@ -106,23 +106,7 @@
                                             @enderror
                                         </div>
                                     </div>
-
-                                    <div class="col-lg-12">
-                                        <div class="mb-4">
-                                            <label class="form-label" for="password">Select Multiple Campaigns</label>
-                                            <select class="select2 form-control select2-multiple @error('campaigns') is-invalid @enderror" name="campaigns[]" required multiple="multiple" required data-placeholder="Choose campaigns for user">
-                                                @foreach ($campaigns as $campaign)
-                                                    <option value="{{ $campaign->id }}" {{ ($user->campaigns->contains($campaign->id))? "selected" : "" }}>{{ $campaign->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('campaigns')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-
+                                   
                                     <div class="col-md-12">
                                         <div class="mb-0 text-center">
                                             <button type="submit" class="btn btn-primary waves-effect waves-light me-1">

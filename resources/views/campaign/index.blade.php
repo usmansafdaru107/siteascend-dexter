@@ -30,7 +30,7 @@
 			<div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body" style="overflow-x: scroll;">
 
                             @if(session()->has('success'))
                                 <div class="alert alert-success" id="message_success">
@@ -93,7 +93,20 @@
                                     <th>Tag</th>
                                     <th>Name</th>
                                     <th>Total Companies in Campaign</th>
-                                    <th>Start Date</th>
+                                    <th>Client Name</th>
+                                    <th>Solution</th>
+                                    <th>Solution URL</th>
+                                    <th>Sales Rep</th>
+                                    <th>Sales Rep Email</th>
+                                    <th>Sales Rep Number</th>
+                                    <th>Sales Rep Bridge</th>
+                                    <th>Calendar Access</th>
+                                    <th>Calendar Username</th>
+                                    <th>Calendar Password</th>
+                                    <th>Calendar Invite Admin</th>
+                                    <th>Campaign Start Date</th>
+                                    <th>Expected End Date</th>
+                                    <th>Actual Finished Date</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
@@ -110,7 +123,21 @@
                                             </td>
                                             <td title="Click to view companies in tha campaign"><a href="{{ route('admin.campaign.company', ['campaign' => $campaign->id]) }}"><i class="ri-links-fill"></i> {{ $campaign->name }}</a></td>
                                             <td>{{ $campaign->companies->count() }}</td>
-                                            <td>{{ $campaign->created_at }}</td>
+                                            <td>{{ $campaign->clientName }}</td>
+                                            <td>{{ $campaign->solution }}</td>
+                                            <td>{{ $campaign->solutionURL }}</td>
+                                            <td>{{ $campaign->salesRep }}</td>
+                                            <td>{{ $campaign->salesRepEmail }}</td>
+                                            <td>{{ $campaign->salesRepNumber }}</td>
+                                            <td>{{ $campaign->salesRepBridge }}</td>
+                                            <td>{{ $campaign->calendarAccess }}</td>
+                                            <td>{{ $campaign->calendarUsername }}</td>
+                                            <td>{{ $campaign->calendarPassword }}</td>
+                                            <td>{{ $campaign->calendarInviteAdmin }}</td>
+                                            <td>{{ $campaign->campaignStartDate }}</td>
+                                            <td>{{ $campaign->expectedEndDate }}</td>
+                                            <td>{{ $campaign->actualFinishedDate }}</td>
+
                                             <td>
                                                 <a href="{{ route('admin.campaign.edit', ['campaign' => $campaign->id]) }}" class="btn btn-outline-secondary btn-sm edit" title="Edit Campaign">
                                                     <i class="fas fa-pencil-alt"></i>

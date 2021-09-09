@@ -113,7 +113,7 @@
                                     <th>Street Address</th>
                                     <th>City</th>
                                     <th>State</th>
-                                    <th>cCountry</th>
+                                    <th>Country</th>
                                     <th>Zip</th>
                                     <th>Created At</th>
                                     <th>Edit</th>
@@ -144,8 +144,8 @@
                                             <td>{{ $company->employees_range }}</td>
                                             <td>{{ $company->primary_industry }}</td>
                                             <td>{{ $company->primary_sub_industry }}</td>
-                                            <td><a href="{{ $contact->zoominfo_company_profile_url ?? '#' }}" target="_blank"><i class="ri-external-link-line"></i></a></td>
-                                            <td><a href="{{ $contact->linkedin_company_profile_url ?? '#' }}" target="_blank"><i class="ri-external-link-line"></i></a></td>
+                                            <td><a href="{{ $company->zoominfo_company_profile_url ?? '#' }}" target="_blank">{{$company->zoominfo_company_profile_url}}</a></td>
+                                            <td><a href="{{ $company->linkedin_company_profile_url ?? '#' }}" target="_blank">{{$company->linkedin_company_profile_url}}</a></td>
                                             <td>{{ $company->ownership_type }}</td>
                                             <td>{{ $company->business_model }}</td>
                                             <td>{{ $company->street_address }}</td>

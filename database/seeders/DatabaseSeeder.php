@@ -14,10 +14,32 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         \App\Models\Role::factory()->create([
-            'name' => 'admin'
+            'name' => 'admin',
+            'abbreviation' => 'Admin Role'
         ]);
         \App\Models\Role::factory()->create([
-            'name' => 'dgr'
+            'name' => 'dgr',
+            'abbreviation' => 'Demand Generation Representative'
+        ]);
+        \App\Models\Role::factory()->create([
+            'name' => 'cre',
+            'abbreviation' => 'Client Relations Executive'
+        ]);
+        \App\Models\Role::factory()->create([
+            'name' => 'dsr',
+            'abbreviation' => 'Delivery Services Manager'
+        ]);
+        \App\Models\Role::factory()->create([
+            'name' => 'csr',
+            'abbreviation' => 'Client Support Representative'
+        ]);
+        \App\Models\Role::factory()->create([
+            'name' => 'dqs',
+            'abbreviation' => 'Data Quality Specialist'
+        ]);
+        \App\Models\Role::factory()->create([
+            'name' => 'client',
+            'abbreviation' => 'Client'
         ]);
         
         \App\Models\CampaignCompanyStatus::factory()->create([
@@ -37,6 +59,9 @@ class DatabaseSeeder extends Seeder
         ]);
         \App\Models\CampaignCompanyStatus::factory()->create([
             'status_name' => 'priority'
+        ]);
+        \App\Models\CampaignCompanyStatus::factory()->create([
+            'status_name' => 'call-back'
         ]);
 
         \App\Models\TagCategory::factory()->create([

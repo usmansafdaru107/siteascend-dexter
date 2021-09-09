@@ -1,6 +1,6 @@
 @extends('layouts.app_main')
 
-@section('title', 'Company Bulk Upload')
+@section('title', 'Contact Bulk Upload')
 
 @section('css_styles')
     <!-- <link href="{{ asset('assets/libs/dropzone/min/dropzone.min.css') }}" rel="stylesheet" type="text/css"> -->
@@ -16,12 +16,12 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="page-title-box d-sm-flex align-items-center justify-content-between">
-						<h4 class="mb-sm-0">Company Bulk Upload</h4>
+						<h4 class="mb-sm-0">Contact Bulk Upload</h4>
 
 						<div class="page-title-right">
 							<ol class="breadcrumb m-0">
 								<li class="breadcrumb-item"><a href="javascript: void(0);"><i class="ri-home-2-line"></i></a></li>
-								<li class="breadcrumb-item">Companies</li>
+								<li class="breadcrumb-item">Contacts</li>
 								<li class="breadcrumb-item active">Bulk Upload</li>
 							</ol>
 						</div>

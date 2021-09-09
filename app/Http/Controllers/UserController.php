@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Campaign;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,7 +13,7 @@ class UserController extends Controller
     public function index()
     {
         $data = [
-            'users' => Role::where('name', 'dgr')->first()->users()->with('role')->get(),
+            'users' => User::with('role')->get(),
         ];
 
         return view("user.index", $data);
@@ -23,8 +22,7 @@ class UserController extends Controller
     public function create()
     {
         $data = [
-            'campaigns' => Campaign::all(),
-            'roles' => Role::where('name', 'dgr')->get()
+            'roles' => Role::all()
         ];
 
         return view("user.create", $data);
@@ -36,8 +34,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8|max:32',
-            'role' => 'required|exists:roles,id',
-            'campaigns' => 'required|array|min:1',
+            'role' => 'required|exists:roles,id'
         ]);
         
         DB::beginTransaction();
@@ -49,8 +46,6 @@ class UserController extends Controller
                 'role_id' => $request->role
             ]);
 
-            $user->campaigns()->attach($request->campaigns);
-    
             DB::commit();
     
             return redirect()->back()->with('success', 'New User created successfully!');
@@ -62,14 +57,13 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        if($user->role->name == 'admin') {
+        if($user->role->name == User::ADMIN) {
             return redirect()->route('admin.user.index')->with('error', "You can't edit this user!");
         }
 
         $data = [
-            'campaigns' => Campaign::all(),
             'user' => $user,
-            'roles' => Role::where('name', 'dgr')->get()
+            'roles' => Role::all()
         ];
 
         return view("user.edit", $data);
@@ -80,19 +74,17 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users,email,'.$user->id,
-            'role' => 'required|exists:roles,id',
-            'campaigns' => 'required|array|min:1',
+            'role' => 'required|exists:roles,id'
         ]);
         
         DB::beginTransaction();
+
         try {
             $user->update([
                 'name' => $request->name,
                 'email' => $request->email,
                 'role_id' => $request->role
             ]);
-
-            $user->campaigns()->sync($request->campaigns);
     
             DB::commit();
     

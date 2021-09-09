@@ -15,7 +15,24 @@ class CreateCampaignsTable extends Migration
     {
         Schema::create('campaigns', function (Blueprint $table) {
             $table->id();
+            $table->string("clientName");
             $table->string("name");
+            $table->string("solution");
+            $table->string("solutionURL");
+            $table->string("salesRep");
+            $table->string("salesRepEmail");
+            $table->string("salesRepNumber");
+            $table->string("salesRepBridge");
+            $table->string("calendarAccess");
+            $table->string("calendarUsername");
+            $table->string("calendarPassword");
+            $table->string("calendarInviteAdmin");
+            $table->string("DGRAlias");
+            $table->string("CSRAlias");
+            $table->string("campaignStartDate");
+            $table->string("expectedEndDate");
+            $table->string("actualFinishedDate")->nullable();
+            $table->text("campaignGoal")->nullable();
             $table->timestamps();
         });
     }

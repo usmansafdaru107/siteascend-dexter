@@ -264,7 +264,7 @@
 
                                     <div class="col-lg-4">
                                         <div class="mb-4">
-                                            <label class="form-label" for="zoominfoCompanyProfileURL">Zooninfo Company Profile URL</label>
+                                            <label class="form-label" for="zoominfoCompanyProfileURL">Zoominfo Company Profile URL</label>
                                             <input type="text" name="zoominfoCompanyProfileURL" id="zoominfoCompanyProfileURL" class="form-control" value="{{ old('zoominfoCompanyProfileURL') }}" required maxlength="255">
                                             <div class="invalid-feedback">
                                                 Invalid company name.

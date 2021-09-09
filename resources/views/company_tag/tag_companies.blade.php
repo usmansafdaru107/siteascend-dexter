@@ -61,7 +61,7 @@
                                     <th>Street Address</th>
                                     <th>City</th>
                                     <th>State</th>
-                                    <th>cCountry</th>
+                                    <th>Country</th>
                                     <th>Zip</th>
                                     <th>Created At</th>
                                 </tr>

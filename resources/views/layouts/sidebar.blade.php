@@ -19,7 +19,7 @@
 
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="ri-user-line"></i>
+                                    <i class="ri-user-fill"></i>
                                     <span>User</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
@@ -70,6 +70,15 @@
                                     <li><a href="{{ route('admin.contact.tag.create') }}">Create New Tag</a></li>
                                 </ul>
                             </li>
+
+                            <!-- <li class="menu-title">Filters</li>
+
+                            <li>
+                                <a href="{{ route('admin.advance.search') }}" class="waves-effect">
+                                    <i class="ri-filter-2-fill"></i>
+                                    <span>Advanced Search</span>
+                                </a>
+                            </li> -->
 
                         </ul>
                     </div>

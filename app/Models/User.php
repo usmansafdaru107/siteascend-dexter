@@ -11,6 +11,9 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    public const ADMIN = "admin";
+    public const DGR = "dgr";
+
     /**
      * The attributes that are mass assignable.
      *

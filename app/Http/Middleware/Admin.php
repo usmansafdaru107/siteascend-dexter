@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,7 @@ class Admin
     public function handle(Request $request, Closure $next)
     {
 
-        if($request->user()->role->name != "admin") {
+        if($request->user()->role->name != User::ADMIN) {
             return redirect()->route($this->notAdminRedirectRouteName);
         }
         return $next($request);

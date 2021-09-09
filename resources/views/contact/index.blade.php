@@ -128,8 +128,8 @@
                                             <td>{{ $contact->job_title }}</td>
                                             <td>{{ $contact->direct_phone_number }}</td>
                                             <td>{{ $contact->email_address }}</td>
-                                            <td><a href="{{ $contact->zoominfo_contact_profile_url ?? '#' }}" target="_blank"><i class="ri-external-link-line"></i></a></td>
-                                            <td><a href="{{ $contact->linkedin_contact_profile_url ?? '#' }}" target="_blank"><i class="ri-external-link-line"></i></a></td>
+                                            <td><a href="{{ $contact->zoominfo_contact_profile_url ?? '#' }}" target="_blank">{{$contact->zoominfo_contact_profile_url}}</a></td>
+                                            <td><a href="{{ $contact->linkedin_contact_profile_url ?? '#' }}" target="_blank">{{$contact->linkedin_contact_profile_url}}</a></td>
                                             <td>{{ $contact->street }}</td>
                                             <td>{{ $contact->city }}</td>
                                             <td>{{ $contact->state }}</td>
