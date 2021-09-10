@@ -92,6 +92,8 @@
                                 <thead>
                                 <tr>
                                     <th>Tag</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
                                     <th>Name</th>
                                     <th>Website Link</th>
                                     <th>Employees Count</th>
@@ -116,8 +118,6 @@
                                     <th>Country</th>
                                     <th>Zip</th>
                                     <th>Created At</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
                                 </tr>
                                 </thead>
 
@@ -130,8 +130,22 @@
                                                     <input class="form-check-input company_checkbox" type="checkbox" id="checkbox_company_{{ $company->id }}" data-id="{{ $company->id }}">
                                                 </div>
                                             </td>
+                                            <td>
+                                                <a href="{{ route('admin.company.edit', ['company' => $company->id]) }}" class="btn btn-outline-secondary btn-sm edit" title="Edit Company">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <form action="{{ route('admin.company.destroy', ['company' => $company->id]) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-outline-secondary btn-sm edit" type="submit" title="Delete Company">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
                                             <td>{{ $company->name }}</td>
-                                            <td><a href="{{ '//'.$company->website }}" target="_blank"><i class="ri-external-link-line"></i></a></td>
+                                            <td><a href="{{ '//'.$company->website }}" target="_blank">{{$company->website}}</a></td>
                                             <td>{{ $company->contacts()->count() }}</td>
                                             <td>{{ $company->hq_phone }}</td>
                                             <td>{{ $company->revenue }}</td>
@@ -154,20 +168,7 @@
                                             <td>{{ $company->country }}</td>
                                             <td>{{ $company->zip }}</td>
                                             <td>{{ $company->created_at }}</td>
-                                            <td>
-                                                <a href="{{ route('admin.company.edit', ['company' => $company->id]) }}" class="btn btn-outline-secondary btn-sm edit" title="Edit Company">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <form action="{{ route('admin.company.destroy', ['company' => $company->id]) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-outline-secondary btn-sm edit" type="submit" title="Delete Company">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
+                                           
                                         </tr>
                                     @endforeach
                                 

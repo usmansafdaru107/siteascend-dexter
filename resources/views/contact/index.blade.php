@@ -91,6 +91,8 @@
                                 <thead>
                                 <tr>
                                     <th>Tag</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
                                     <th>Name</th>
                                     <th>Company Name</th>
                                     <th>Management Level</th>
@@ -107,8 +109,6 @@
                                     <th>Country</th>
                                     <th>Zip Code</th>
                                     <th>Created At</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
                                 </tr>
                                 </thead>
 
@@ -119,6 +119,20 @@
                                                 <div class="form-check mb-3">
                                                     <input class="form-check-input contact_checkbox" type="checkbox" id="checkbox_contact_{{ $contact->id }}" data-id="{{ $contact->id }}">
                                                 </div>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('admin.contact.edit', ['contact' => $contact->id]) }}" class="btn btn-outline-secondary btn-sm edit" title="Edit Company">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <form action="{{ route('admin.contact.destroy', ['contact' => $contact->id]) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-outline-secondary btn-sm edit" type="submit" title="Delete Company">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                             <td>{{ $contact->name() }}</td>
                                             <td>{{ $contact->company->name ?? "" }}</td>
@@ -136,20 +150,7 @@
                                             <td>{{ $contact->country }}</td>
                                             <td>{{ $contact->zip }}</td>
                                             <td>{{ $contact->created_at }}</td>
-                                            <td>
-                                                <a href="{{ route('admin.contact.edit', ['contact' => $contact->id]) }}" class="btn btn-outline-secondary btn-sm edit" title="Edit Company">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <form action="{{ route('admin.contact.destroy', ['contact' => $contact->id]) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-outline-secondary btn-sm edit" type="submit" title="Delete Company">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
+                                            
                                         </tr>
                                     @endforeach
                                 

@@ -206,9 +206,9 @@ class CampaignController extends Controller
         $dataOrdered = [
             "priority" => [],
             "hot" => [],
-            "active" => [],
             "call-back" => [],
             "send-info" => [],
+            "active" => [],
             "meeting-set" => [],
             "stay-out-sales-rep-request" => [],
             "stay-out-already-customer" => [],

@@ -363,7 +363,8 @@
                                     <div class="col-lg-12">
                                         <div class="mb-4">
                                             <label class="form-label" for="campaignGoal">Campaign Goal</label>
-                                            <textarea name="campaignGoal" id="campaignGoal"  class="form-control" rows="2">{{ old('campaignGoal') }}</textarea>
+                                            <input type="text" name="campaignGoal" id="campaignGoal" class="form-control @error('campaignGoal') is-invalid @enderror" value="{{ old('campaignGoal') }}" required maxlength="255">
+                                            <!-- <textarea name="campaignGoal" id="campaignGoal"  class="form-control" rows="2">{{ old('campaignGoal') }}</textarea> -->
                                             @error('campaignGoal')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}

@@ -27,20 +27,24 @@ class Campaign extends Model
     }
 
     public function getCreatedAtAttribute($value) {
-        return \Carbon\Carbon::parse($value)->format('l jS F Y h:i:s A');
+        return \Carbon\Carbon::parse($value)->format('d/m/y');
+        // return \Carbon\Carbon::parse($value)->format('l jS F Y h:i:s A');
     }
 
     public function getCampaignStartDateAttribute($value) {
-        return \Carbon\Carbon::parse($value)->format('l jS F Y');
+        return \Carbon\Carbon::parse($value)->format('d/m/y');
+        // return \Carbon\Carbon::parse($value)->format('l jS F Y');
     }
 
     public function getExpectedEndDateAttribute($value) {
-        return \Carbon\Carbon::parse($value)->format('l jS F Y');
+        return \Carbon\Carbon::parse($value)->format('d/m/y');
+        // return \Carbon\Carbon::parse($value)->format('l jS F Y');
     }
     
     public function getActualFinishedDateAttribute($value) {
         if($value)
-            return \Carbon\Carbon::parse($value)->format('l jS F Y');
+            return \Carbon\Carbon::parse($value)->format('d/m/y');
+            // return \Carbon\Carbon::parse($value)->format('l jS F Y');
         return "";
     }
 

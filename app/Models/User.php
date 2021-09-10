@@ -59,7 +59,8 @@ class User extends Authenticatable
     }
 
     public function getCreatedAtAttribute($value) {
-        return \Carbon\Carbon::parse($value)->format('l jS F Y h:i:s A');
+        return \Carbon\Carbon::parse($value)->format('d/m/y');
+        // return \Carbon\Carbon::parse($value)->format('l jS F Y h:i:s A');
     }
 
 }
