@@ -121,7 +121,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.contact.edit', ['contact' => $contact->id]) }}" class="btn btn-outline-secondary btn-sm edit" title="Edit Company">
+                                                <a href="{{ route('admin.contact.edit', ['contact' => $contact->id]) }}" class="btn btn-outline-secondary btn-sm edit" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Contact">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
                                             </td>
@@ -129,7 +129,7 @@
                                                 <form action="{{ route('admin.contact.destroy', ['contact' => $contact->id]) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="btn btn-outline-secondary btn-sm edit" type="submit" title="Delete Company">
+                                                    <button class="btn btn-outline-secondary btn-sm edit" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Contact">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </form>

@@ -40,6 +40,9 @@ class CreateCompaniesTable extends Migration
             $table->string("linkedin_company_profile_url")->nullable();
             $table->string("ownership_type")->nullable();
             $table->string("business_model")->nullable();
+            $table->string("to_dial_extension")->nullable();
+            $table->string("to_dial_directory")->nullable();
+            $table->string("to_dial_operator")->nullable();
             $table->timestamps();
         });
     }

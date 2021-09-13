@@ -77,7 +77,7 @@
                                     <div class="col-lg-3">
                                         <div class="mb-4">
                                             <label class="form-label" for="middleName">Middle Name</label>
-                                            <input type="text" name="middleName" id="middleName" class="form-control" value="{{ old('middleName', $contact->middle_name) }}" required maxlength="255">
+                                            <input type="text" name="middleName" id="middleName" class="form-control" value="{{ old('middleName', $contact->middle_name) }}" maxlength="255">
                                             <div class="invalid-feedback">
                                                 Invalid company name.
                                             </div>
@@ -87,7 +87,7 @@
                                     <div class="col-lg-3">
                                         <div class="mb-4">
                                             <label class="form-label" for="salutation">Salutation</label>
-                                            <input type="text" name="salutation" id="salutation" class="form-control" value="{{ old('salutation', $contact->salutation) }}" required maxlength="255">
+                                            <input type="text" name="salutation" id="salutation" class="form-control" value="{{ old('salutation', $contact->salutation) }}" maxlength="255">
                                             <div class="invalid-feedback">
                                                 Invalid company name.
                                             </div>
@@ -97,7 +97,7 @@
                                     <div class="col-lg-3">
                                         <div class="mb-4">
                                             <label class="form-label" for="suffix">Suffix</label>
-                                            <input type="text" name="suffix" id="suffix" class="form-control" value="{{ old('suffix', $contact->suffix) }}" required maxlength="255">
+                                            <input type="text" name="suffix" id="suffix" class="form-control" value="{{ old('suffix', $contact->suffix) }}" maxlength="255">
                                             <div class="invalid-feedback">
                                                 Invalid company name.
                                             </div>
@@ -124,7 +124,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="mb-4">
                                             <label class="form-label" for="jobFunction">Job Function</label>
                                             <input type="text" name="jobFunction" id="jobFunction" class="form-control" value="{{ old('jobFunction', $contact->job_function) }}" required maxlength="255">
@@ -134,7 +134,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="mb-4">
                                             <label class="form-label" for="jobTitle">Job Title</label>
                                             <input type="text" name="jobTitle" id="jobTitle" class="form-control" value="{{ old('jobTitle', $contact->job_title) }}" required maxlength="255">
@@ -156,6 +156,16 @@
 
                                     <div class="col-lg-4">
                                         <div class="mb-4">
+                                            <label class="form-label" for="dialExtension">Dial Extension</label>
+                                            <input type="text" name="dialExtension" id="dialExtension" class="form-control" value="{{ old('dialExtension') }}" maxlength="255">
+                                            <div class="invalid-feedback">
+                                                Invalid company name.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
                                             <label class="form-label" for="mobilePhone">Mobile Phone</label>
                                             <input type="text" name="mobilePhone" id="mobilePhone" class="form-control" value="{{ old('mobilePhone', $contact->mobile_phone) }}" required maxlength="255">
                                             <div class="invalid-feedback">
@@ -164,7 +174,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="mb-4">
                                             <label class="form-label" for="emailAddress">Email Address</label>
                                             <input type="text" name="emailAddress" id="emailAddress" class="form-control" value="{{ old('emailAddress', $contact->email_address) }}" required maxlength="255">
@@ -174,7 +184,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="mb-4">
                                             <label class="form-label" for="supplementEmail">Supplement Email</label>
                                             <input type="text" name="supplementEmail" id="supplementEmail" class="form-control" value="{{ old('supplementEmail', $contact->supplemental_email) }}" required maxlength="255">

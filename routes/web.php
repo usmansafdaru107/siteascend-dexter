@@ -42,13 +42,14 @@ Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(fun
 
     Route::get("/campaign/{campaign}/companies", [CampaignController::class, "companyCampaigns"])->name("campaign.company");
     Route::post('/campaign/updateStatus', [CampaignController::class, 'updateStatus'])->name('campaign.updateStatus');
+    Route::get('/campaign/{campaign}/accordion', [CampaignController::class, 'campaignAccordion'])->name('campaign.campaignAccordion');
     
     // Company Campaign Statuses
     Route::get('/campaign/company/status/fetchAll', [CampaignCompanyStatusController::class, 'index'])->name('campaignCompanyStatuses.fetchAll');
 
-
     // Company
     Route::get("/company", [CompanyController::class, "index"])->name("company.index");
+    Route::get("/company/fetchOne/{company}", [CompanyController::class, "fetchOne"])->name("company.fetchOne");
     Route::get("/company/create", [CompanyController::class, "create"])->name("company.create");
     Route::post("/company", [CompanyController::class, "store"])->name("company.store");
     Route::get("/company/{company}/edit", [CompanyController::class, "edit"])->name("company.edit");
@@ -60,10 +61,12 @@ Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(fun
 
     // Contact
     Route::get("/contact", [ContactController::class, "index"])->name("contact.index");
+    Route::get("/contact/fetchOne/{contact}", [ContactController::class, "fetchOne"])->name("contact.fetchOne");
     Route::get("/contact/create", [ContactController::class, "create"])->name("contact.create");
     Route::post("/contact", [ContactController::class, "store"])->name("contact.store");
     Route::get("/contact/{contact}/edit", [ContactController::class, "edit"])->name("contact.edit");
     Route::put("/contact/{contact}", [ContactController::class, "update"])->name("contact.update");
+    Route::post("/contact/miniUpdate/{contact}", [ContactController::class, "miniUpdate"])->name("contact.miniUpdate");
     Route::delete("/contact/{contact}", [ContactController::class, "destroy"])->name("contact.destroy");
     Route::get("/contact/upload", [ContactController::class, "bulkUpload"])->name("contact.bulkUpload");
     Route::post("/contact/upload", [ContactController::class, "upload"])->name("contact.upload");

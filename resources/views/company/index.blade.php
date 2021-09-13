@@ -131,7 +131,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.company.edit', ['company' => $company->id]) }}" class="btn btn-outline-secondary btn-sm edit" title="Edit Company">
+                                                <a href="{{ route('admin.company.edit', ['company' => $company->id]) }}" class="btn btn-outline-secondary btn-sm edit" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Company">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
                                             </td>
@@ -139,13 +139,13 @@
                                                 <form action="{{ route('admin.company.destroy', ['company' => $company->id]) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="btn btn-outline-secondary btn-sm edit" type="submit" title="Delete Company">
+                                                    <button class="btn btn-outline-secondary btn-sm edit" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Company">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </form>
                                             </td>
                                             <td>{{ $company->name }}</td>
-                                            <td><a href="{{ '//'.$company->website }}" target="_blank">{{$company->website}}</a></td>
+                                            <td><a href="{{ '//'.$company->website }}" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to open link in new tab">{{$company->website}}</a></td>
                                             <td>{{ $company->contacts()->count() }}</td>
                                             <td>{{ $company->hq_phone }}</td>
                                             <td>{{ $company->revenue }}</td>
@@ -158,8 +158,8 @@
                                             <td>{{ $company->employees_range }}</td>
                                             <td>{{ $company->primary_industry }}</td>
                                             <td>{{ $company->primary_sub_industry }}</td>
-                                            <td><a href="{{ $company->zoominfo_company_profile_url ?? '#' }}" target="_blank">{{$company->zoominfo_company_profile_url}}</a></td>
-                                            <td><a href="{{ $company->linkedin_company_profile_url ?? '#' }}" target="_blank">{{$company->linkedin_company_profile_url}}</a></td>
+                                            <td><a href="{{ $company->zoominfo_company_profile_url ?? '#' }}" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to open link in new tab">{{$company->zoominfo_company_profile_url}}</a></td>
+                                            <td><a href="{{ $company->linkedin_company_profile_url ?? '#' }}" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to open link in new tab">{{$company->linkedin_company_profile_url}}</a></td>
                                             <td>{{ $company->ownership_type }}</td>
                                             <td>{{ $company->business_model }}</td>
                                             <td>{{ $company->street_address }}</td>

@@ -22,13 +22,20 @@ class CompanyController extends Controller
         return view("company.index", $data);
     }
 
+    public function fetchOne($companyId)
+    {
+        $company = Company::select('id', 'hq_phone','website', 'linkedin_company_profile_url', 'zoominfo_company_profile_url', 'to_dial_extension', 'to_dial_directory', 'to_dial_operator')->where('id', $companyId)->with('contacts')->get();
+        if(!$company)
+            return response()->json(["status" => "error" ], 404);
+        return response()->json(['company' => $company[0]]);
+    }
+
     public function create()
     {
         $data = [
             'contacts' => Contact::with('company')->get()
         ];
 
-        // dd($data);
         return view("company.create", $data);
     }
 
@@ -62,6 +69,9 @@ class CompanyController extends Controller
                 'linkedin_company_profile_url' => $request->linkedinCompanyProfileURL,
                 'ownership_type' => $request->ownershipType,
                 'business_model' => $request->businessModel,
+                'to_dial_extension' => $request->toDialExtension,
+                'to_dial_directory' => $request->toDialDirectory,
+                'to_dial_operator' => $request->toDialOperator,
             ]);
     
             foreach ($request->contacts as $key => $value) {
@@ -119,6 +129,9 @@ class CompanyController extends Controller
                 'linkedin_company_profile_url' => $request->linkedinCompanyProfileURL,
                 'ownership_type' => $request->ownershipType,
                 'business_model' => $request->businessModel,
+                'to_dial_extension' => $request->toDialExtension,
+                'to_dial_directory' => $request->toDialDirectory,
+                'to_dial_operator' => $request->toDialOperator,
             ]);
 
             if($request->contacts !== null) {

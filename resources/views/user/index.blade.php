@@ -70,7 +70,7 @@
                                             <td>{{ Str::upper($user->role->name) . ' - ' . $user->role->abbreviation }}</td>
                                             <td>{{ $user->created_at }}</td>
                                             <td>
-                                                <a href="{{ route('admin.user.edit', ['user' => $user->id]) }}" class="btn btn-outline-secondary btn-sm edit" title="Edit User">
+                                                <a href="{{ route('admin.user.edit', ['user' => $user->id]) }}" class="btn btn-outline-secondary btn-sm edit" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit User">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
                                             </td>
@@ -78,7 +78,7 @@
                                                 <form action="{{ route('admin.user.destroy', ['user' => $user->id]) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="btn btn-outline-secondary btn-sm edit" type="submit" title="Delete User">
+                                                    <button class="btn btn-outline-secondary btn-sm edit" type="submit"  data-bs-toggle="tooltip" data-bs-placement="top" title="Delete User">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </form>

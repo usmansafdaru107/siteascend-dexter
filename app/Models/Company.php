@@ -35,6 +35,9 @@ class Company extends Model
         'linkedin_company_profile_url',
         'ownership_type',
         'business_model',
+        'to_dial_extension',
+        'to_dial_directory',
+        'to_dial_operator',
     ];
 
     public function contacts()

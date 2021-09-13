@@ -91,6 +91,7 @@
                                 <thead>
                                 <tr>
                                     <th>Tag</th>
+                                    <th>Company Accordion View in Campaign</th>
                                     <th>Name</th>
                                     <th>Total Companies in Campaign</th>
                                     <th>Client Name</th>
@@ -121,7 +122,8 @@
                                                     <input class="form-check-input campaign_checkbox" type="checkbox" id="checkbox_campaign_{{ $campaign->id }}" data-id="{{ $campaign->id }}">
                                                 </div>
                                             </td>
-                                            <td title="Click to view companies in tha campaign"><a href="{{ route('admin.campaign.company', ['campaign' => $campaign->id]) }}"><i class="ri-links-fill"></i> {{ $campaign->name }}</a></td>
+                                            <td class="text-center" style="font-size: 16px;"><a href="{{ route('admin.campaign.campaignAccordion', ['campaign' => $campaign->id]) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to view Company Accordion in Campaign"><i class="ri-eye-line"></i></a></td>
+                                            <td><a href="{{ route('admin.campaign.company', ['campaign' => $campaign->id]) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to view companies in tha campaign"><i class="ri-links-fill"></i> {{ $campaign->name }}</a></td>
                                             <td>{{ $campaign->companies->count() }}</td>
                                             <td>{{ $campaign->clientName }}</td>
                                             <td>{{ $campaign->solution }}</td>
@@ -139,7 +141,7 @@
                                             <td>{{ $campaign->actualFinishedDate }}</td>
 
                                             <td>
-                                                <a href="{{ route('admin.campaign.edit', ['campaign' => $campaign->id]) }}" class="btn btn-outline-secondary btn-sm edit" title="Edit Campaign">
+                                                <a href="{{ route('admin.campaign.edit', ['campaign' => $campaign->id]) }}" class="btn btn-outline-secondary btn-sm edit" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Campaign">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
                                             </td>
@@ -147,7 +149,7 @@
                                                 <form action="{{ route('admin.campaign.destroy', ['campaign' => $campaign->id]) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="btn btn-outline-secondary btn-sm edit" type="submit" title="Delete Campaign">
+                                                    <button class="btn btn-outline-secondary btn-sm edit" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Campaign">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </form>

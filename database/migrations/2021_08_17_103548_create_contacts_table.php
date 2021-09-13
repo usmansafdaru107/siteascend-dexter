@@ -26,6 +26,7 @@ class CreateContactsTable extends Migration
             $table->string("job_function")->nullable();
             $table->string("job_title")->nullable();
             $table->string("direct_phone_number")->nullable();
+            $table->string("dial_extension")->nullable();
             $table->string("mobile_phone")->nullable();
             $table->string("email_address")->nullable();
             $table->string("supplemental_email")->nullable();
@@ -37,6 +38,7 @@ class CreateContactsTable extends Migration
             $table->string("zip")->nullable();
             $table->string("country")->nullable();
             $table->string("email_domain")->nullable();
+            $table->string("notes")->nullable();
             $table->timestamps();
         });
     }

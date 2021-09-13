@@ -3,7 +3,7 @@
                     <div class="d-flex">
                         <!-- LOGO -->
                         <div class="navbar-brand-box">
-                            <a href="index.html" class="logo logo-dark">
+                            <a href="{{route('home')}}" class="logo logo-dark">
                                 <span class="logo-sm">
                                     <img src="{{ asset('assets/images/logo-sm-dark.png') }}" alt="logo-sm-dark" height="22">
                                 </span>
@@ -12,7 +12,7 @@
                                 </span>
                             </a>
 
-                            <a href="index.html" class="logo logo-light">
+                            <a href="{{route('home')}}" class="logo logo-light">
                                 <span class="logo-sm">
                                     <img src="{{ asset('assets/images/logo-sm-light.png') }}" alt="logo-sm-light" height="22">
                                 </span>
@@ -27,16 +27,19 @@
                         </button>
 
                         <!-- App Search-->
-                        <!-- <form class="app-search d-none d-lg-block">
+                        <form class="app-search d-none d-lg-block">
                             <div class="position-relative">
                                 <input type="text" class="form-control" placeholder="Search...">
                                 <span class="ri-search-line"></span>
                             </div>
-                        </form> -->
+                        </form>
 
                         <div class="dropdown dropdown-mega d-none d-lg-block ms-2">
+                            <!-- <a href="{{ route('home') }}" type="button" class="header-item">
+                                Home
+                            </a> -->
                             <button type="button" class="btn header-item waves-effect" data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-                                Mega Menu
+                                Menu
                                 <i class="mdi mdi-chevron-down"></i> 
                             </button>
                             <div class="dropdown-menu dropdown-megamenu">
@@ -45,81 +48,36 @@
                 
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <h5 class="font-size-14">UI Components</h5>
+                                                <h5 class="font-size-14">User</h5>
                                                 <ul class="list-unstyled megamenu-list">
                                                     <li>
-                                                        <a href="javascript:void(0);">Lightbox</a>
+                                                        <a href="{{ route('admin.user.index') }}">User List</a>
                                                     </li>
                                                     <li>
-                                                        <a href="javascript:void(0);">Range Slider</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Sweet Alert</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Rating</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Forms</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Tables</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Charts</a>
+                                                        <a href="{{ route('admin.user.create') }}">Create New</a>
                                                     </li>
                                                 </ul>
                                             </div>
 
                                             <div class="col-md-4">
-                                                <h5 class="font-size-14">Applications</h5>
+                                                <h5 class="font-size-14">Campaign</h5>
                                                 <ul class="list-unstyled megamenu-list">
-                                                    <li>
-                                                        <a href="javascript:void(0);">Ecommerce</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Calendar</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Email</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Projects</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Tasks</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Contacts</a>
-                                                    </li>
+                                                    <li><a href="{{ route('admin.campaign.index') }}">Campaign List</a></li>
+                                                    <li><a href="{{ route('admin.campaign.create') }}">Create New</a></li>
+                                                    <li><a href="{{ route('admin.campaign.tag.index') }}">Tag List</a></li>
+                                                    <li><a href="{{ route('admin.campaign.tag.create') }}">Create New Tag</a></li>
                                                 </ul>
                                             </div>
 
                                             <div class="col-md-4">
-                                                <h5 class="font-size-14">Extra Pages</h5>
+                                                <h5 class="font-size-14">Company</h5>
                                                 <ul class="list-unstyled megamenu-list">
-                                                    <li>
-                                                        <a href="javascript:void(0);">Light Sidebar</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Compact Sidebar</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Horizontal layout</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Maintenance</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Coming Soon</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Timeline</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">FAQs</a>
-                                                    </li>
-                                        
+                                                    <li><a href="{{ route('admin.company.accordview') }}">Company Accordion View</a></li>
+                                                    <li><a href="{{ route('admin.company.index') }}">Company List</a></li>
+                                                    <li><a href="{{ route('admin.company.create') }}">Create New</a></li>
+                                                    <li><a href="{{ route('admin.company.bulkUpload') }}">Bulk Upload</a></li>
+                                                    <li><a href="{{ route('admin.company.tag.index') }}">Tag List</a></li>
+                                                    <li><a href="{{ route('admin.company.tag.create') }}">Create New Tag</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -127,29 +85,13 @@
                                     <div class="col-sm-4">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <h5 class="font-size-14">UI Components</h5>
+                                                <h5 class="font-size-14">Contact</h5>
                                                 <ul class="list-unstyled megamenu-list">
-                                                    <li>
-                                                        <a href="javascript:void(0);">Lightbox</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Range Slider</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Sweet Alert</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Rating</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Forms</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Tables</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="javascript:void(0);">Charts</a>
-                                                    </li>
+                                                    <li><a href="{{ route('admin.contact.index') }}">Contact List</a></li>
+                                                    <li><a href="{{ route('admin.contact.create') }}">Create New</a></li>
+                                                    <li><a href="{{ route('admin.contact.bulkUpload') }}">Bulk Upload</a></li>
+                                                    <li><a href="{{ route('admin.contact.tag.index') }}">Tag List</a></li>
+                                                    <li><a href="{{ route('admin.contact.tag.create') }}">Create New Tag</a></li>
                                                 </ul>
                                             </div>
 

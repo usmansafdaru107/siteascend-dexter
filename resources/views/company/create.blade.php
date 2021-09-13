@@ -316,6 +316,34 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label class="form-label" for="toDialExtension">To Dial Extension</label>
+                                            <input type="text" name="toDialExtension" id="toDialExtension" class="form-control" value="{{ old('toDialExtension') }}" maxlength="255">
+                                            <div class="invalid-feedback">
+                                                Invalid company name.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label class="form-label" for="toDialDirectory">To Dial Directory</label>
+                                            <input type="text" name="toDialDirectory" id="toDialDirectory" class="form-control" value="{{ old('toDialDirectory') }}" maxlength="255">
+                                            <div class="invalid-feedback">
+                                                Invalid company name.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label class="form-label" for="toDialOperator">To Dial Operator</label>
+                                            <input type="text" name="toDialOperator" id="toDialOperator" class="form-control" value="{{ old('toDialOperator') }}" maxlength="255">
+                                            <div class="invalid-feedback">
+                                                Invalid company name.
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-12">
                                         <div class="mb-0 text-center">
                                             <button type="submit" class="btn btn-primary waves-effect waves-light me-1">

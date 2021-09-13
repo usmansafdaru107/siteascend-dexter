@@ -21,6 +21,7 @@ class Contact extends Model
         'job_function',
         'job_title',
         'direct_phone_number',
+        'dial_extension',
         'mobile_phone',
         'email_address',
         'supplemental_email',
@@ -32,6 +33,7 @@ class Contact extends Model
         'zip',
         'country',
         'email_domain',
+        'notes'
     ];
 
 

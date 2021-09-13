@@ -232,4 +232,13 @@ class CampaignController extends Controller
         ]);
         return response()->json(['success'=>'Record Updated!']);
     }
+
+    public function campaignAccordion(Campaign $campaign)
+    {
+        $data = [
+            'campaign' => $campaign,
+            'companies' => $campaign->companies
+        ];
+        return view('campaign.campaign_accordion', $data);
+    }
 }
