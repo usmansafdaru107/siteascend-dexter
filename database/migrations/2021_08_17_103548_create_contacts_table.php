@@ -30,6 +30,7 @@ class CreateContactsTable extends Migration
             $table->string("mobile_phone")->nullable();
             $table->string("email_address")->nullable();
             $table->string("supplemental_email")->nullable();
+            $table->string("aa_email")->nullable();
             $table->string("zoominfo_contact_profile_url")->nullable();
             $table->string("linkedin_contact_profile_url")->nullable();
             $table->string("street")->nullable();
@@ -38,7 +39,6 @@ class CreateContactsTable extends Migration
             $table->string("zip")->nullable();
             $table->string("country")->nullable();
             $table->string("email_domain")->nullable();
-            $table->string("notes")->nullable();
             $table->timestamps();
         });
     }

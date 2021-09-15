@@ -10,7 +10,6 @@ class CampaignCompanyStatusController extends Controller
 {
     public function index()
     {
-        // dd(json_encode());
         return response()->json(CampaignCompanyStatus::select('id', 'status_name')->get());
     }
 }

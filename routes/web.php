@@ -40,7 +40,7 @@ Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(fun
     Route::put("/campaign/{campaign}", [CampaignController::class, "update"])->name("campaign.update");
     Route::delete("/campaign/{campaign}", [CampaignController::class, "destroy"])->name("campaign.destroy");
 
-    Route::get("/campaign/{campaign}/companies", [CampaignController::class, "companyCampaigns"])->name("campaign.company");
+    // Route::get("/campaign/{campaign}/companies", [CampaignController::class, "companyCampaigns"])->name("campaign.company");
     Route::post('/campaign/updateStatus', [CampaignController::class, 'updateStatus'])->name('campaign.updateStatus');
     Route::get('/campaign/{campaign}/accordion', [CampaignController::class, 'campaignAccordion'])->name('campaign.campaignAccordion');
     
@@ -54,6 +54,7 @@ Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(fun
     Route::post("/company", [CompanyController::class, "store"])->name("company.store");
     Route::get("/company/{company}/edit", [CompanyController::class, "edit"])->name("company.edit");
     Route::put("/company/{company}", [CompanyController::class, "update"])->name("company.update");
+    Route::post("/company/miniUpdate/{company}", [CompanyController::class, "miniUpdate"])->name("company.miniUpdate");
     Route::delete("/company/{company}", [CompanyController::class, "destroy"])->name("company.destroy");
     Route::get("/company/upload", [CompanyController::class, "bulkUpload"])->name("company.bulkUpload");
     Route::post("/company/upload", [CompanyController::class, "upload"])->name("company.upload");
@@ -61,13 +62,18 @@ Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(fun
 
     // Contact
     Route::get("/contact", [ContactController::class, "index"])->name("contact.index");
-    Route::get("/contact/fetchOne/{contact}", [ContactController::class, "fetchOne"])->name("contact.fetchOne");
+    Route::get("/contact/delete-requests", [ContactController::class, "deleteRequests"])->name("contact.delete.requests");
+    Route::post("/contact/restore/{contact}", [ContactController::class, "restore"])->name("contact.restore");
+    Route::post("/contact/fetchOne", [ContactController::class, "fetchOne"])->name("contact.fetchOne");
     Route::get("/contact/create", [ContactController::class, "create"])->name("contact.create");
     Route::post("/contact", [ContactController::class, "store"])->name("contact.store");
+    Route::post("/contact/storeMini", [ContactController::class, "storeMini"])->name("contact.storeMini");
     Route::get("/contact/{contact}/edit", [ContactController::class, "edit"])->name("contact.edit");
     Route::put("/contact/{contact}", [ContactController::class, "update"])->name("contact.update");
     Route::post("/contact/miniUpdate/{contact}", [ContactController::class, "miniUpdate"])->name("contact.miniUpdate");
+    Route::post("/contact/miniUpdateNote", [ContactController::class, "miniUpdateNote"])->name("contact.miniUpdateNote");
     Route::delete("/contact/{contact}", [ContactController::class, "destroy"])->name("contact.destroy");
+    Route::delete("/contact/force-destroy/{contact}", [ContactController::class, "forceDestroy"])->name("contact.force.destroy");
     Route::get("/contact/upload", [ContactController::class, "bulkUpload"])->name("contact.bulkUpload");
     Route::post("/contact/upload", [ContactController::class, "upload"])->name("contact.upload");
 

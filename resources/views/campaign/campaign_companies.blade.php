@@ -122,6 +122,10 @@
             var statusId = $(this).attr('data-status-id');
             var that = this;
 
+            console.log("companyId",companyId);
+            console.log("campaignId", campaignId);
+            console.log("statusId",statusId);
+
             Swal.fire({
             title: 'Add Status to Company in a Campaign',
             input: 'select',
@@ -134,7 +138,7 @@
                         $.ajax({
                             type:'POST',
                             url:"{{ route('admin.campaign.updateStatus') }}",
-                            data:{campaignId:campaignId, companyId: companyId, status: value},
+                            data:{campaignId: campaignId, companyId: companyId, status: value},
                             success:function(data) {
                                 if(data.success) {
                                     $(that).parent().parent().attr("data-status", statusesObject[value].toLowerCase().replaceAll(" ", "-"))

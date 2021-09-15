@@ -99,7 +99,6 @@ class CampaignController extends Controller
     
             return redirect()->back()->with('success', 'New Campaign created successfully!');
         } catch (\Exception $e) {
-            dd($e);
             DB::rollBack();
             return view("errors.500");
         }
@@ -196,13 +195,40 @@ class CampaignController extends Controller
         return redirect()->back()->with('success', 'Campaign delete successfully!');
     }
 
-    public function companyCampaigns(Campaign $campaign)
+    // public function companyCampaigns(Campaign $campaign)
+    // {
+    //     $data = [
+    //         'campaign' => $campaign,
+    //         'companies' => $campaign->companies
+    //     ];
+
+    //     $dataOrdered = [
+    //         "priority" => [],
+    //         "hot" => [],
+    //         "call-back" => [],
+    //         "send-info" => [],
+    //         "active" => [],
+    //         "meeting-set" => [],
+    //         "stay-out-sales-rep-request" => [],
+    //         "stay-out-already-customer" => [],
+    //     ];
+
+    //     if($data['companies']) {
+    //         foreach ($data['companies'] as $key => $company) {
+    //             $status = CampaignCompanyStatus::find($company->pivot->status_id)->status_name;
+    //             $dataOrdered[$status][] = $company;
+    //         }
+    //         $data['companies'] = call_user_func_array('array_merge', $dataOrdered);
+    //     }
+        
+    //     return view('campaign.campaign_companies', $data);
+    // }
+    public function campaignAccordion(Campaign $campaign)
     {
         $data = [
             'campaign' => $campaign,
             'companies' => $campaign->companies
         ];
-
         $dataOrdered = [
             "priority" => [],
             "hot" => [],
@@ -222,23 +248,19 @@ class CampaignController extends Controller
             $data['companies'] = call_user_func_array('array_merge', $dataOrdered);
         }
         
-        return view('campaign.campaign_companies', $data);
+        return view('campaign.campaign_accordion', $data);
     }
 
     public function updateStatus(Request $request)
     {
-        $campaign  = Campaign::find($request->campaignId)->first()->companies()->updateExistingPivot($request->companyId, [
-            'status_id' => $request->status,
-        ]);
-        return response()->json(['success'=>'Record Updated!']);
+        try {
+            Campaign::find($request->campaignId)->companies()->updateExistingPivot($request->companyId, [
+                'status_id' => $request->status
+            ]);
+            return response()->json(['success'=>'Record Updated!']);
+        } catch (\Throwable $th) {
+            return response()->json(['success'=>'false'], 500);
+        }
     }
 
-    public function campaignAccordion(Campaign $campaign)
-    {
-        $data = [
-            'campaign' => $campaign,
-            'companies' => $campaign->companies
-        ];
-        return view('campaign.campaign_accordion', $data);
-    }
 }

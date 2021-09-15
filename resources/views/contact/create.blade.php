@@ -173,7 +173,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="mb-4">
                                             <label class="form-label" for="emailAddress">Email Address</label>
                                             <input type="text" name="emailAddress" id="emailAddress" class="form-control" value="{{ old('emailAddress') }}" required maxlength="255">
@@ -183,7 +183,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="mb-4">
                                             <label class="form-label" for="supplementEmail">Supplement Email</label>
                                             <input type="text" name="supplementEmail" id="supplementEmail" class="form-control" value="{{ old('supplementEmail') }}" required maxlength="255">
@@ -195,7 +195,17 @@
 
                                     <div class="col-lg-4">
                                         <div class="mb-4">
-                                            <label class="form-label" for="zoominfoCompanyProfileURL">Zoominfo Company Profile URL</label>
+                                            <label class="form-label" for="aaEmail">AA Email</label>
+                                            <input type="text" name="aaEmail" id="aaEmail" class="form-control" value="{{ old('aaEmail') }}" required maxlength="255">
+                                            <div class="invalid-feedback">
+                                                Invalid company name.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label class="form-label" for="zoominfoCompanyProfileURL">Zoominfo Contact Profile URL</label>
                                             <input type="text" name="zoominfoCompanyProfileURL" id="zoominfoCompanyProfileURL" class="form-control" value="{{ old('zoominfoCompanyProfileURL') }}" required maxlength="255">
                                             <div class="invalid-feedback">
                                                 Invalid company name.
@@ -205,7 +215,7 @@
 
                                     <div class="col-lg-4">
                                         <div class="mb-4">
-                                            <label class="form-label" for="linkedinCompanyProfileURL">Linkedin Company Profile URL</label>
+                                            <label class="form-label" for="linkedinCompanyProfileURL">Linkedin Contact Profile URL</label>
                                             <input type="text" name="linkedinCompanyProfileURL" id="linkedinCompanyProfileURL" class="form-control" value="{{ old('linkedinCompanyProfileURL') }}" required maxlength="255">
                                             <div class="invalid-feedback">
                                                 Invalid company name.

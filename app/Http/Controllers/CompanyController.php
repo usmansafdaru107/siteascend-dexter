@@ -146,9 +146,25 @@ class CompanyController extends Controller
     
             return redirect()->route("admin.company.index")->with('success', 'Company Updated successfully!');
         } catch (\Exception $e) {
-            dd($e);
             DB::rollBack();
             return view("errors.500");
+        }
+    }
+
+    public function miniUpdate(Request $request, Company $company)
+    {
+       try {
+
+            $company->update([
+                'to_dial_extension' => $request->company_details_to_dial_extension,
+                'to_dial_directory' => $request->company_details_to_dial_directory,
+                'to_dial_operator' => $request->company_details_to_dial_operator
+            ]);
+
+            return response()->json(["status" => "success"]);
+
+        } catch (\Throwable $th) {
+            return response()->json(["status" => "error"], 500);
         }
     }
 

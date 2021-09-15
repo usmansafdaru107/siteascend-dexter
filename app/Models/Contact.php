@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Contact extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'company_id',
@@ -25,6 +26,7 @@ class Contact extends Model
         'mobile_phone',
         'email_address',
         'supplemental_email',
+        'aa_email',
         'zoominfo_contact_profile_url',
         'linkedin_contact_profile_url',
         'street',
@@ -33,7 +35,6 @@ class Contact extends Model
         'zip',
         'country',
         'email_domain',
-        'notes'
     ];
 
 
@@ -56,4 +57,5 @@ class Contact extends Model
         return \Carbon\Carbon::parse($value)->format('d/m/y');
         // return \Carbon\Carbon::parse($value)->format('l jS F Y h:i:s A');
     }
+
 }

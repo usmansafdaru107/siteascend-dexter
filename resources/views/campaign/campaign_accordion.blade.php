@@ -2,6 +2,10 @@
 
 @section('title', 'Company Accordion View in Campaign')
 
+@section('css_styles')
+    <link rel="stylesheet" href="{{asset('custom_css/style.css')}}">
+@stop
+
 @section('content')
 <div class="main-content">
 
@@ -98,8 +102,8 @@
 
         <!-- start row -->
         <div class="row">
-            <div class="col-lg-6">
-                <div class="card" style="max-height: 250px; overflow-y: auto;">
+            <div class="col-lg-7">
+                <div class="card" style="max-height: 300px; overflow-y: auto;">
                     <div class="card-body">
                         <div class="table-responsive">
                         @if(!$companies || count($companies) <= 0)
@@ -107,10 +111,9 @@
                                 <p>No Companies available in this campaign.</p>
                             </div>
                         @else
-                            <table class="table table-centered table-bordered table-hover dt-responsive nowrap" data-bs-page-length="5" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                <thead class="table-light">
+                            <table id="companies_table" class="table table-centered table-hover table-bordered dt-responsive nowrap" data-bs-page-length="5" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead class="text-white">
                                     <tr>
-                                        <th style="width: 20px;">#</th>
                                         <th>Company Name</th>
                                         <th>City</th>
                                         <th>State</th>
@@ -119,17 +122,18 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($companies as $company)
-                                        <tr class="company_table_row" id="{{$company->id}}" style="cursor: pointer;">
-                                            <td>
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input company_checkbox" id="company_checkbox_{{$company->id}}">
-                                                    <label class="form-check-label mb-0" for="company_checkbox_{{$company->id}}">&nbsp;</label>
-                                                </div>
-                                            </td>
+                                        @php
+                                            $status = ($company->pivot->status_id) ? App\Models\CampaignCompanyStatus::find($company->pivot->status_id)->status_name : "";
+                                        @endphp
+                                        <tr id="{{$company->id}}" data-campaign-id="{{ $campaign->id }}" style="cursor: pointer;">
                                             <td>{{$company->name}}</td>
                                             <td>{{$company->city}}</td>
                                             <td>{{$company->state}}</td>
-                                            <td>{{ Str::replace('-', ' ', Str::upper(App\Models\CampaignCompanyStatus::find($company->pivot->status_id)->status_name)) }} </td>
+                                            <td>
+                                                <a href="#" class="change_status" id="{{ $company->id }}" data-company-id="{{ $company->id }}" data-campaign-id="{{ $campaign->id }}" data-status-id="{{ $company->pivot->status_id }}">
+                                                    {{ Str::replace('-', ' ', Str::upper($status))}}
+                                                </a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -139,7 +143,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-5">
                 <div class="card">
                     <div class="card-body">
 
@@ -148,37 +152,33 @@
                                 <div>
                                     <div class="clearfix py-2">
                                         <h5 class="float-end font-size-14 m-0" id="company_details_hq"></h5>
-                                        <p class="text-muted mb-0 text-truncate">HQ :</p>
-                                        <h5 class="float-end font-size-14 m-0" id="company_details_hq_switch_board_options"></h5>
-                                        <p class="text-muted mb-0 text-truncate">HQ Switch Board Options :</p>
-                                        <h5 class="float-end font-size-14 m-0" id="company_details_to_dial_extension"></h5>
-                                        <p class="text-muted mb-0 text-truncate">To Dial Extension :</p>
-                                        <h5 class="float-end font-size-14 m-0" id="company_details_to_dial_directory"></h5>
-                                        <p class="text-muted mb-0 text-truncate">To Dial Directory :</p>
-                                        <h5 class="float-end font-size-14 m-0" id="company_details_to_dial_operator"></h5>
-                                        <p class="text-muted mb-0 text-truncate">To Dial Operator :</p>
+                                        <p class="text-muted mb-2 text-truncate">HQ :</p>
+                                        <h5 class="float-end font-size-14 m-0">
+                                            <input type="text" disabled="true" id="company_details_to_dial_extension" class="form-control form-control-sm">
+                                        </h5>
+                                        <p class="text-muted mb-2 text-truncate">To Dial Extension :</p>
+                                        <h5 class="float-end font-size-14 m-0">
+                                            <input type="text" disabled="true" id="company_details_to_dial_directory" class="form-control form-control-sm">
+                                        </h5>
+                                        <p class="text-muted mb-2 text-truncate">To Dial Directory :</p>
+                                        <h5 class="float-end font-size-14 m-0">
+                                            <input type="text" disabled="true" id="company_details_to_dial_operator" class="form-control form-control-sm">
+                                        </h5>
+                                        <p class="text-muted mb-2 text-truncate">To Dial Operator :</p>
                                         <h5 class="float-end font-size-14 m-0" id="company_details_company_url"></h5>
-                                        <p class="text-muted mb-0 text-truncate">Company URL :</p>
+                                        <p class="text-muted mb-2 text-truncate">Company URL :</p>
                                         <h5 class="float-end font-size-14 m-0" id="company_details_linkedin_profile"></h5>
-                                        <p class="text-muted mb-0 text-truncate">Company LinkedIn Profile :</p>
+                                        <p class="text-muted mb-2 text-truncate">Company LinkedIn Profile :</p>
                                         <h5 class="float-end font-size-14 m-0" id="company_details_zoominfo_profile"></h5>
-                                        <p class="text-muted mb-0 text-truncate">Company ZoomInfo Profile :</p>
+                                        <p class="text-muted mb-2 text-truncate">Company ZoomInfo Profile :</p>
                                     </div>
+                                </div>
+                                <div class="text-center">
+                                    <button class="btn btn-outline-dark btn-sm" style="display: none;" id="edit_company_btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="ri-pencil-fill"></i></button>
+                                    <button class="btn btn-outline-dark btn-sm" style="display: none;" id="update_company_btn" data-company-id=""><i class="ri-check-fill"></i></button>
+                                    <button class="btn btn-outline-dark btn-sm" style="display: none;" id="dismiss_company_edit_btn"><i class="ri-close-fill"></i></button>
                                 </div>
                             </div>
-                            <!-- <div class="col-xl-6 col-md-6">
-                                <div>
-                                    <div class="clearfix py-2">
-                                        <h5 class="float-end font-size-14 m-0">Gigaheap</h5>
-                                        <p class="text-muted mb-0 text-truncate">Company URL :</p>
-                                        <h5 class="float-end font-size-14 m-0">Solution</h5>
-                                        <p class="text-muted mb-0 text-truncate">Company LinkedIn Profile :</p>
-                                        <h5 class="float-end font-size-14 m-0">Solution url</h5>
-                                        <p class="text-muted mb-0 text-truncate">Company ZoomInfo Profile :</p>
-                                        
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -189,16 +189,15 @@
         <!-- start row -->
         <div class="row">
             <div class="col-lg-12">
-                <div class="card" style="max-height: 250px; overflow-y: auto;">
+                <div class="card" style="max-height: 400px; overflow-y: auto;">
                     <div class="card-body">
                         <div class="text-center" id="no_contacts_div">
                             <p>No contacts</p>
                         </div>
                         <div class="table-responsive" id="contacts_table_div">
                             <table id="contacts_table" class="table table-bordered table-centered table-hover dt-responsive nowrap" data-bs-page-length="5" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                <thead class="table-light">
+                                <thead>
                                     <tr>
-                                        <th style="width: 20px;">#</th>
                                         <th>Prospect Name</th>
                                         <th>Title</th>
                                         <th>Management Level</th>
@@ -209,12 +208,6 @@
                                 </thead>
                                 <tbody id="contacts_table_body">
                                     <!-- <tr class="contacts_table_rows" id="" style="cursor: pointer;">
-                                        <td>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input contact_checkbox" id="contact_checkbox_:id">
-                                                <label class="form-check-label mb-0" for="contact_checkbox_:id">&nbsp;</label>
-                                            </div>
-                                        </td>
                                         <td>:prospect_name</td>
                                         <td>:title</td>
                                         <td>:management_level</td>
@@ -233,103 +226,227 @@
 
         <!-- start row -->
         <div class="row">
-        <div class="col-lg-12">
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-
                         <div class="row">
-                            <div class="col-xl-6 col-md-6">
+                            <div class="col-xl-7 col-md-7">
                                 <div>
-                                    <div class="clearfix py-2">
-                                        <h5 class="float-end font-size-14 m-0 w-50" id="">
-                                            <input type="text" name="" id="contact_details_prospect_name" class="form-control form-control-sm">
-                                        </h5>
-                                        <p class="text-muted mb-0 text-truncate">Prospect Name :</p>
-                                    </div>
-                                    <div class="clearfix py-2">
+                                    <div class="row mb-3">
+                                        <label for="inputEmail3" class="col-sm-1 col-form-label text-truncate">Name</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" disabled="true" id="contact_details_prospect_name" class="form-control form-control-sm">
+                                        </div>
 
-                                        <h5 class="float-end font-size-14 m-0 w-50" id="">
-                                            <input type="text" name="" id="contact_details_title" class="form-control form-control-sm" maxlength="255">
-                                        </h5>
-                                        <p class="text-muted mb-0 text-truncate">Title :</p>
-                                    </div>
-                                    <div class="clearfix py-2">
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label text-truncate">Direct Dial</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" disabled="true" id="contact_details_direct_dial" class="form-control form-control-sm" maxlength="255">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-1 col-form-label text-truncate">Ext.</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" disabled="true" id="contact_details_ext" class="form-control form-control-sm" maxlength="255">
+                                        </div>
 
-                                        <h5 class="float-end font-size-14 m-0 w-50" id="">
-                                            <input type="text" name="" id="contact_details_email" class="form-control form-control-sm" maxlength="255">
-                                        </h5>
-                                        <p class="text-muted mb-0 text-truncate">Email :</p>
-                                    </div>
-                                    <div class="clearfix py-2">
-                                        <h5 class="float-end font-size-14 m-0 w-50" id="">
-                                            <input type="text" name="" id="contact_details_aa_email" class="form-control form-control-sm" maxlength="255">
-                                        </h5>
-                                        <p class="text-muted mb-0 text-truncate">AA Email :</p>
-                                    </div>
-                                    <div class="clearfix py-2">
+                                        <label for="inputEmail3" class="col-sm-1 col-form-label text-truncate">Title</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" disabled="true" id="contact_details_title" class="form-control form-control-sm" maxlength="255">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-2 col-form-label text-truncate">Mobile</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" disabled="true" id="contact_details_mobile" class="form-control form-control-sm" maxlength="255">
+                                        </div>
 
-                                        <h5 class="float-end font-size-14 m-0 w-50" id="">
+                                        <label for="inputEmail3" class="col-sm-1 col-form-label text-truncate">Email</label>
+                                        <div class="col-sm-11">
+                                            <input type="text" disabled="true" id="contact_details_email" class="form-control form-control-sm" maxlength="255">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-3 col-form-label text-truncate">AA Email</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" disabled="true" id="contact_details_aa_email" class="form-control form-control-sm" maxlength="255">
+                                        </div>
+
+                                        <label for="inputEmail3" class="col-sm-3 col-form-label text-truncate">LinkedIn Profile</label>
+                                        <div class="col-sm-9">
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control form-control-sm" id="contact_details_linkedin_profile" maxlength="255">
+                                                <input type="text" disabled="true" class="form-control form-control-sm" id="contact_details_linkedin_profile" maxlength="255">
                                                 <div class="input-group-prepend input-group-sm">
                                                     <span class="input-group-text" id="contact_details_linkedin_profile_url"><i class="ri-links-line" id=""></i></span>
                                                 </div>
                                             </div>
-                                        </h5>
-                                        <p class="text-muted mb-0 text-truncate">LinkedIn Profile :</p>
-                                    </div>
-                                    <div class="clearfix py-2">
-                                        <h5 class="float-end font-size-14 m-0 w-50" id="">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-3 col-form-label text-truncate">ZoomInfo Profile</label>
+                                        <div class="col-sm-9">
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control form-control-sm" id="contact_details_zoominfo_profile" maxlength="255">
+                                                <input type="text" disabled="true" class="form-control form-control-sm" id="contact_details_zoominfo_profile" maxlength="255">
                                                 <div class="input-group-prepend input-group-sm">
                                                     <span class="input-group-text" id="contact_details_zoominfo_profile_url"><i class="ri-links-line" id=""></i></span>
                                                 </div>
                                             </div>
-                                        </h5>
-                                        <p class="text-muted mb-0 text-truncate">ZoomInfo Profile :</p>
-                                    </div>
-                                    <div class="clearfix py-2">
-
-                                        <h5 class="float-end font-size-14 m-0 w-50" id="">
-                                            <input type="text" name="" id="contact_details_direct_dial" class="form-control form-control-sm" maxlength="255">
-                                        </h5>
-                                        <p class="text-muted mb-0 text-truncate">Direct Dial:</p>
-                                    </div>
-                                    <div class="clearfix py-2">
-
-                                        <h5 class="float-end font-size-14 m-0 w-50" id="">
-                                            <input type="text" name="" id="contact_details_ext" class="form-control form-control-sm" maxlength="255">
-                                        </h5>
-                                        <p class="text-muted mb-0 text-truncate">Ext. :</p>
-                                    </div>
-                                    <div class="clearfix py-2">
-
-                                        <h5 class="float-end font-size-14 m-0 w-50" id="">
-                                            <input type="text" name="" id="contact_details_mobile" class="form-control form-control-sm" maxlength="255">
-                                        </h5>
-                                        <p class="text-muted mb-0 text-truncate">Mobile :</p>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <button class="btn btn-outline-dark btn-sm" id="update_contact_btn" data-contact-id="">Update</button>
+                                    <button class="btn btn-outline-dark btn-sm" style="display: none;" id="edit_contact_btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="ri-pencil-fill"></i></button>
+                                    <button class="btn btn-outline-dark btn-sm" style="display: none;" id="update_contact_btn" data-campaign-id="" data-company-id="" data-contact-id=""><i class="ri-check-fill"></i></button>
+                                    <button class="btn btn-outline-dark btn-sm" style="display: none;" id="dismiss_contact_edit_btn"><i class="ri-close-fill"></i></button>
                                 </div>
                             </div>
-                            <div class="col-xl-6 col-md-6">
-                                <div>
-                                    <textarea name="notes" id="notes" class="form-control" cols="10" rows="10" placeholder="Notes:"></textarea>
+                            <div class="col-xl-5 col-md-5">
+                                <div class="mb-4">
+                                    <textarea name="notes" disabled id="notes" class="form-control" cols="10" rows="10" placeholder="Notes:"></textarea>
+                                </div>
+                                <div class="text-center">
+                                    <button class="btn btn-outline-dark btn-sm" style="display: none;" id="edit_contact_note_btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="ri-pencil-fill"></i></button>
+                                    <button class="btn btn-outline-dark btn-sm" style="display: none;" id="update_contact_note_btn" data-campaign-id="" data-company-id="" data-contact-id=""><i class="ri-check-fill"></i></button>
+                                    <button class="btn btn-outline-dark btn-sm" style="display: none;" id="dismiss_contact_note_edit_btn"><i class="ri-close-fill"></i></button>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- end row -->
+        
+        <div class="row mb-4">
+            <div class="col-md-12 float-right">
+                <div>
+                    <button id="add_new_contact_btn" data-company-id="" class="btn btn-outline-light float-end" style="display: none;">Add New Contact</button>
+                    <button id="request_to_delete_contact_btn" data-company-id="" data-contact-id="" class="btn btn-outline-light float-end mx-2 text-danger" style="display: none;">Request to Delete Current Record</button>
+                </div>
+            </div>
+        </div>
+
     </div>
     
 </div>
 <!-- End Page-content -->
+
+<!-- Add new Contact Model -->
+<div class="modal fade" id="create_new_contact_modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Center modal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="row">
+                    <div class="col-lg-2">
+                        <div class="mb-2">
+                            <label class="form-label" for="salutation">Salutation</label>
+                            <input type="text" name="salutation" id="salutation" class="form-control" value="{{ old('salutation') }}" maxlength="255">
+                            <div class="invalid-feedback">
+                                Invalid company name.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5">
+                        <div class="mb-2">
+                            <label class="form-label" for="contactFirstName">Contact First Name</label>
+                            <input type="text" name="contactFirstName" id="contactFirstName" class="form-control" value="{{ old('contactFirstName') }}" required maxlength="255">
+                            <div class="invalid-feedback">
+                                Invalid company name.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5">
+                        <div class="mb-2">
+                            <label class="form-label" for="contactLastName">Contact Last Name</label>
+                            <input type="text" name="contactLastName" id="contactLastName" class="form-control" value="{{ old('contactLastName') }}" required maxlength="255">
+                            <div class="invalid-feedback">
+                                Invalid company name.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="mb-2">
+                            <label class="form-label" for="jobTitle">Job Title</label>
+                            <input type="text" name="jobTitle" id="jobTitle" class="form-control" value="{{ old('jobTitle') }}" required maxlength="255">
+                            <div class="invalid-feedback">
+                                Invalid company name.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5">
+                        <div class="mb-2">
+                            <label class="form-label" for="directPhoneNumber">Direct Phone Number</label>
+                            <input type="text" name="directPhoneNumber" id="directPhoneNumber" class="form-control" value="{{ old('directPhoneNumber') }}" required maxlength="255">
+                            <div class="invalid-feedback">
+                                Invalid company name.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="mb-2">
+                            <label class="form-label" for="dialExtension">Dial Extension</label>
+                            <input type="text" name="dialExtension" id="dialExtension" class="form-control" value="{{ old('dialExtension') }}" maxlength="255">
+                            <div class="invalid-feedback">
+                                Invalid company name.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="mb-2">
+                            <label class="form-label" for="mobilePhone">Mobile Phone</label>
+                            <input type="text" name="mobilePhone" id="mobilePhone" class="form-control" value="{{ old('mobilePhone') }}" required maxlength="255">
+                            <div class="invalid-feedback">
+                                Invalid company name.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="mb-2">
+                            <label class="form-label" for="emailAddress">Email Address</label>
+                            <input type="text" name="emailAddress" id="emailAddress" class="form-control" value="{{ old('emailAddress') }}" required maxlength="255">
+                            <div class="invalid-feedback">
+                                Invalid company name.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="mb-2">
+                            <label class="form-label" for="zoominfoCompanyProfileURL">Zoominfo Contact Profile URL</label>
+                            <input type="text" name="zoominfoCompanyProfileURL" id="zoominfoCompanyProfileURL" class="form-control" value="{{ old('zoominfoCompanyProfileURL') }}" required maxlength="255">
+                            <div class="invalid-feedback">
+                                Invalid company name.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="mb-2">
+                            <label class="form-label" for="linkedinCompanyProfileURL">Linkedin Contact Profile URL</label>
+                            <input type="text" name="linkedinCompanyProfileURL" id="linkedinCompanyProfileURL" class="form-control" value="{{ old('linkedinCompanyProfileURL') }}" required maxlength="255">
+                            <div class="invalid-feedback">
+                                Invalid company name.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mt-2 text-center">
+                            <button type="button" id="store_new_contact_btn" data-company-id="" class="btn btn-primary waves-effect waves-light me-1">
+                                Add Contact
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- Emd: Add new Contact Model -->
 
 <footer class="footer">
     <div class="container-fluid">
@@ -353,10 +470,17 @@
     <script>
        var urls = {
            getCompany: '{{ route("admin.company.fetchOne", ":id") }}',
-           getContact: '{{ route("admin.contact.fetchOne", ":id") }}',
+           getContact: '{{ route("admin.contact.fetchOne") }}',
            miniUpdateContact: '{{ route("admin.contact.miniUpdate", ":id") }}',
+           miniUpdateCompany: '{{ route("admin.company.miniUpdate", ":id") }}',
+           miniUpdateContactNote: '{{ route("admin.contact.miniUpdateNote") }}',
+           campaignCompanyStatusesFetchAll: '{{ route("admin.campaignCompanyStatuses.fetchAll") }}',
+           campaignUpdateStatus: '{{ route("admin.campaign.updateStatus") }}',
+           storeContactMini: '{{ route("admin.contact.storeMini") }}',
+           requestDeleteContact: '{{ route("admin.contact.destroy", ":id") }}',
        }
     </script>
-    <script src="{{ asset('custom_js/ajaxService.js') }}"></script>
+    <script src="{{ asset('custom_js/services/ajaxService.js') }}"></script>
+    <script src="{{ asset('custom_js/services/helpersService.js') }}"></script>
     <script src="{{ asset('custom_js/campaign/campaign_accordion.js') }}"></script>
 @stop

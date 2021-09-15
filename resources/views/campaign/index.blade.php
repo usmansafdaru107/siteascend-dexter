@@ -91,7 +91,6 @@
                                 <thead>
                                 <tr>
                                     <th>Tag</th>
-                                    <th>Company Accordion View in Campaign</th>
                                     <th>Name</th>
                                     <th>Total Companies in Campaign</th>
                                     <th>Client Name</th>
@@ -122,8 +121,7 @@
                                                     <input class="form-check-input campaign_checkbox" type="checkbox" id="checkbox_campaign_{{ $campaign->id }}" data-id="{{ $campaign->id }}">
                                                 </div>
                                             </td>
-                                            <td class="text-center" style="font-size: 16px;"><a href="{{ route('admin.campaign.campaignAccordion', ['campaign' => $campaign->id]) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to view Company Accordion in Campaign"><i class="ri-eye-line"></i></a></td>
-                                            <td><a href="{{ route('admin.campaign.company', ['campaign' => $campaign->id]) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to view companies in tha campaign"><i class="ri-links-fill"></i> {{ $campaign->name }}</a></td>
+                                            <td><a href="{{ route('admin.campaign.campaignAccordion', ['campaign' => $campaign->id]) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to view Company Accordion in Campaign"><i class="ri-links-fill"></i> {{ $campaign->name }}</a></td>
                                             <td>{{ $campaign->companies->count() }}</td>
                                             <td>{{ $campaign->clientName }}</td>
                                             <td>{{ $campaign->solution }}</td>

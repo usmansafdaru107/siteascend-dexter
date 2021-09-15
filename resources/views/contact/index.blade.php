@@ -126,7 +126,7 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                <form action="{{ route('admin.contact.destroy', ['contact' => $contact->id]) }}" method="POST">
+                                                <form action="{{ route('admin.contact.force.destroy', ['contact' => $contact->id]) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-outline-secondary btn-sm edit" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Contact">
