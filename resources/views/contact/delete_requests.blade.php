@@ -1,6 +1,6 @@
 @extends('layouts.app_main')
 
-@section('title', 'Request to Delete Contacts')
+@section('title', 'Requests to Delete Contacts')
 
 @section('content')
 
@@ -31,7 +31,7 @@
 			<div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body" style="overflow-x: scroll;">
+                        <div class="card-body" style="overflow-x: auto;">
 
                             @if(session()->has('success'))
                                 <div class="alert alert-success" id="message_success">
@@ -50,6 +50,8 @@
                                 <tr>
                                     <th>Abort Request</th>
                                     <th>Delete Permanently</th>
+                                    <th>Requesting User Name</th>
+                                    <th>Requesting User Email</th>
                                     <th>Name</th>
                                     <th>Company Name</th>
                                     <th>Management Level</th>
@@ -89,6 +91,15 @@
                                                     </button>
                                                 </form>
                                             </td>
+                                            @php
+                                                $user = \App\Models\User::where('id', '=', $contact->deleted_by)->get(["name", "email"]);
+                                                if($user->isEmpty())
+                                                    $user = ['name' => '', 'email' => ''];
+                                                else
+                                                    $user = $user[0];
+                                            @endphp
+                                            <td>{{ $user['name'] }}</td>
+                                            <td>{{ $user['email'] }}</td>
                                             <td>{{ $contact->name() }}</td>
                                             <td>{{ $contact->company->name ?? "" }}</td>
                                             <td>{{ $contact->management_level }}</td>

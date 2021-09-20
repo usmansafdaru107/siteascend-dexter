@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use App\Models\User;
+use App\Http\Requests\auth\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,19 +14,12 @@ class AuthController extends Controller
         return view("auth/login");
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required']
-        ]);
-
-        if (Auth::attempt($credentials, $request->remember)) {
+        if (Auth::attempt($request->validated(), $request->remember)) {
             $request->session()->regenerate();
-
             return redirect()->intended($request->user()->role->name . ".dashboard");
         }
-
         return back()->withInput($request->input())->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ]);

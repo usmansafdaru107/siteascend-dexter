@@ -7,8 +7,12 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\HeadingRowImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ContactImport;
+use App\Models\Company;
+use App\Models\ContactRequest;
 use App\Models\Note;
 use App\Models\Tag;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
@@ -16,41 +20,10 @@ class ContactController extends Controller
     {
         $data = [
             'contacts' => Contact::with('company')->get(),
-            'tags' => Tag::where('tag_category_id', 1)->get()
+            'tags' => Tag::where('tag_category_id', Tag::CONTACT)->get()
 
         ];
         return view("contact.index", $data);
-    }
-
-    public function deleteRequests()
-    {
-        $data = [
-            'contacts' => Contact::onlyTrashed()->with('company')->get(),
-            'tags' => Tag::where('tag_category_id', 1)->get()
-
-        ];
-        return view("contact.delete_request", $data);
-    }
-
-    public function fetchOne(Request $request)
-    {
-        try {
-            $contact = Contact::select('id', 'first_name','last_name', 'salutation', 'job_title', 'direct_phone_number', 'dial_extension', 'mobile_phone', 'email_address', 'aa_email', 'zoominfo_contact_profile_url', 'linkedin_contact_profile_url')->where('id', $request->contactId)->get();
-            
-            if(!$contact)
-                return response()->json(["status" => "error" ], 404);
-
-            $note = Note::where("contact_id", "=", $request->contactId)->where("campaign_id", "=", $request->campaignId)->where("company_id", "=", $request->companyId)->get();
-            
-            if(!$note->isEmpty())
-                $contact[0]->notes = $note[0]->notes;
-            else
-                $contact[0]->notes = "";
-
-            return response()->json(['contact' => $contact[0]]);
-        } catch (\Throwable $th) {
-            return response()->json(["status" => "error" ], 500);
-        }
     }
 
     public function create()
@@ -58,7 +31,6 @@ class ContactController extends Controller
         $data = [
             'contacts' => Contact::all()
         ];
-
         return view("contact.create", $data);
     }
 
@@ -90,29 +62,6 @@ class ContactController extends Controller
             'email_domain' => $request->emailDomain,
         ]);
         return redirect()->back()->with('success', 'New contact created successfully!');
-
-    }
-
-    public function storeMini(Request $request)
-    {
-        try {
-            Contact::create([
-                'company_id' => $request->companyId,
-                'first_name' => $request->contactFirstName,
-                'last_name' => $request->contactLastName,
-                'salutation' => $request->salutation,
-                'job_title' => $request->jobTitle,
-                'direct_phone_number' => $request->directPhoneNumber,
-                'dial_extension' => $request->dialExtension,
-                'mobile_phone' => $request->mobilePhone,
-                'email_address' => $request->emailAddress,
-                'zoominfo_contact_profile_url' => $request->zoominfoCompanyProfileURL,
-                'linkedin_contact_profile_url' => $request->linkedinCompanyProfileURL,
-            ]);
-            return response()->json(['success' => 'success']);
-        } catch (\Throwable $th) {
-            return response()->json(['success' => 'error'], 500);
-        }
 
     }
 
@@ -155,6 +104,60 @@ class ContactController extends Controller
             'email_domain' => $request->emailDomain,
         ]);
         return redirect()->route("admin.contact.index")->with('success', 'Contact Updated successfully!');
+    }
+
+    public function destroy(Contact $contact)
+    {
+        try {
+            $contact->update([
+                "deleted_by" => auth()->user()->id
+            ]);
+            $contact->delete();
+            return response()->json(['status' => "success", "message" => 'Contact delete successfully!']);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error'], 500);
+        }
+       
+    }
+
+    public function show(Request $request)
+    {
+        try {
+            $contact = Contact::select('id', 'first_name','last_name', 'salutation', 'job_title', 'direct_phone_number', 'dial_extension', 'mobile_phone', 'email_address', 'aa_email', 'zoominfo_contact_profile_url', 'linkedin_contact_profile_url')->where('id', $request->contactId)->get();
+            
+            if(!$contact)
+                return response()->json(["status" => "error" ], 404);
+
+            $note = Note::where("contact_id", "=", $request->contactId)->where("campaign_id", "=", $request->campaignId)->where("company_id", "=", $request->companyId)->get();
+            
+            if(!$note->isEmpty())
+                $contact[0]->notes = $note[0]->notes;
+            else
+                $contact[0]->notes = "";
+
+            return response()->json(['contact' => $contact[0]]);
+        } catch (\Throwable $th) {
+            return response()->json(["status" => "error" ], 500);
+        }
+    }
+
+    public function deleteRequests()
+    {
+        $data = [
+            'contacts' => Contact::onlyTrashed()->with('company')->get()
+            // 'user' => User::where('id', '=', 1)->get(["name", "email"])[0]
+        ];
+        return view("contact.delete_requests", $data);
+    }
+
+    public function restore($contactId)
+    {
+        $contact = Contact::withTrashed()->find($contactId);
+        $contact->restore();
+        $contact->update([
+            'deleted_by' => null
+        ]);
+        return redirect()->back()->with('success', 'Contact restored successfully!');
     }
 
     public function miniUpdate(Request $request, Contact $contact)
@@ -201,23 +204,6 @@ class ContactController extends Controller
        }
     }
 
-    public function destroy(Contact $contact)
-    {
-        try {
-            $contact->delete();
-            return response()->json(['status' => "success", "message" => 'Contact delete successfully!']);
-        } catch (\Throwable $th) {
-            return response()->json(['status' => 'error'], 500);
-        }
-       
-    }
-
-    public function restore($contactId)
-    {
-        Contact::withTrashed()->find($contactId)->restore();
-        return redirect()->back()->with('success', 'Contact restored successfully!');
-    }
-
     public function forceDestroy($contactId)
     {
         Contact::withTrashed()->find($contactId)->forceDelete();
@@ -245,4 +231,73 @@ class ContactController extends Controller
         Excel::import(new ContactImport, request()->file('csv_file'));
         return redirect()->back()->with('success', 'Records uploaded successfully!');
     }
+
+    public function storeMini(Request $request)
+    {
+        try {
+            Contact::create([
+                'company_id' => $request->companyId,
+                'first_name' => $request->contactFirstName,
+                'last_name' => $request->contactLastName,
+                'salutation' => $request->salutation,
+                'job_title' => $request->jobTitle,
+                'direct_phone_number' => $request->directPhoneNumber,
+                'dial_extension' => $request->dialExtension,
+                'mobile_phone' => $request->mobilePhone,
+                'email_address' => $request->emailAddress,
+                'zoominfo_contact_profile_url' => $request->zoominfoCompanyProfileURL,
+                'linkedin_contact_profile_url' => $request->linkedinCompanyProfileURL,
+            ]);
+            return response()->json(['success' => 'success']);
+        } catch (\Throwable $th) {
+            return response()->json(['success' => 'error'], 500);
+        }
+
+    }
+
+    public function storeMiniContact(Request $request)
+    {
+        try {
+
+            $contactRequest = ContactRequest::where('id', '=', $request->contactRequestId)->get();
+            if($contactRequest->isEmpty())
+                return response()->json(['status' => 'error', 'type' => 'contact-request-not-found'], 404);
+            $contactRequest = $contactRequest[0];
+
+            $company = Company::where('name', '=', $request->companyName)->get("id");
+            if($company->isEmpty())
+                return response()->json(['status' => 'error', 'type' => 'company-not-found'], 404);
+            $company = $company[0];
+
+           
+
+            $splitName = explode(' ', $request->prospectTitle, 2); // Restricts it to only 2 values, for names like Billy Bob Jones
+
+            $first_name = $splitName[0] ?? '';
+            $last_name = $splitName[1] ?? '';
+
+            DB::beginTransaction();
+            Contact::create([
+                'company_id' => $company->id,
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'salutation' => $request->salutation,
+                'job_title' => $request->jobTitle,
+                'direct_phone_number' => $request->directPhoneNumber,
+                'dial_extension' => $request->dialExtension,
+                'mobile_phone' => $request->mobilePhone,
+                'email_address' => $request->emailAddress,
+                'zoominfo_contact_profile_url' => $request->zoominfoCompanyProfileURL,
+                'linkedin_contact_profile_url' => $request->linkedinCompanyProfileURL,
+            ]);
+            $contactRequest->delete();
+            DB::commit();
+            return response()->json(['success' => 'success']);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json(['status' => 'error'], 500);
+        }
+
+    }
+   
 }

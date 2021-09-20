@@ -35,6 +35,7 @@ class Contact extends Model
         'zip',
         'country',
         'email_domain',
+        'deleted_by',
     ];
 
 

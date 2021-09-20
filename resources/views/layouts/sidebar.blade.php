@@ -65,6 +65,7 @@
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{{ route('admin.contact.index') }}">Contact List</a></li>
                                     <li><a href="{{ route('admin.contact.delete.requests') }}">Delete Requests</a></li>
+                                    <li><a href="{{ route('admin.contact-request.index') }}">Request Queue</a></li>
                                     <li><a href="{{ route('admin.contact.create') }}">Create New</a></li>
                                     <li><a href="{{ route('admin.contact.bulkUpload') }}">Bulk Upload</a></li>
                                     <li><a href="{{ route('admin.contact.tag.index') }}">Tag List</a></li>

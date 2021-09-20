@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\CampaignCompanyStatus;
-use Illuminate\Http\Request;
-use Nette\Utils\Json;
 
 class CampaignCompanyStatusController extends Controller
 {

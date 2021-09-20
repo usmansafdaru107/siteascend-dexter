@@ -74,7 +74,7 @@
 							<div class="col-md-3">
 								<div class="card">
 									<div class="card-body">
-										<a href="{{ route('admin.user.index') }}" class="text-white">
+										<a href="{{ route('admin.contact.index') }}" class="text-white">
 											<div class="d-flex">
 												<div class="flex-1 overflow-hidden">
 													<p class="text-truncate font-size-14 mb-2">Total Contacts</p>

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\campaign\StoreCampaignRequest;
+use App\Http\Requests\campaign\UpdateCampaignRequest;
 use App\Models\Campaign;
-use App\Models\CampaignCompanyStatus;
 use App\Models\Company;
 use App\Models\Role;
 use App\Models\Tag;
@@ -16,7 +17,7 @@ class CampaignController extends Controller
     {
         $data = [
             'campaigns' => Campaign::all(),
-            'tags' => Tag::where('tag_category_id', 3)->get()
+            'tags' => Tag::where('tag_category_id', Tag::CAMPAIGN)->get()
         ];
         return view("campaign.index", $data);
     }
@@ -24,47 +25,19 @@ class CampaignController extends Controller
     public function create()
     {
         $data = [
-            'companies' => Company::all(),
+            'companies' => Company::all("id", "name"),
             'dgrs' => Role::where('name', 'dgr')->first()->users()->get(),
             'cres' => Role::where('name', 'cre')->first()->users()->get(),
             'dsrs' => Role::where('name', 'dsr')->first()->users()->get(),
             'csrs' => Role::where('name', 'csr')->first()->users()->get(),
-            'tags' => Tag::where('tag_category_id', 3)->get(),
-            'campaignTags' => Tag::where('tag_category_id', 3)->get()
+            'tags' => Tag::where('tag_category_id', Tag::CAMPAIGN)->get(),
         ];
 
         return view("campaign.create", $data);
     }
 
-    public function store(Request $request)
+    public function store(StoreCampaignRequest $request)
     {
-        $request->validate([
-            'clientName' => 'required|max:255',
-            'campaignName' => 'required|max:255',
-            'solution' => 'required|max:255',
-            'solutionURL' => 'required|max:255',
-            'salesRep' => 'required|max:255',
-            'salesRepEmail' => 'required|email|max:255',
-            'salesRepNumber' => 'required|max:255',
-            'salesRepBridge' => 'required|max:255',
-            'calendarAccess' => 'required|max:255',
-            'calendarUsername' => 'required|max:255',
-            'calendarPassword' => 'required|max:255',
-            'calendarInviteAdmin' => 'required|max:255',
-            'cre' => 'required|exists:users,id',
-            'dsr' => 'required|exists:users,id',
-            'dgr' => 'required|array|min:1',
-            "dgr.*"  => "exists:users,id",
-            'DGRAlias' => 'required|min:3|max:255',
-            'csr' => 'required|exists:users,id',
-            'CSRAlias' => 'required|min:3|max:255',
-            'campaignTag' => 'required|array|min:1',
-            'campaignTag.*' => 'exists:tags,id',
-            'campaignStartDate' => 'required|date|date_format:Y-m-d',
-            'expectedEndDate' => 'required|date|date_format:Y-m-d',
-            'companies' => 'required|array|min:1',
-            'companies.*' => 'exists:companies,id',
-        ]);
         DB::beginTransaction();
         try {
             $campaign = Campaign::create([
@@ -107,49 +80,19 @@ class CampaignController extends Controller
     public function edit(Campaign $campaign)
     {
         $data = [
-            'companies' => Company::all(),
+            'companies' => Company::all("id", "name"),
             'dgrs' => Role::where('name', 'dgr')->first()->users()->get(),
             'cres' => Role::where('name', 'cre')->first()->users()->get(),
             'dsrs' => Role::where('name', 'dsr')->first()->users()->get(),
             'csrs' => Role::where('name', 'csr')->first()->users()->get(),
-            'tags' => Tag::where('tag_category_id', 3)->get(),
-            'campaignTags' => Tag::where('tag_category_id', 3)->get(),
+            'tags' => Tag::where('tag_category_id', Tag::CAMPAIGN)->get(),
             'campaign' => $campaign
-
         ];
-
         return view("campaign.edit", $data);
     }
 
-    public function update(Request $request, Campaign $campaign)
+    public function update(UpdateCampaignRequest $request, Campaign $campaign)
     {
-        $request->validate([
-            'clientName' => 'required|max:255',
-            'campaignName' => 'required|max:255',
-            'solution' => 'required|max:255',
-            'solutionURL' => 'required|max:255',
-            'salesRep' => 'required|max:255',
-            'salesRepEmail' => 'required|email|max:255',
-            'salesRepNumber' => 'required|max:255',
-            'salesRepBridge' => 'required|max:255',
-            'calendarAccess' => 'required|max:255',
-            'calendarUsername' => 'required|max:255',
-            'calendarPassword' => 'required|max:255',
-            'calendarInviteAdmin' => 'required|max:255',
-            'cre' => 'required|exists:users,id',
-            'dsr' => 'required|exists:users,id',
-            'dgr' => 'required|array|min:1',
-            "dgr.*"  => "exists:users,id",
-            'DGRAlias' => 'required|min:3|max:255',
-            'csr' => 'required|exists:users,id',
-            'CSRAlias' => 'required|min:3|max:255',
-            'campaignTag' => 'required|array|min:1',
-            'campaignTag.*' => 'exists:tags,id',
-            'campaignStartDate' => 'required|date|date_format:Y-m-d',
-            'expectedEndDate' => 'required|date|date_format:Y-m-d',
-            'companies' => 'required|array|min:1',
-            'companies.*' => 'exists:companies,id',
-        ]);
         DB::beginTransaction();
         try {
             $campaign->update([
@@ -195,59 +138,12 @@ class CampaignController extends Controller
         return redirect()->back()->with('success', 'Campaign delete successfully!');
     }
 
-    // public function companyCampaigns(Campaign $campaign)
-    // {
-    //     $data = [
-    //         'campaign' => $campaign,
-    //         'companies' => $campaign->companies
-    //     ];
-
-    //     $dataOrdered = [
-    //         "priority" => [],
-    //         "hot" => [],
-    //         "call-back" => [],
-    //         "send-info" => [],
-    //         "active" => [],
-    //         "meeting-set" => [],
-    //         "stay-out-sales-rep-request" => [],
-    //         "stay-out-already-customer" => [],
-    //     ];
-
-    //     if($data['companies']) {
-    //         foreach ($data['companies'] as $key => $company) {
-    //             $status = CampaignCompanyStatus::find($company->pivot->status_id)->status_name;
-    //             $dataOrdered[$status][] = $company;
-    //         }
-    //         $data['companies'] = call_user_func_array('array_merge', $dataOrdered);
-    //     }
-        
-    //     return view('campaign.campaign_companies', $data);
-    // }
     public function campaignAccordion(Campaign $campaign)
     {
         $data = [
             'campaign' => $campaign,
-            'companies' => $campaign->companies
+            'companies' => $campaign->companies()->orderBy("name")->get()
         ];
-        $dataOrdered = [
-            "priority" => [],
-            "hot" => [],
-            "call-back" => [],
-            "send-info" => [],
-            "active" => [],
-            "meeting-set" => [],
-            "stay-out-sales-rep-request" => [],
-            "stay-out-already-customer" => [],
-        ];
-
-        if($data['companies']) {
-            foreach ($data['companies'] as $key => $company) {
-                $status = CampaignCompanyStatus::find($company->pivot->status_id)->status_name;
-                $dataOrdered[$status][] = $company;
-            }
-            $data['companies'] = call_user_func_array('array_merge', $dataOrdered);
-        }
-        
         return view('campaign.campaign_accordion', $data);
     }
 

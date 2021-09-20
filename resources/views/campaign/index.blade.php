@@ -92,6 +92,8 @@
                                 <tr>
                                     <th>Tag</th>
                                     <th>Name</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
                                     <th>Total Companies in Campaign</th>
                                     <th>Client Name</th>
                                     <th>Solution</th>
@@ -107,8 +109,6 @@
                                     <th>Campaign Start Date</th>
                                     <th>Expected End Date</th>
                                     <th>Actual Finished Date</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
                                 </tr>
                                 </thead>
 
@@ -122,6 +122,20 @@
                                                 </div>
                                             </td>
                                             <td><a href="{{ route('admin.campaign.campaignAccordion', ['campaign' => $campaign->id]) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to view Company Accordion in Campaign"><i class="ri-links-fill"></i> {{ $campaign->name }}</a></td>
+                                            <td>
+                                                <a href="{{ route('admin.campaign.edit', ['campaign' => $campaign->id]) }}" class="btn btn-outline-secondary btn-sm edit" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Campaign">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <form action="{{ route('admin.campaign.destroy', ['campaign' => $campaign->id]) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-outline-secondary btn-sm edit" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Campaign">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
                                             <td>{{ $campaign->companies->count() }}</td>
                                             <td>{{ $campaign->clientName }}</td>
                                             <td>{{ $campaign->solution }}</td>
@@ -138,20 +152,6 @@
                                             <td>{{ $campaign->expectedEndDate }}</td>
                                             <td>{{ $campaign->actualFinishedDate }}</td>
 
-                                            <td>
-                                                <a href="{{ route('admin.campaign.edit', ['campaign' => $campaign->id]) }}" class="btn btn-outline-secondary btn-sm edit" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Campaign">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <form action="{{ route('admin.campaign.destroy', ['campaign' => $campaign->id]) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-outline-secondary btn-sm edit" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Campaign">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
                                         </tr>
                                     @endforeach
                                 

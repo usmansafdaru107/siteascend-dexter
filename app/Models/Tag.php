@@ -9,6 +9,10 @@ class Tag extends Model
 {
     use HasFactory;
 
+    public const CONTACT = 1;
+    public const COMPANY = 2;
+    public const CAMPAIGN = 3;
+
     protected $fillable = ['tag_name', 'tag_category_id'];
 
     public function category() {

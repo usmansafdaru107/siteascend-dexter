@@ -1,4 +1,21 @@
 var campaignAccordionService = function () {
+
+    var currentValues = {
+        companyNote: "",
+        contactNote: "",
+        companyDetails: {toDialExtension: '', toDialDirectory: '', toDialOperator: ''},
+        contactDetails: {
+            name: '',
+            directDial: '',
+            ext: '',
+            title: '',
+            mobile: '',
+            email: '',
+            aaEmail: '',
+            linkedinUrl: '',
+            zoomInfoUrl: ''
+        }
+    }
     
     const elementIds = {
         company_details_hq: 'company_details_hq',
@@ -31,12 +48,18 @@ var campaignAccordionService = function () {
         notes: 'notes',
 
         update_contact_btn: 'update_contact_btn',
-        edit_contact_btn: 'edit_contact_btn',
+        // edit_contact_btn: 'edit_contact_btn',
         dismiss_contact_edit_btn: 'dismiss_contact_edit_btn',
 
         update_contact_note_btn: 'update_contact_note_btn',
         edit_contact_note_btn: 'edit_contact_note_btn',
         dismiss_contact_note_edit_btn: 'dismiss_contact_note_edit_btn',
+
+        company_notes: 'company_notes',
+
+        update_company_note_btn: 'update_company_note_btn',
+        edit_company_note_btn: 'edit_company_note_btn',
+        dismiss_company_note_edit_btn: 'dismiss_company_note_edit_btn',
 
         update_company_btn: 'update_company_btn',
         edit_company_btn: 'edit_company_btn',
@@ -58,6 +81,13 @@ var campaignAccordionService = function () {
         emailAddress: 'emailAddress',
         zoominfoCompanyProfileURL: 'zoominfoCompanyProfileURL',
         linkedinCompanyProfileURL: 'linkedinCompanyProfileURL',
+
+        request_contact_btn: 'request_contact_btn',
+        request_contact_modal: 'request_contact_modal',
+
+        companyName: 'companyName',
+        prospectTitle: 'prospectTitle',
+        store_new_contact_request_btn: 'store_new_contact_request_btn',
     }
 
     const classes = {
@@ -77,12 +107,76 @@ var campaignAccordionService = function () {
         hideUpdateContactNoteButton();
         hideEditContactNoteButton();
 
+        hideUpdateCompanyNoteButton();
+        hideEditCompanyNoteButton();
+
         hideUpdateCompanyButton();
         hideEditCompanyButton();
 
         helpersService.hide(elementIds.add_new_contact_btn);
         helpersService.hide(elementIds.request_to_delete_contact_btn);
 
+        function checkIfContactInfoChanged() {
+            console.log(currentValues);
+            var contactData = {
+                "name": $("#" + elementIds.contact_details_prospect_name).val(),
+                "contact_details_title": $("#" + elementIds.contact_details_title).val(),
+                "contact_details_email": $("#" + elementIds.contact_details_email).val(),
+                "contact_details_aa_email": $("#" + elementIds.contact_details_aa_email).val(),
+                "contact_details_linkedin_profile": $("#" + elementIds.contact_details_linkedin_profile).val(),
+                "contact_details_zoominfo_profile": $("#" + elementIds.contact_details_zoominfo_profile).val(),
+                "contact_details_direct_dial": $("#" + elementIds.contact_details_direct_dial).val(),
+                "contact_details_ext": $("#" + elementIds.contact_details_ext).val(),
+                "contact_details_mobile": $("#" + elementIds.contact_details_mobile).val(),
+            }
+            if(currentValues.contactDetails.name != contactData.name) {
+                showUpdateContactButton();
+                return;
+            }
+            if(currentValues.contactDetails.title != contactData.contact_details_title) {
+                showUpdateContactButton();
+                return;
+            }
+            if(currentValues.contactDetails.email != contactData.contact_details_email) {
+                showUpdateContactButton();
+                return;
+            }
+            if(currentValues.contactDetails.aaEmail != contactData.contact_details_aa_email) {
+                showUpdateContactButton();
+                return;
+            }
+            if(currentValues.contactDetails.linkedinUrl != contactData.contact_details_linkedin_profile) {
+                showUpdateContactButton();
+                return;
+            }
+            if(currentValues.contactDetails.zoomInfoUrl != contactData.contact_details_zoominfo_profile) {
+                showUpdateContactButton();
+                return;
+            }
+            if(currentValues.contactDetails.directDial != contactData.contact_details_direct_dial) {
+                showUpdateContactButton();
+                return;
+            }
+            if(currentValues.contactDetails.ext != contactData.contact_details_ext) {
+                showUpdateContactButton();
+                return;
+            }
+            if(currentValues.contactDetails.mobile != contactData.contact_details_mobile) {
+                showUpdateContactButton();
+                return;
+            }
+            hideUpdateContactButton();
+        }
+        // Contact Inputs change show edit contact buttons
+        $("#" + elementIds.contact_details_prospect_name).keyup(checkIfContactInfoChanged);
+        $("#" + elementIds.contact_details_direct_dial).keyup(checkIfContactInfoChanged);
+        $("#" + elementIds.contact_details_ext).keyup(checkIfContactInfoChanged);
+        $("#" + elementIds.contact_details_title).keyup(checkIfContactInfoChanged);
+        $("#" + elementIds.contact_details_mobile).keyup(checkIfContactInfoChanged);
+        $("#" + elementIds.contact_details_email).keyup(checkIfContactInfoChanged);
+        $("#" + elementIds.contact_details_aa_email).keyup(checkIfContactInfoChanged);
+        $("#" + elementIds.contact_details_linkedin_profile).keyup(checkIfContactInfoChanged);
+        $("#" + elementIds.contact_details_zoominfo_profile).keyup(checkIfContactInfoChanged);
         // Companies Table Click
         $('#' + elementIds.companies_table + ' tbody tr').click(function(evt) {
             if ( $(evt.target).is("a") ) {
@@ -95,9 +189,12 @@ var campaignAccordionService = function () {
 
             var url = urls.getCompany;
             url = url.replace(':id', companyId);
+            url += `?campaign-id=${campaignId}`;
             ajaxService.makeAjaxRequest("GET", url).done(function(data) {
                 emptyCompanyInfo();
                 emptyContactInfo();
+
+                populateCompanyInfo(data['company'], companyId);
 
                 hideUpdateContactButton();
                 hideEditContactButton();
@@ -111,13 +208,19 @@ var campaignAccordionService = function () {
                 showEditCompanyButton();
                 makeCompanyInputsNonEditable();
 
+                hideUpdateCompanyNoteButton();
+                showEditCompanyNoteButton();
+                makeCompanyNoteInputsNonEditable();
+
+                $("#" + elementIds.update_company_note_btn).attr("data-campaign-id", campaignId);
+                $("#" + elementIds.update_company_note_btn).attr("data-company-id", companyId);
+
                 helpersService.show(elementIds.add_new_contact_btn);
                 helpersService.hide(elementIds.request_to_delete_contact_btn);
                 $("#" + elementIds.add_new_contact_btn).attr("data-company-id", companyId);
                 $("#" + elementIds.request_to_delete_contact_btn).attr("data-company-id", "");
                 $("#" + elementIds.request_to_delete_contact_btn).attr("data-contact-id", "");
 
-                populateCompanyInfo(data['company'], companyId);
                 emptyContactTableBody();
                 populateContactTableBody(data['company']['contacts'], campaignId, companyId);
             }).fail(function(err) {
@@ -136,13 +239,20 @@ var campaignAccordionService = function () {
                 hideEditCompanyButton();
                 makeCompanyInputsNonEditable();
 
+                hideUpdateCompanyNoteButton();
+                hideEditCompanyNoteButton();
+                makeCompanyNoteInputsNonEditable();
+
+                $("#" + elementIds.update_company_note_btn).attr("data-campaign-id", "");
+                $("#" + elementIds.update_company_note_btn).attr("data-company-id", "");
+
                 helpersService.hide(elementIds.add_new_contact_btn);
                 helpersService.hide(elementIds.request_to_delete_contact_btn);
                 $("#" + elementIds.add_new_contact_btn).attr("data-company-id", "");
                 $("#" + elementIds.request_to_delete_contact_btn).attr("data-company-id", "");
                 $("#" + elementIds.request_to_delete_contact_btn).attr("data-contact-id", "");
 
-                toastr["error"](`Invalid company selected!`);
+                toastr["error"](`Invalid company selected, if error persists refresh the page and try again!`);
             });
         });
 
@@ -194,13 +304,24 @@ var campaignAccordionService = function () {
             url = url.replace(':id', contactId);
             ajaxService.makeAjaxRequest("POST", url, contactData).done(function(data) {
                 toastr["success"](`Contact Updated Successfully!`);
-                showEditContactButton();
+                // showEditContactButton();
                 hideUpdateContactButton();
-                makeContactInputsNonEditable();
+                // makeContactInputsNonEditable();
+
+                currentValues.contactDetails.name = contactData.name;
+                currentValues.contactDetails.directDial = contactData.contact_details_direct_dial;
+                currentValues.contactDetails.ext = contactData.contact_details_ext;
+                currentValues.contactDetails.title = contactData.contact_details_title;
+                currentValues.contactDetails.mobile = contactData.contact_details_mobile;
+                currentValues.contactDetails.email = contactData.contact_details_email;
+                currentValues.contactDetails.aaEmail = contactData.contact_details_aa_email;
+                currentValues.contactDetails.linkedinUrl = contactData.contact_details_linkedin_profile;
+                currentValues.contactDetails.zoomInfoUrl = contactData.contact_details_zoominfo_profile;
+
             }).fail(function(err){
-                showEditContactButton();
+                // showEditContactButton();
                 hideUpdateContactButton();
-                makeContactInputsNonEditable();
+                // makeContactInputsNonEditable();
                 toastr["error"](`Something unexpected happened please refresh and try again!`);
             });
         });
@@ -219,6 +340,7 @@ var campaignAccordionService = function () {
             var url = urls.miniUpdateContactNote;
             ajaxService.makeAjaxRequest("POST", url, contactData).done(function(data) {
                 toastr["success"](`Note added to this contact Successfully!`);
+                currentValues.contactNote = contactData.notes;
                 showEditContactNoteButton();
                 hideUpdateContactNoteButton();
                 makeContactNoteInputsNonEditable();
@@ -226,6 +348,29 @@ var campaignAccordionService = function () {
                 showEditContactNoteButton();
                 hideUpdateContactNoteButton();
                 makeContactNoteInputsNonEditable();
+                toastr["error"](`Something unexpected happened please refresh and try again!`);
+            });
+        });
+
+        // Update Company Note Event Listener
+        $("#" + elementIds.update_company_note_btn).on("click", function() {
+            var contactData = {
+                campaignId: $("#" + elementIds.update_company_note_btn).attr("data-campaign-id"),
+                companyId: $("#" + elementIds.update_company_note_btn).attr("data-company-id"),
+                companyNotes: $("#" + elementIds.company_notes).val()
+            }
+            var url = urls.miniUpdateCompanyNote;
+            ajaxService.makeAjaxRequest("POST", url, contactData).done(function(data) {
+                currentValues.companyNote = contactData.companyNotes;
+
+                toastr["success"](`Note added to company Successfully!`);
+                showEditCompanyNoteButton();
+                hideUpdateCompanyNoteButton();
+                makeCompanyNoteInputsNonEditable();
+            }).fail(function(err) {
+                showEditCompanyNoteButton();
+                hideUpdateCompanyNoteButton();
+                makeCompanyNoteInputsNonEditable();
                 toastr["error"](`Something unexpected happened please refresh and try again!`);
             });
         });
@@ -243,6 +388,9 @@ var campaignAccordionService = function () {
             url = url.replace(':id', companyId);
             ajaxService.makeAjaxRequest("POST", url, companyData).done(function(data) {
                 toastr["success"](`Company details updated Successfully!`);
+                currentValues.companyDetails.toDialExtension = companyData.company_details_to_dial_extension;
+                currentValues.companyDetails.toDialDirectory = companyData.company_details_to_dial_directory;
+                currentValues.companyDetails.toDialOperator = companyData.company_details_to_dial_operator;
                 showEditCompanyButton();
                 hideUpdateCompanyButton();
                 makeCompanyInputsNonEditable();
@@ -254,14 +402,14 @@ var campaignAccordionService = function () {
             });
         });
 
-         // Get Statuses
-         ajaxService.makeAjaxRequest("GET", urls.campaignCompanyStatusesFetchAll).done(function(data) {
-            data.forEach(element => {
-                statusesObjectArray[element.status_name] = [];
-                statusesObjectArrayOrignal[element.status_name] = [];
-                statusesObject[element.id] = element.status_name.toUpperCase().replaceAll("-", " ");
-            });
-         });
+        // Get Statuses
+        ajaxService.makeAjaxRequest("GET", urls.campaignCompanyStatusesFetchAll).done(function(data) {
+        data.forEach(element => {
+            statusesObjectArray[element.status_name] = [];
+            statusesObjectArrayOrignal[element.status_name] = [];
+            statusesObject[element.id] = element.status_name.toUpperCase().replaceAll("-", " ");
+        });
+        });
 
         //  Status Change
         $("." + classes.change_status).on('click', function(e) {
@@ -313,16 +461,28 @@ var campaignAccordionService = function () {
         });
 
         // Show update contact button and make inputs editable
-        $("#" + elementIds.edit_contact_btn).on("click", function() {
-            showUpdateContactButton();
-            hideEditContactButton();
-            makeContactInputsEditable();
-        });
+        // $("#" + elementIds.edit_contact_btn).on("click", function() {
+        //     showUpdateContactButton();
+        //     hideEditContactButton();
+        //     makeContactInputsEditable();
+        // });
         // Hide update contact button and make inputs non editable
         $("#" + elementIds.dismiss_contact_edit_btn).on("click", function() {
             hideUpdateContactButton();
             showEditContactButton();
-            makeContactInputsNonEditable();
+            // makeContactInputsNonEditable();
+
+            $("#"+elementIds.contact_details_prospect_name).val(currentValues.contactDetails.name);
+            $("#"+elementIds.contact_details_title).val(currentValues.contactDetails.title);
+            $("#"+elementIds.contact_details_email).val(currentValues.contactDetails.email);
+            $("#"+elementIds.contact_details_aa_email).val(currentValues.contactDetails.aaEmail);
+            $("#"+elementIds.contact_details_linkedin_profile).val(currentValues.contactDetails.linkedinUrl);
+            $("#"+elementIds.contact_details_linkedin_profile_url).html(`<a href="${currentValues.contactDetails.linkedinUrl}" target="_blank"><i class="ri-links-line" id=""></i></a>`);
+            $("#"+elementIds.contact_details_zoominfo_profile).val(currentValues.contactDetails.zoomInfoUrl);
+            $("#"+elementIds.contact_details_zoominfo_profile_url).html('<a href="${currentValues.contactDetails.zoomInfoUrl}" target="_blank"><i class="ri-links-line" id=""></i></a>');
+            $("#"+elementIds.contact_details_direct_dial).val(currentValues.contactDetails.directDial);
+            $("#"+elementIds.contact_details_ext).val(currentValues.contactDetails.ext);
+            $("#"+elementIds.contact_details_mobile).val(currentValues.contactDetails.mobile);
         });
 
         // Show update contact note button and make inputs editable
@@ -338,17 +498,30 @@ var campaignAccordionService = function () {
             makeContactNoteInputsNonEditable();
         });
 
-        // Show update contact button and make inputs editable
+        // Show update company button and make inputs editable
         $("#" + elementIds.edit_company_btn).on("click", function() {
             showUpdateCompanyButton();
             hideEditCompanyButton();
             makeCompanyInputsEditable();
         });
-        // Hide update contact button and make inputs non editable
+        // Hide update company button and make inputs non editable
         $("#" + elementIds.dismiss_company_edit_btn).on("click", function() {
             hideUpdateCompanyButton();
             showEditCompanyButton();
             makeCompanyInputsNonEditable();
+        });
+
+         // Show update company note button and make inputs editable
+         $("#" + elementIds.edit_company_note_btn).on("click", function() {
+            showUpdateCompanyNoteButton();
+            hideEditCompanyNoteButton();
+            makeCompanyNoteInputsEditable();
+        });
+        // Hide update company note button and make inputs non editable
+        $("#" + elementIds.dismiss_company_note_edit_btn).on("click", function() {
+            hideUpdateCompanyNoteButton();
+            showEditCompanyNoteButton();
+            makeCompanyNoteInputsNonEditable();
         });
 
         // Create Contact Button click show modal
@@ -379,6 +552,7 @@ var campaignAccordionService = function () {
                 hideUpdateContactButton();
                 hideEditContactNoteButton();
                 hideUpdateContactNoteButton();
+                makeContactInputsNonEditable();
             }).fail(function(err) {
                 emptyContactInfo();
                 $("#" + elementIds.request_to_delete_contact_btn).attr("data-contact-id", "");
@@ -387,9 +561,44 @@ var campaignAccordionService = function () {
                 hideUpdateContactButton();
                 hideEditContactNoteButton();
                 hideUpdateContactNoteButton();
+                makeContactInputsNonEditable();
                 toastr["error"](`Something unexpected happened please refresh and try again!`);
             });
         });
+
+        // Contact Request Show Modal
+        $("#" + elementIds.request_contact_btn).on("click", function() {
+            emptyCreateContactRequestModalInfo();
+            $("#" + elementIds.request_contact_modal).modal("show");
+        })
+        // Add Contact Request Event
+        $("#" + elementIds.store_new_contact_request_btn).on("click", function() {
+            var contactRequestData = {
+                companyName: $("#" + elementIds.companyName).val(),
+                prospectTitle: $("#" + elementIds.prospectTitle).val(),
+            }
+            // validate
+            if(contactRequestData.companyName.trim().length <= 0) {
+                $("#" + elementIds.companyName).addClass("is-invalid");
+                return;
+            } else {
+                $("#" + elementIds.companyName).removeClass("is-invalid");
+            }
+            if(contactRequestData.prospectTitle.trim().length <= 0) {
+                $("#" + elementIds.prospectTitle).addClass("is-invalid");
+                return;
+            } else {
+                $("#" + elementIds.prospectTitle).removeClass("is-invalid");
+            }
+            
+            ajaxService.makeAjaxRequest("POST", urls.requestCreateContact, contactRequestData).done(function(data) {
+                $("#" + elementIds.request_contact_modal).modal("hide");
+                toastr["success"](`Contact Request sent Successfully!`);
+            }).fail(function(err){
+                $("#" + elementIds.request_contact_modal).modal("hide");
+                toastr["error"](`Something unexpected happened please refresh and try again!`);
+            });
+        })
 
     }
 
@@ -403,13 +612,13 @@ var campaignAccordionService = function () {
             var url = urls.getContact;
             var payload = {contactId: contactId, campaignId: campaignId, companyId: companyId};
             ajaxService.makeAjaxRequest("POST", url, payload).done(function(data) {
-                // console.log(data);
                 emptyContactInfo();
                 populateContactInfo(data['contact'], payload);
 
                 showEditContactButton();
                 hideUpdateContactButton();
-                makeContactInputsNonEditable();
+                // makeContactInputsNonEditable();
+                makeContactInputsEditable();
 
                 showEditContactNoteButton();
                 hideUpdateContactNoteButton();
@@ -423,7 +632,9 @@ var campaignAccordionService = function () {
                 emptyContactInfo();
                 hideEditContactButton();
                 hideUpdateContactButton();
-                makeContactInputsNonEditable();
+                // makeContactInputsNonEditable();
+                makeContactInputsEditable();
+
 
                 hideEditContactNoteButton();
                 hideUpdateContactNoteButton();
@@ -473,20 +684,30 @@ var campaignAccordionService = function () {
         $("#" + elementIds.zoominfoCompanyProfileURL).val("");
         $("#" + elementIds.linkedinCompanyProfileURL).val("");
     }
+    function emptyCreateContactRequestModalInfo() {
+        $("#" + elementIds.companyName).val("");
+        $("#" + elementIds.prospectTitle).val("");
+    }
 
     function populateCompanyInfo(data, companyId) {
+        $("#"+elementIds.company_notes).text(data.notes);
         $("#"+elementIds.company_details_hq).text(data.hq_phone);
         $("#"+elementIds.company_details_to_dial_extension).val(data.to_dial_extension);
         $("#"+elementIds.company_details_to_dial_directory).val(data.to_dial_directory);
         $("#"+elementIds.company_details_to_dial_operator).val(data.to_dial_operator);
         $("#"+elementIds.company_details_company_url).html(`<a href='//${data.website}' target='_blank'>${data.website}</a>`);
-        $("#"+elementIds.company_details_linkedin_profile).html(`<a href='${data.linkedin_company_profile_url}' target='_blank'>${data.linkedin_company_profile_url}</a>`);
-        $("#"+elementIds.company_details_zoominfo_profile).html(`<a href='${data.zoominfo_company_profile_url}' target='_blank'>${data.zoominfo_company_profile_url}</a>`);
+        $("#"+elementIds.company_details_linkedin_profile).html(`<a href='${data.linkedin_company_profile_url}' target='_blank'><i class="ri-external-link-line"></i></a>`);
+        $("#"+elementIds.company_details_zoominfo_profile).html(`<a href='${data.zoominfo_company_profile_url}' target='_blank'><i class="ri-external-link-line"></i></a>`);
 
         $("#" + elementIds.update_company_btn).attr("data-company-id", companyId);
+
+        currentValues.companyNote = data.notes;
+        currentValues.companyDetails.toDialExtension = data.to_dial_extension;
+        currentValues.companyDetails.toDialDirectory = data.to_dial_directory;
+        currentValues.companyDetails.toDialOperator = data.to_dial_operator;
     }
     function populateContactInfo(data, payload) {
-        $("#"+elementIds.contact_details_prospect_name).val((data.salutation)?data.salutation + " ":"" + data.first_name + " " + data.last_name);
+        $("#"+elementIds.contact_details_prospect_name).val(data.first_name + " " + data.last_name);
         $("#"+elementIds.contact_details_title).val(data.job_title);
         $("#"+elementIds.contact_details_email).val(data.email_address);
         $("#"+elementIds.contact_details_aa_email).val(data.aa_email);
@@ -505,6 +726,18 @@ var campaignAccordionService = function () {
         $("#" + elementIds.update_contact_note_btn).attr("data-campaign-id", payload.campaignId);
         $("#" + elementIds.update_contact_note_btn).attr("data-company-id", payload.companyId);
         $("#" + elementIds.update_contact_note_btn).attr("data-contact-id", data.id);
+
+        currentValues.contactDetails.name = data.first_name + " " + data.last_name;
+        currentValues.contactDetails.directDial = (data.direct_phone_number)? data.direct_phone_number : "";
+        currentValues.contactDetails.ext = (data.dial_extension)? data.dial_extension : "";
+        currentValues.contactDetails.title = (data.job_title)? data.job_title : "";
+        currentValues.contactDetails.mobile = (data.mobile_phone)? data.mobile_phone : "";
+        currentValues.contactDetails.email = (data.email_address)? data.email_address : "";
+        currentValues.contactDetails.aaEmail = (data.aa_email)? data.aa_email : "";
+        currentValues.contactDetails.linkedinUrl = (data.linkedin_contact_profile_url)? data.linkedin_contact_profile_url : "";
+        currentValues.contactDetails.zoomInfoUrl = (data.zoominfo_contact_profile_url)? data.zoominfo_contact_profile_url : "";
+
+        currentValues.contactNote = (data.notes)? data.notes : "";
     }
 
     function emptyContactTableBody() {
@@ -550,10 +783,10 @@ var campaignAccordionService = function () {
         $("#" + elementIds.dismiss_contact_edit_btn).hide('slow');
     }
     function showEditContactButton() {
-        $("#" + elementIds.edit_contact_btn).show('slow');
+        // $("#" + elementIds.edit_contact_btn).show('slow');
     }
     function hideEditContactButton() {
-        $("#" + elementIds.edit_contact_btn).hide('slow');
+        // $("#" + elementIds.edit_contact_btn).hide('slow');
     }
 
     function showUpdateContactNoteButton() {
@@ -586,6 +819,21 @@ var campaignAccordionService = function () {
         $("#" + elementIds.edit_company_btn).hide('slow');
     }
 
+    function showUpdateCompanyNoteButton() {
+        $("#" + elementIds.update_company_note_btn).show('slow');
+        $("#" + elementIds.dismiss_company_note_edit_btn).show('slow');
+    }
+    function hideUpdateCompanyNoteButton() {
+        $("#" + elementIds.update_company_note_btn).hide('slow');
+        $("#" + elementIds.dismiss_company_note_edit_btn).hide('slow');
+    }
+    function showEditCompanyNoteButton() {
+        $("#" + elementIds.edit_company_note_btn).show('slow');
+    }
+    function hideEditCompanyNoteButton() {
+        $("#" + elementIds.edit_company_note_btn).hide('slow');
+    }
+
     function makeContactInputsEditable() {
         $("#" + elementIds.contact_details_prospect_name).removeAttr("disabled");
         $("#" + elementIds.contact_details_direct_dial).removeAttr("disabled");
@@ -613,6 +861,7 @@ var campaignAccordionService = function () {
         $("#" + elementIds.notes).removeAttr("disabled");
     }
     function makeContactNoteInputsNonEditable() {
+        $("#" + elementIds.notes).val(currentValues.contactNote);
         $("#" + elementIds.notes).prop("disabled", "true");
     }
     function makeCompanyInputsEditable() {
@@ -624,6 +873,20 @@ var campaignAccordionService = function () {
         $("#" + elementIds.company_details_to_dial_extension).prop("disabled", "true");
         $("#" + elementIds.company_details_to_dial_directory).prop("disabled", "true");
         $("#" + elementIds.company_details_to_dial_operator).prop("disabled", "true");
+
+        $("#" + elementIds.company_details_to_dial_extension).val(currentValues.companyDetails.toDialExtension);
+        $("#" + elementIds.company_details_to_dial_directory).val(currentValues.companyDetails.toDialDirectory);
+        $("#" + elementIds.company_details_to_dial_operator).val(currentValues.companyDetails.toDialOperator);
+    }
+
+    function makeCompanyNoteInputsEditable() {
+        $("#" + elementIds.company_notes).val(currentValues.companyNote);
+        $("#" + elementIds.company_notes).removeAttr("disabled");
+
+    }
+    function makeCompanyNoteInputsNonEditable() {
+        $("#" + elementIds.company_notes).val(currentValues.companyNote);
+        $("#" + elementIds.company_notes).prop("disabled", "true");
     }
 
     function handleStoreContact(companyId) {

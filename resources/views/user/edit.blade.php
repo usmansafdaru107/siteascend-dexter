@@ -90,7 +90,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-4">
                                             <label class="form-label" for="role">Select User Role</label>
-                                            <select class="select2 form-control @error('role') is-invalid @enderror" name="role" required data-placeholder="Choose User Role">
+                                            <select class="select2 form-control @error('role_id') is-invalid @enderror" name="role_id" required data-placeholder="Choose User Role">
                                                 @foreach ($roles as $role)
                                                     @if ($user->role->id == $role->id)
                                                         <option value="{{ $role->id }}" selected>{{ Str::upper($role->name) . ' - ' . $role->abbreviation }}</option>
@@ -99,7 +99,7 @@
                                                     @endif
                                                 @endforeach
                                             </select>
-                                            @error('role')
+                                            @error('role_id')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
