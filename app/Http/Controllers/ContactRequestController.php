@@ -33,6 +33,6 @@ class ContactRequestController extends Controller
     public function destroy(ContactRequest $contactRequest) 
     {
         $contactRequest->delete();
-        return redirect()->back()->with('success', "Request marked as resolved!");
+        return redirect()->back()->with('success', "Request deleted successfully!");
     }
 }

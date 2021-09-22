@@ -76,11 +76,12 @@ Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(fun
             Route::post("/csv/upload", [ContactController::class, "upload"])->name("upload");
             Route::post("/store-mini", [ContactController::class, "storeMini"])->name("storeMini");
             Route::post("/store-mini-contact", [ContactController::class, "storeMiniContact"])->name("storeMiniContact");
+            Route::post("/delete", [ContactController::class, "destroy"])->name("destroy");
         });
         Route::resource("contact", ContactController::class)->except([
-            'show'
+            'show', 'destroy'
         ])->names([
-            'index' => 'index', 'create' => 'create', 'store' => 'store', 'edit' => 'edit', 'update' => 'update', 'destroy' => 'destroy'
+            'index' => 'index', 'create' => 'create', 'store' => 'store', 'edit' => 'edit', 'update' => 'update'
         ]);
     });
    
