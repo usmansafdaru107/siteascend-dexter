@@ -7,7 +7,7 @@
 
 		<div class="page-content">
 			<div class="container-fluid">
-				
+
 				<!-- start page title -->
 				<div class="row">
 					<div class="col-12">
@@ -79,7 +79,7 @@
 												<div class="flex-1 overflow-hidden">
 													<p class="text-truncate font-size-14 mb-2">Total Contacts</p>
 													<h4 class="mb-0">{{ $stats['totalContacts'] }}</h4>
-													
+
 												</div>
 												<div class="text-primary ms-auto">
 													<i class="ri-admin-fill font-size-24"></i>
@@ -87,7 +87,7 @@
 											</div>
 										</a>
 									</div>
-									
+
 								</div>
 							</div>
 							<div class="col-md-3">
@@ -116,11 +116,11 @@
 				<!-- end row -->
 
 			</div>
-			
+
 		</div>
 		<!-- End Page-content -->
-		
-		
-		
+
+
+
 	</div>
 @stop

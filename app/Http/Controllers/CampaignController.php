@@ -94,9 +94,9 @@ class CampaignController extends Controller
             $campaign->users()->syncWithoutDetaching([$request->cre]);
             $campaign->users()->syncWithoutDetaching([$request->dsr]);
             $campaign->users()->syncWithoutDetaching([$request->csr]);
-    
+
             DB::commit();
-    
+
             return redirect()->back()->with('success', 'New Campaign created successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -179,9 +179,9 @@ class CampaignController extends Controller
             $campaign->users()->syncWithoutDetaching([$request->cre]);
             $campaign->users()->syncWithoutDetaching([$request->dsr]);
             $campaign->users()->syncWithoutDetaching([$request->csr]);
-    
+
             DB::commit();
-    
+
             return redirect()->route("admin.campaign.index")->with('success', 'Campaign Updated successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -220,7 +220,7 @@ class CampaignController extends Controller
     //         }
     //         $data['companies'] = call_user_func_array('array_merge', $dataOrdered);
     //     }
-        
+
     //     return view('campaign.campaign_companies', $data);
     // }
     public function campaignAccordion(Campaign $campaign)
@@ -240,14 +240,14 @@ class CampaignController extends Controller
             "stay-out-already-customer" => [],
         ];
 
-        if($data['companies']) {
-            foreach ($data['companies'] as $key => $company) {
-                $status = CampaignCompanyStatus::find($company->pivot->status_id)->status_name;
-                $dataOrdered[$status][] = $company;
-            }
-            $data['companies'] = call_user_func_array('array_merge', $dataOrdered);
-        }
-        
+        // if($data['companies']) {
+        //     foreach ($data['companies'] as $key => $company) {
+        //         $status = CampaignCompanyStatus::find($company->pivot->status_id)->status_name;
+        //         $dataOrdered[$status][] = $company;
+        //     }
+        //     $data['companies'] = call_user_func_array('array_merge', $dataOrdered);
+        // }
+
         return view('campaign.campaign_accordion', $data);
     }
 
