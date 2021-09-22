@@ -68,9 +68,9 @@ class CampaignController extends Controller
             $campaign->users()->syncWithoutDetaching([$request->cre]);
             $campaign->users()->syncWithoutDetaching([$request->dsr]);
             $campaign->users()->syncWithoutDetaching([$request->csr]);
-    
+
             DB::commit();
-    
+
             return redirect()->back()->with('success', 'New Campaign created successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -123,9 +123,9 @@ class CampaignController extends Controller
             $campaign->users()->syncWithoutDetaching([$request->cre]);
             $campaign->users()->syncWithoutDetaching([$request->dsr]);
             $campaign->users()->syncWithoutDetaching([$request->csr]);
-    
+
             DB::commit();
-    
+
             return redirect()->route("admin.campaign.index")->with('success', 'Campaign Updated successfully!');
         } catch (\Exception $e) {
             DB::rollBack();

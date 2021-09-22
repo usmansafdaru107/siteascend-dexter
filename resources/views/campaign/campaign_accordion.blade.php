@@ -12,7 +12,7 @@
 <div class="page-content" style="margin-top: 15px !important;">
     <!-- <div class="container-fluid"> -->
     <div class="">
-        
+
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -52,7 +52,7 @@
                                         <p class="text-muted mb-0 text-truncate">Solution URL :</p>
                                         <h5 class="float-end font-size-14 m-0">{{ $campaign->campaignGoal }}</h5>
                                         <p class="text-muted mb-0 text-truncate">Campaign Goal :</p>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -333,7 +333,7 @@
                                     <button class="btn btn-outline-dark btn-sm" style="display: none;" id="dismiss_contact_note_edit_btn"><i class="ri-close-fill"></i></button>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -354,7 +354,7 @@
         <!-- End: Request Buttons -->
 
     </div>
-    
+
 </div>
 <!-- End Page-content -->
 
