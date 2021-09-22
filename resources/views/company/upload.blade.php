@@ -3,6 +3,25 @@
 @section('title', 'Company Bulk Upload')
 
 @section('css_styles')
+<style>
+    .nav_color {
+        color: #919bae !important
+    }
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+    .nav_brand1 {
+        background: none;
+    }
+    .vertical-line {
+        border-left: 1px solid #919bae;
+        height: 50px;
+        position: relative;
+        left: 4px;
+        top: 12px;
+    }
+    </style>
     <!-- <link href="{{ asset('assets/libs/dropzone/min/dropzone.min.css') }}" rel="stylesheet" type="text/css"> -->
 @stop
 
@@ -47,7 +66,7 @@
                                     {{ session()->get('error') }}
                                 </div>
                             @endif
-                            
+
                             <div>
                                 <form action="{{ route('admin.company.upload') }}" class="" method="POST" enctype="multipart/form-data">
                                     @csrf
@@ -58,14 +77,14 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                    
+
                                     <div class="text-center mt-4">
                                         <button type="submit" class="btn btn-primary waves-effect waves-light">Upload</button>
                                     </div>
                                 </form>
                             </div>
 
-                            
+
                         </div>
                     </div>
                 </div> <!-- end col -->
@@ -78,3 +97,5 @@
 @section('js_scripts')
     <!-- <script src="{{ asset('assets/libs/dropzone/min/dropzone.min.js') }}"></script> -->
 @stop
+
+

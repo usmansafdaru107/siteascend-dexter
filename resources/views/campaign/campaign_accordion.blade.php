@@ -3,7 +3,28 @@
 @section('title', 'Company Accordion View in Campaign')
 
 @section('css_styles')
+
+<style>
+    .nav_color {
+        color: #919bae !important
+    }
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0; // remove the gap so it doesn't close
+    }
+    .nav_brand1 {
+        background: none;
+    }
+    .vertical-line {
+        border-left: 1px solid #919bae;
+        height: 50px;
+        position: relative;
+        left: 4px;
+        top: 12px;
+    }
+    </style>
     <link rel="stylesheet" href="{{asset('custom_css/style.css')}}">
+
 @stop
 
 @section('content')
@@ -587,3 +608,4 @@
     <script src="{{ asset('custom_js/services/helpersService.js') }}"></script>
     <script src="{{ asset('custom_js/campaign/campaign_accordion.js') }}"></script>
 @stop
+

@@ -28,7 +28,6 @@
 
         @yield('css_styles')
 
-        @include('layouts.styles_css')
         <!-- Bootstrap Css -->
         <link href="{{ asset('assets/css/bootstrap-dark.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- Icons Css -->
