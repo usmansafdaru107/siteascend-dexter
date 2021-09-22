@@ -25,7 +25,7 @@
         <link href="{{ asset('assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- Responsive datatable examples -->
         <link href="{{ asset('assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-
+        <link href="{{ asset('assets/css/style_dexter.css') }}" rel="stylesheet" type="text/css">
         @yield('css_styles')
 
         <!-- Bootstrap Css -->
