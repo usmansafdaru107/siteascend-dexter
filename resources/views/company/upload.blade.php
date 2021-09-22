@@ -47,7 +47,7 @@
                                     {{ session()->get('error') }}
                                 </div>
                             @endif
-                            
+
                             <div>
                                 <form action="{{ route('admin.company.upload') }}" class="" method="POST" enctype="multipart/form-data">
                                     @csrf
@@ -58,14 +58,14 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                    
+
                                     <div class="text-center mt-4">
                                         <button type="submit" class="btn btn-primary waves-effect waves-light">Upload</button>
                                     </div>
                                 </form>
                             </div>
 
-                            
+
                         </div>
                     </div>
                 </div> <!-- end col -->
@@ -78,3 +78,5 @@
 @section('js_scripts')
     <!-- <script src="{{ asset('assets/libs/dropzone/min/dropzone.min.js') }}"></script> -->
 @stop
+
+

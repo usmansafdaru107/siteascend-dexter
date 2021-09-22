@@ -37,7 +37,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            
+
                             @if(session()->has('success'))
                                 <div class="alert alert-success" id="message_success">
                                     {{ session()->get('success') }}
@@ -268,7 +268,7 @@
                                     </div>
                                 </div>
                                 <!-- end: Sixth Row -->
-                                
+
                                  <!-- Seventh Row -->
                                  <div class="row">
                                     <div class="col-lg-8">
@@ -415,3 +415,5 @@
     <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script>
 @stop
+
+

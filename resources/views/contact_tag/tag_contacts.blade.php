@@ -80,7 +80,7 @@
                                             <td>{{ $contact->created_at }}</td>
                                         </tr>
                                     @endforeach
-                                
+
                                 </tbody>
                             </table>
 
@@ -93,3 +93,4 @@
 	</div>
 </div>
 @stop
+

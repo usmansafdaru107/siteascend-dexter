@@ -118,10 +118,10 @@
                                             <td>{{ $contact->country }}</td>
                                             <td>{{ $contact->zip }}</td>
                                             <td>{{ $contact->created_at }}</td>
-                                            
+
                                         </tr>
                                     @endforeach
-                                
+
                                 </tbody>
                             </table>
 
@@ -134,3 +134,4 @@
 	</div>
 </div>
 @stop
+

@@ -96,7 +96,7 @@
                                             <td>{{ $company->created_at }}</td>
                                         </tr>
                                     @endforeach
-                                
+
                                 </tbody>
                             </table>
 

@@ -3,6 +3,7 @@
 @section('title', 'Edit Company Tag')
 
 @section('css_styles')
+
     <!-- <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"> -->
 @stop
 
@@ -90,3 +91,4 @@
     <!-- <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script> -->
     <!-- <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script> -->
 @stop
+

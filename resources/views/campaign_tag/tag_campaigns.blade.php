@@ -52,7 +52,7 @@
                                             <td>{{ $campaign->created_at }}</td>
                                         </tr>
                                     @endforeach
-                                
+
                                 </tbody>
                             </table>
 
@@ -65,3 +65,4 @@
 	</div>
 </div>
 @stop
+

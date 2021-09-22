@@ -62,7 +62,7 @@
                                                     {{ $message }}
                                                 </div>
                                             @enderror
-                                            
+
                                         </div>
                                     </div>
 
@@ -90,3 +90,5 @@
     <!-- <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script> -->
     <!-- <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script> -->
 @stop
+
+

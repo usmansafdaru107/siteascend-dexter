@@ -46,7 +46,7 @@
                             <div class="mb-2" style="float: right">
                                 <a class="btn btn-outline-dark btn-sm page-title-right" href="{{ route('admin.company.create') }}">Add New Company</a>
                             </div>
-        
+
                                 <h4 class="card-title">Accordion example</h4>
                                 <p class="card-title-desc">Extend the default collapse behavior to see the contact is a company.</p>
 
@@ -68,7 +68,7 @@
                                             <div id="collapse{{ $company->id }}" class="collapse"
                                                     aria-labelledby="headingOne" data-bs-parent="#accordion">
                                                 <div class="card-body">
-                                                    
+
                                                 <p class="text-center text-white font-weight-bold">{{ $company->name . " Contacts" }}</p>
                                                 <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                     <thead>
@@ -95,7 +95,7 @@
                                                                 <td>{{ $contact->created_at }}</td>
                                                             </tr>
                                                         @endforeach
-                                                    
+
                                                     </tbody>
                                                 </table>
                                                     <!-- <tr>
@@ -125,9 +125,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     @endforeach
-                                    
+
                                     <!-- <div class="card mb-1 shadow-none">
                                         <a href="#collapseTwo" class="text-dark collapsed" data-bs-toggle="collapse"
                                                         aria-expanded="false"
@@ -174,11 +174,11 @@
                                     </div> -->
                                 </div>
 
-                                        
-        
 
-                                   
-                                
+
+
+
+
 
                         </div>
                     </div>
@@ -189,3 +189,4 @@
 	</div>
 </div>
 @stop
+

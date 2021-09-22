@@ -3,6 +3,7 @@
 @section('title', 'Edit Contact')
 
 @section('css_styles')
+
     <!-- <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"> -->
 @stop
 

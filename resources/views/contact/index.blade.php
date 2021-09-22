@@ -47,7 +47,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                        
+
                                         <div class="dropdown mt-4 mt-sm-0">
 
                                             <a href="#" class="btn btn-light btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -71,7 +71,7 @@
                                                                 {{ $tag->tag_name }}
                                                             </label>
                                                         </div>
-                                                        
+
                                                     </a>
                                                 @endforeach
                                             </div>
@@ -86,7 +86,7 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <table id="datatable" class="table table-bordered table-responsive">
                                 <thead>
                                 <tr>
@@ -150,10 +150,10 @@
                                             <td>{{ $contact->country }}</td>
                                             <td>{{ $contact->zip }}</td>
                                             <td>{{ $contact->created_at }}</td>
-                                            
+
                                         </tr>
                                     @endforeach
-                                
+
                                 </tbody>
                             </table>
 
@@ -176,7 +176,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            
+
             const ids = {
                 checkbox_contact_: "checkbox_contact_",
                 checkbox_tag_: "checkbox_tag_",
@@ -209,7 +209,7 @@
             $("." + classes.tag_checkbox).on('click', function() {
 
                 if($(this).prop("checked") == true) {
-               
+
                     var tagId = $(this).attr("data-id");
                     var tagName = $(this).attr("data-name");
                     var selectContactsCount = $('.'+classes.contact_checkbox +":checked").length;
@@ -261,3 +261,4 @@
         });
     </script>
 @stop
+
