@@ -36,11 +36,13 @@
         <!-- App Css-->
         <link href="{{ asset('assets/css/app-dark.min.css') }}" rel="stylesheet" type="text/css" />
 
+        <link rel="stylesheet" href="{{asset('custom_css/style.css')}}">
+
     </head>
 
-    <body data-layout="horizontal" data-sidebar="dark">
+    <body data-topbar="light" data-layout="horizontal" data-layout-size="boxed">
 
-        <div id="layout-wrapper">
+        <div id="layout-wrapper" style="min-height: 100vh;">
 
             @extends('layouts.navbar')
 

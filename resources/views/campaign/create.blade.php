@@ -6,12 +6,10 @@
     <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css">
 @stop
 
-
-
 @section('content')
 
 <div class="main-content">
-	<div class="page-content">
+	<div class="page-content top-padding">
         <div class="container-fluid">
 
 			<!-- start page title -->

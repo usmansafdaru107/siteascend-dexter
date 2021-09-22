@@ -92,12 +92,10 @@ Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(fun
         ])->names([
             'index' => 'index', 'store' => 'requestCreateContact', 'destroy' => 'destroy'
         ]);
-        // Route::get("/", [ContactRequestController::class, "index"])->name("index");
-        // Route::post("/", [ContactRequestController::class, "store"])->name("requestCreateContact");
     });
     
     // Contact Tags
-    Route::get("/contact/tag", [ContactTagController::class, "index"])->name("contact.tag.index");
+    Route::get("/contact-tag/tag", [ContactTagController::class, "index"])->name("contact.tag.index");
     Route::get("/contact/tag/create", [ContactTagController::class, "create"])->name("contact.tag.create");
     Route::post("/contact/tag", [ContactTagController::class, "store"])->name("contact.tag.store");
     Route::get("/contact/tag/{tag}/edit", [ContactTagController::class, "edit"])->name("contact.tag.edit");
@@ -108,7 +106,7 @@ Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(fun
     Route::get("/tag/{tag}/contacts", [ContactTagController::class, "tagContacts"])->name("tag.contact");
 
     // Company Tags
-    Route::get("/company/tag", [CompanyTagController::class, "index"])->name("company.tag.index");
+    Route::get("/company-tag/tag", [CompanyTagController::class, "index"])->name("company.tag.index");
     Route::get("/company/tag/create", [CompanyTagController::class, "create"])->name("company.tag.create");
     Route::post("/company/tag", [CompanyTagController::class, "store"])->name("company.tag.store");
     Route::get("/company/tag/{tag}/edit", [CompanyTagController::class, "edit"])->name("company.tag.edit");

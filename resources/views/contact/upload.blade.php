@@ -10,7 +10,7 @@
 @section('content')
 
 <div class="main-content">
-	<div class="page-content">
+	<div class="page-content top-padding">
         <div class="container-fluid">
 
 			<!-- start page title -->

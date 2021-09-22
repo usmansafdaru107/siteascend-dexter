@@ -1,17 +1,11 @@
-@extends('layouts.app_main_without_sidebar')
+@extends('layouts.app_main')
 
 @section('title', 'Company Accordion View in Campaign')
-
-@section('css_styles')
-
-    <link rel="stylesheet" href="{{asset('custom_css/style.css')}}">
-
-@stop
 
 @section('content')
 <div class="main-content">
 
-<div class="page-content" style="margin-top: 15px !important;">
+<div class="page-content top-padding">
     <!-- <div class="container-fluid"> -->
     <div class="">
 
