@@ -43,6 +43,7 @@ class CreateContactsTable extends Migration
             $table->softDeletes();
             $table->unsignedBigInteger('deleted_by')->nullable();
             $table->foreign('deleted_by')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
+            $table->string("reason")->nullable();
         });
     }
 

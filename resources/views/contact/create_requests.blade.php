@@ -48,12 +48,12 @@
                             <table id="datatable" class="table table-bordered table-responsive">
                                 <thead>
                                 <tr>
-                                    <!-- <th>Mark as Resolved</th> -->
+                                    <th>Delete</th>
+                                    <th>Add New Contact</th>
                                     <th>Requesting User Name</th>
                                     <th>Requesting User Email</th>
                                     <th>Company Name</th>
                                     <th>Prospect Title</th>
-                                    <th>Add New Contact</th>
                                 </tr>
                                 </thead>
 
@@ -67,15 +67,25 @@
                                                 else
                                                     $user = $user[0];
                                             @endphp
-                                            <td>{{ $user['name'] }}</td>
-                                            <td>{{ $user['email'] }}</td>
-                                            <td>{{ $contactRequest->company_name }}</td>
-                                            <td>{{ $contactRequest->prospect_title }}</td>
+                                            <td>
+                                                <form action="{{ route('admin.contact-request.destroy', ['contact_request' => $contactRequest->id]) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-outline-secondary btn-sm edit" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Contact Request">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
                                             <td class="text-center">
                                                 <button class="btn btn-outline-secondary btn-sm add_new_contact_btn" data-contact-request-id="{{ $contactRequest->id }}" data-company-name="{{ $contactRequest->company_name }}" data-prospect-title="{{ $contactRequest->prospect_title }}" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Contact!">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
                                             </td>
+                                            <td>{{ $user['name'] }}</td>
+                                            <td>{{ $user['email'] }}</td>
+                                            <td>{{ $contactRequest->company_name }}</td>
+                                            <td>{{ $contactRequest->prospect_title }}</td>
+                                           
                                             
                                         </tr>
                                     @endforeach

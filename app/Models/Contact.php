@@ -36,6 +36,7 @@ class Contact extends Model
         'country',
         'email_domain',
         'deleted_by',
+        'reason'
     ];
 
 
