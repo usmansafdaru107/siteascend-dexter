@@ -3,6 +3,25 @@
 @section('title', 'User Tag')
 
 @section('css_styles')
+<style>
+    .nav_color {
+        color: #919bae !important
+    }
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+    .nav_brand1 {
+        background: none;
+    }
+    .vertical-line {
+        border-left: 1px solid #919bae;
+        height: 50px;
+        position: relative;
+        left: 4px;
+        top: 12px;
+    }
+    </style>
     <!-- <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"> -->
 @stop
 
@@ -89,3 +108,5 @@
     <!-- <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script> -->
     <!-- <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script> -->
 @stop
+
+

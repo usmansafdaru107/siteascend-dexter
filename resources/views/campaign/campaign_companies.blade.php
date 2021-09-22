@@ -74,7 +74,7 @@
                                             <td>{{ $company->created_at }}</td>
                                         </tr>
                                     @endforeach
-                                
+
                                 </tbody>
                             </table>
 
@@ -113,7 +113,7 @@
                 });
             }
         });
-        
+
         var changeStatus = $(".change-status");
         changeStatus.on('click', function(e) {
             e.preventDefault();
@@ -197,7 +197,7 @@
         //  * from: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array/12646864#12646864
         //  */
         // async function shuffleArray(array) {
-           
+
         //     statusesObjectArray = statusesObjectArrayOrignal
         //     console.log(statusesObjectArray);
 
@@ -217,4 +217,26 @@
 
     });
 </script>
+@stop
+
+@section('css_styles')
+<style>
+    .nav_color {
+        color: #919bae !important
+    }
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+    .nav_brand1 {
+        background: none;
+    }
+    .vertical-line {
+        border-left: 1px solid #919bae;
+        height: 50px;
+        position: relative;
+        left: 4px;
+        top: 12px;
+    }
+    </style>
 @stop
