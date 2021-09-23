@@ -1,0 +1,17 @@
+/* .nav_color {
+    color: #919bae !important
+}
+
+.nav_brand1 {
+    background: none;
+} */
+.vertical-line {
+    border-left: 1.3px solid #919bae;
+    height: 30px;
+    position: relative;
+    top: 22px;
+}
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}

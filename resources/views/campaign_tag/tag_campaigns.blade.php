@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="main-content">
-	<div class="page-content">
+	<div class="page-content top-padding">
         <div class="container-fluid">
 
 			<!-- start page title -->
@@ -52,7 +52,7 @@
                                             <td>{{ $campaign->created_at }}</td>
                                         </tr>
                                     @endforeach
-                                
+
                                 </tbody>
                             </table>
 
@@ -65,3 +65,4 @@
 	</div>
 </div>
 @stop
+

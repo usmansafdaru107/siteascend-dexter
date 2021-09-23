@@ -1,18 +1,14 @@
-@extends('layouts.app_main_without_sidebar')
+@extends('layouts.app_main')
 
 @section('title', 'Company Accordion View in Campaign')
-
-@section('css_styles')
-    <link rel="stylesheet" href="{{asset('custom_css/style.css')}}">
-@stop
 
 @section('content')
 <div class="main-content">
 
-<div class="page-content" style="margin-top: 15px !important;">
+<div class="page-content top-padding">
     <!-- <div class="container-fluid"> -->
     <div class="">
-        
+
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -52,7 +48,7 @@
                                         <p class="text-muted mb-0 text-truncate">Solution URL :</p>
                                         <h5 class="float-end font-size-14 m-0">{{ $campaign->campaignGoal }}</h5>
                                         <p class="text-muted mb-0 text-truncate">Campaign Goal :</p>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +100,7 @@
         <!-- start row -->
         <div class="row">
             <div class="col-lg-7">
-                <div class="card" style="max-height: 350px; overflow-y: auto;">
+                <div class="card" style="max-height: 420px; overflow-y: auto;">
                     <div class="card-body">
                         <div class="table-responsive">
                         @if(!$companies || count($companies) <= 0)
@@ -154,18 +150,6 @@
                                     <div class="clearfix py-2">
                                         <h5 class="float-end font-size-14 m-0" id="company_details_hq"></h5>
                                         <p class="text-muted mb-2 text-truncate">HQ :</p>
-                                        <p class="text-muted mb-2 text-truncate">Company Notes :</p>
-                                        <div class="col-xl-12 col-md-12">
-                                            <div class="mb-2">
-                                                <textarea name="notes" disabled id="company_notes" class="form-control" cols="10" rows="5" placeholder="Company Notes:" style="resize: none;"></textarea>
-                                            </div>
-                                            <div class="text-center">
-                                                <button class="btn btn-outline-dark btn-sm" style="display: none;" id="edit_company_note_btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="ri-pencil-fill"></i></button>
-                                                <button class="btn btn-outline-dark btn-sm" style="display: none;" id="update_company_note_btn" data-campaign-id="" data-company-id=""><i class="ri-check-fill"></i></button>
-                                                <button class="btn btn-outline-dark btn-sm" style="display: none;" id="dismiss_company_note_edit_btn"><i class="ri-close-fill"></i></button>
-                                            </div>
-                                        </div>
-                                        
                                         <h5 class="float-end font-size-14 m-0">
                                             <input type="text" disabled="true" id="company_details_to_dial_extension" class="form-control form-control-sm">
                                         </h5>
@@ -187,9 +171,20 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <button class="btn btn-outline-dark btn-sm" style="display: none;" id="edit_company_btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="ri-pencil-fill"></i></button>
+                                    <!-- <button class="btn btn-outline-dark btn-sm" style="display: none;" id="edit_company_btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="ri-pencil-fill"></i></button> -->
                                     <button class="btn btn-outline-dark btn-sm" style="display: none;" id="update_company_btn" data-company-id=""><i class="ri-check-fill"></i></button>
                                     <button class="btn btn-outline-dark btn-sm" style="display: none;" id="dismiss_company_edit_btn"><i class="ri-close-fill"></i></button>
+                                </div>
+                                <p class="text-muted mb-2 text-truncate">Company Notes :</p>
+                                <div class="col-xl-12 col-md-12">
+                                    <div class="mb-2">
+                                        <textarea name="notes" disabled id="company_notes" class="form-control" cols="10" rows="5" placeholder="Company Notes:" style="resize: none;"></textarea>
+                                    </div>
+                                    <div class="text-center">
+                                        <!-- <button class="btn btn-outline-dark btn-sm" style="display: none;" id="edit_company_note_btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="ri-pencil-fill"></i></button> -->
+                                        <button class="btn btn-outline-dark btn-sm" style="display: none;" id="update_company_note_btn" data-campaign-id="" data-company-id=""><i class="ri-check-fill"></i></button>
+                                        <button class="btn btn-outline-dark btn-sm" style="display: none;" id="dismiss_company_note_edit_btn"><i class="ri-close-fill"></i></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -329,12 +324,12 @@
                                     <textarea name="notes" disabled id="notes" class="form-control" cols="10" rows="10" placeholder="Notes:" style="resize: none;"></textarea>
                                 </div>
                                 <div class="text-center">
-                                    <button class="btn btn-outline-dark btn-sm" style="display: none;" id="edit_contact_note_btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="ri-pencil-fill"></i></button>
+                                    <!-- <button class="btn btn-outline-dark btn-sm" style="display: none;" id="edit_contact_note_btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="ri-pencil-fill"></i></button> -->
                                     <button class="btn btn-outline-dark btn-sm" style="display: none;" id="update_contact_note_btn" data-campaign-id="" data-company-id="" data-contact-id=""><i class="ri-check-fill"></i></button>
                                     <button class="btn btn-outline-dark btn-sm" style="display: none;" id="dismiss_contact_note_edit_btn"><i class="ri-close-fill"></i></button>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -342,6 +337,7 @@
         </div>
         <!-- end row -->
         
+        <!-- Request Buttons -->
         <div class="row mb-4">
             <div class="col-md-12">
                 <div>
@@ -351,9 +347,10 @@
                 </div>
             </div>
         </div>
+        <!-- End: Request Buttons -->
 
     </div>
-    
+
 </div>
 <!-- End Page-content -->
 
@@ -512,6 +509,41 @@
 </div>
 <!-- End: Request Contact Model -->
 
+<!-- Request Contact Model -->
+<div class="modal fade" id="request_to_delete_contact_modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Request To Delete Current Contact</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="row">
+                    <div class="col-lg-12">
+                        <div class="mb-2">
+                            <label class="form-label" for="reason">Reason</label>
+                            <input type="text" name="reason" id="reason" class="form-control" value="{{ old('reason') }}" maxlength="255">
+                            <div class="invalid-feedback">
+                                Please provide a reason.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="mt-2 text-center">
+                            <button type="button" id="request_contact_delete_btn" data-contact-id="" class="btn btn-primary waves-effect waves-light me-1">
+                                Confirm Delete
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End: Request Contact Model -->
+
 <footer class="footer">
     <div class="container-fluid">
         <div class="row">
@@ -542,7 +574,7 @@
            campaignCompanyStatusesFetchAll: '{{ route("admin.campaignCompanyStatuses.index") }}',
            campaignUpdateStatus: '{{ route("admin.campaign.updateStatus") }}',
            storeContactMini: '{{ route("admin.contact.storeMini") }}',
-           requestDeleteContact: '{{ route("admin.contact.destroy", ":id") }}',
+           requestDeleteContact: '{{ route("admin.contact.destroy") }}',
            requestCreateContact: '{{ route("admin.contact-request.requestCreateContact") }}',
            
        }
@@ -551,3 +583,4 @@
     <script src="{{ asset('custom_js/services/helpersService.js') }}"></script>
     <script src="{{ asset('custom_js/campaign/campaign_accordion.js') }}"></script>
 @stop
+

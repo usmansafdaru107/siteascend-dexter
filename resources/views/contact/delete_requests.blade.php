@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="main-content">
-	<div class="page-content">
+	<div class="page-content top-padding">
         <div class="container-fluid">
 
 			<!-- start page title -->
@@ -52,6 +52,7 @@
                                     <th>Delete Permanently</th>
                                     <th>Requesting User Name</th>
                                     <th>Requesting User Email</th>
+                                    <td>Reason For Delete</td>
                                     <th>Name</th>
                                     <th>Company Name</th>
                                     <th>Management Level</th>
@@ -100,6 +101,7 @@
                                             @endphp
                                             <td>{{ $user['name'] }}</td>
                                             <td>{{ $user['email'] }}</td>
+                                            <td>{{ $contact->reason }}</td>
                                             <td>{{ $contact->name() }}</td>
                                             <td>{{ $contact->company->name ?? "" }}</td>
                                             <td>{{ $contact->management_level }}</td>
@@ -116,10 +118,10 @@
                                             <td>{{ $contact->country }}</td>
                                             <td>{{ $contact->zip }}</td>
                                             <td>{{ $contact->created_at }}</td>
-                                            
+
                                         </tr>
                                     @endforeach
-                                
+
                                 </tbody>
                             </table>
 
@@ -132,3 +134,4 @@
 	</div>
 </div>
 @stop
+

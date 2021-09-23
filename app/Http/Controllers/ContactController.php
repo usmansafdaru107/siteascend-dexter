@@ -106,11 +106,16 @@ class ContactController extends Controller
         return redirect()->route("admin.contact.index")->with('success', 'Contact Updated successfully!');
     }
 
-    public function destroy(Contact $contact)
+    public function destroy(Request $request)
     {
         try {
+            $contact = Contact::where('id', '=', $request->contactId)->get();
+            if($contact->isEmpty())
+                return response()->json(['status' => "error", "type" => 'contact-not-found'], 404);
+            $contact = $contact[0];
             $contact->update([
-                "deleted_by" => auth()->user()->id
+                "deleted_by" => auth()->user()->id,
+                "reason" => $request->reason
             ]);
             $contact->delete();
             return response()->json(['status' => "success", "message" => 'Contact delete successfully!']);
@@ -155,7 +160,8 @@ class ContactController extends Controller
         $contact = Contact::withTrashed()->find($contactId);
         $contact->restore();
         $contact->update([
-            'deleted_by' => null
+            'deleted_by' => null,
+            'reason' => null
         ]);
         return redirect()->back()->with('success', 'Contact restored successfully!');
     }

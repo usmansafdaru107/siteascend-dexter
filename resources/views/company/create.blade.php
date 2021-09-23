@@ -3,6 +3,7 @@
 @section('title', 'Create Company')
 
 @section('css_styles')
+
     <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css">
 @stop
 
@@ -10,7 +11,7 @@
 @section('content')
 
 <div class="main-content">
-	<div class="page-content">
+	<div class="page-content top-padding">
         <div class="container-fluid">
 
 			<!-- start page title -->
@@ -191,7 +192,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-lg-4">
                                         <div class="mb-4">
                                             <label class="form-label" for="estHrDeptBudget">Est HR Dept Budget</label>
@@ -368,3 +369,4 @@
     <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script>
 @stop
+

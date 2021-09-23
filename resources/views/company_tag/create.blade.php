@@ -10,7 +10,7 @@
 @section('content')
 
 <div class="main-content">
-	<div class="page-content">
+	<div class="page-content top-padding">
         <div class="container-fluid">
 
 			<!-- start page title -->
@@ -62,7 +62,7 @@
                                                     {{ $message }}
                                                 </div>
                                             @enderror
-                                            
+
                                         </div>
                                     </div>
 
@@ -90,3 +90,5 @@
     <!-- <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script> -->
     <!-- <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script> -->
 @stop
+
+

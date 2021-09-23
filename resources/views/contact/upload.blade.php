@@ -3,13 +3,14 @@
 @section('title', 'Contact Bulk Upload')
 
 @section('css_styles')
+
     <!-- <link href="{{ asset('assets/libs/dropzone/min/dropzone.min.css') }}" rel="stylesheet" type="text/css"> -->
 @stop
 
 @section('content')
 
 <div class="main-content">
-	<div class="page-content">
+	<div class="page-content top-padding">
         <div class="container-fluid">
 
 			<!-- start page title -->
@@ -35,7 +36,7 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-        
+
                                     @if(session()->has('success'))
                                         <div class="alert alert-success" id="message_success">
                                             {{ session()->get('success') }}
@@ -47,7 +48,7 @@
                                             {{ session()->get('error') }}
                                         </div>
                                     @endif
-                                    
+
                                         <div>
                                             <form action="{{ route('admin.contact.upload') }}" class="" method="POST" enctype="multipart/form-data">
                                                 @csrf
@@ -58,14 +59,14 @@
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
-                                                
+
                                                 <div class="text-center mt-4">
                                                     <button type="submit" class="btn btn-primary waves-effect waves-light">Upload</button>
                                                 </div>
                                             </form>
                                         </div>
-        
-                                       
+
+
                                     </div>
                                 </div>
                             </div> <!-- end col -->

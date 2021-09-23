@@ -5,3 +5,11 @@
 .hide {
     display: none !important;
 }
+
+.nav_co {
+ color: white;
+}
+
+.top-padding {
+    padding-top: 25px !important;
+}
