@@ -49,7 +49,7 @@
                                 </div>
                             @endif
                             <h4 class="card-title mb-4 text-center">Campaign Tag Edit</h4>
-                            <form action="{{ route('admin.campaign.tag.update', ['tag' => $tag->id]) }}" method="POST">
+                            <form action="{{ route('admin.campaign.tag.update', ['campaign_tag' => $tag->id]) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">

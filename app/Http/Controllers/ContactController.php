@@ -62,17 +62,14 @@ class ContactController extends Controller
             'email_domain' => $request->emailDomain,
         ]);
         return redirect()->back()->with('success', 'New contact created successfully!');
-
     }
 
     public function edit(Contact $contact)
     {
-
         $data = [
             'contacts' => Contact::all(),
             'contact' => $contact
         ];
-
         return view("contact.edit", $data);
     }
 
@@ -150,7 +147,6 @@ class ContactController extends Controller
     {
         $data = [
             'contacts' => Contact::onlyTrashed()->with('company')->get()
-            // 'user' => User::where('id', '=', 1)->get(["name", "email"])[0]
         ];
         return view("contact.delete_requests", $data);
     }

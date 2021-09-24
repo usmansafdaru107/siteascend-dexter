@@ -11,7 +11,7 @@ class ContactTagController extends Controller
     public function index()
     {
         $data = [
-            'tags' => Tag::where('tag_category_id', 1)->get()
+            'tags' => Tag::withCount(['contacts'])->where('tag_category_id', Tag::CONTACT)->get()
         ];
 
         return view("contact_tag.index", $data);
@@ -36,31 +36,30 @@ class ContactTagController extends Controller
         return redirect()->back()->with('success', 'New Contact Tag created successfully!');
     }
 
-    public function edit(Tag $tag)
+    public function edit(Tag $contact_tag)
     {
         $data = [
-            'tag' => $tag
+            'tag' => $contact_tag
         ];
-
         return view("contact_tag.edit", $data);
     }
 
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request, Tag $contact_tag)
     {
         $request->validate([
             'name' => 'required'
         ]);
         
-            $tag->update([
+            $contact_tag->update([
                 'tag_name' => $request->name
             ]);
 
             return redirect()->route('admin.contact.tag.index')->with('success', 'Contact Tag Updated successfully!');
     }
 
-    public function destroy(Tag $tag)
+    public function destroy(Tag $contact_tag)
     {
-        $tag->delete();
+        $contact_tag->delete();
         return redirect()->back()->with('success', "Contact Tag deleted successfully!");
     }
 

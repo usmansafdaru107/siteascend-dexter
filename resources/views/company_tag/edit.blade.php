@@ -51,7 +51,7 @@
                                 </div>
                             @endif
                             <h4 class="card-title mb-4 text-center">Company Tag Edit</h4>
-                            <form action="{{ route('admin.company.tag.update', ['tag' => $tag->id]) }}" method="POST">
+                            <form action="{{ route('admin.company.tag.update', ['company_tag' => $tag->id]) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
@@ -86,9 +86,3 @@
 	</div>
 </div>
 @stop
-
-@section('js_scripts')
-    <!-- <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script> -->
-    <!-- <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script> -->
-@stop
-

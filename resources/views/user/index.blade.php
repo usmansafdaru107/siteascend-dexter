@@ -65,7 +65,7 @@
                                     @foreach ($users as $user)
                                         <tr>
                                             <td>{{ $user->name }}</td>
-                                            <td>{{ $user->campaigns->count() }}</td>
+                                            <td>{{ $user->campaigns_count }}</td>
                                             <td>{{ $user->email }}</td>
                                             <td>{{ Str::upper($user->role->name) . ' - ' . $user->role->abbreviation }}</td>
                                             <td>{{ $user->created_at }}</td>

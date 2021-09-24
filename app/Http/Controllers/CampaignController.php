@@ -17,7 +17,7 @@ class CampaignController extends Controller
     public function index()
     {
         $data = [
-            'campaigns' => Campaign::all(),
+            'campaigns' => Campaign::withCount(['companies'])->get(),
             'tags' => Tag::where('tag_category_id', Tag::CAMPAIGN)->get()
         ];
         return view("campaign.index", $data);

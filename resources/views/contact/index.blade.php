@@ -48,32 +48,34 @@
                                 <div class="col-12">
                                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
 
-                                        <div class="dropdown mt-4 mt-sm-0">
-
-                                            <a href="#" class="btn btn-light btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span id="contact_selected_count">0</span> Selected <i class="mdi mdi-chevron-down"></i>
-                                            </a>
-
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#" id="clear_all">Clear All</a>
+                                        <div class="btn-group">
+                                            <div>
+                                                <a href="#" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <span id="contact_selected_count">0</span> Selected <i class="mdi mdi-chevron-down"></i>
+                                                </a>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="#" id="clear_all">Clear All</a>
+                                                </div>
                                             </div>
+                                            <div>
+                                                <a href="#" class="btn btn-light btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Tag Contacts <i class="mdi mdi-chevron-down"></i>
+                                                </a>
+                                                <div class="dropdown-menu">
+                                                    @forelse($tags as $tag)
+                                                        <a class="dropdown-item" href="#">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input tag_checkbox" type="checkbox" id="checkbox_tag_{{ $tag->id }}" data-id="{{ $tag->id }}" data-name="{{ $tag->tag_name }}">
+                                                                <label class="form-check-label" for="checkbox_tag_{{ $tag->id }}">
+                                                                    {{ $tag->tag_name }}
+                                                                </label>
+                                                            </div>
 
-                                            <a href="#" class="btn btn-light btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Tag Contacts <i class="mdi mdi-chevron-down"></i>
-                                            </a>
-
-                                            <div class="dropdown-menu">
-                                                @foreach($tags as $tag)
-                                                    <a class="dropdown-item" href="#">
-                                                        <div class="form-check mb-3">
-                                                            <input class="form-check-input tag_checkbox" type="checkbox" id="checkbox_tag_{{ $tag->id }}" data-id="{{ $tag->id }}" data-name="{{ $tag->tag_name }}">
-                                                            <label class="form-check-label" for="checkbox_tag_{{ $tag->id }}">
-                                                                {{ $tag->tag_name }}
-                                                            </label>
-                                                        </div>
-
-                                                    </a>
-                                                @endforeach
+                                                        </a>
+                                                    @empty
+                                                        <a class="dropdown-item" href="#">No Tags available</a>
+                                                    @endforelse
+                                                </div>
                                             </div>
                                         </div>
 

@@ -25,7 +25,8 @@
         <link href="{{ asset('assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- Responsive datatable examples -->
         <link href="{{ asset('assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('assets/css/style_dexter.css') }}" rel="stylesheet" type="text/css">
+        <!-- Nav Custom Style -->
+        <link href="{{ asset('custom_css/navbar/navbar.css') }}" rel="stylesheet" type="text/css">
 
         @yield('css_styles')
 
@@ -35,7 +36,7 @@
         <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- App Css-->
         <link href="{{ asset('assets/css/app-dark.min.css') }}" rel="stylesheet" type="text/css" />
-
+        <!-- Dexter Style Sheet -->
         <link rel="stylesheet" href="{{asset('custom_css/style.css')}}">
 
     </head>

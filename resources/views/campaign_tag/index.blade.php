@@ -63,15 +63,15 @@
                                     @foreach ($tags as $tag)
                                         <tr>
                                             <td title="Click to view campaigns in that tag"><a href="{{ route('admin.tag.campaign', ['tag' => $tag->id]) }}"><i class="ri-links-fill"></i> {{ $tag->tag_name }}</a></td>
-                                            <td>{{ $tag->campaigns->count() }}</td>
+                                            <td>{{ $tag->campaigns_count }}</td>
                                             <td>{{ $tag->created_at }}</td>
                                             <td>
-                                                <a href="{{ route('admin.campaign.tag.edit', ['tag' => $tag->id]) }}" class="btn btn-outline-secondary btn-sm edit" title="Edit Campaign Tag">
+                                                <a href="{{ route('admin.campaign.tag.edit', ['campaign_tag' => $tag->id]) }}" class="btn btn-outline-secondary btn-sm edit" title="Edit Campaign Tag">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
                                             </td>
                                             <td>
-                                                <form action="{{ route('admin.campaign.tag.destroy', ['tag' => $tag->id]) }}" method="POST">
+                                                <form action="{{ route('admin.campaign.tag.destroy', ['campaign_tag' => $tag->id]) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-outline-secondary btn-sm edit" type="submit" title="Delete Tag">

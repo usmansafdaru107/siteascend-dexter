@@ -11,7 +11,7 @@ class CampaignTagController extends Controller
     public function index()
     {
         $data = [
-            'tags' => Tag::where('tag_category_id', 3)->get()
+            'tags' => Tag::withCount(['campaigns'])->where('tag_category_id', 3)->get()
         ];
 
         return view("campaign_tag.index", $data);
@@ -36,31 +36,31 @@ class CampaignTagController extends Controller
             return redirect()->back()->with('success', 'New Campaign Tag created successfully!');
     }
 
-    public function edit(Tag $tag)
+    public function edit(Tag $campaign_tag)
     {
         $data = [
-            'tag' => $tag
+            'tag' => $campaign_tag
         ];
 
         return view("campaign_tag.edit", $data);
     }
 
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request, Tag $campaign_tag)
     {
         $request->validate([
             'name' => 'required'
         ]);
         
-            $tag->update([
+            $campaign_tag->update([
                 'tag_name' => $request->name
             ]);
 
             return redirect()->route('admin.campaign.tag.index')->with('success', 'Campaign Tag Updated successfully!');
     }
 
-    public function destroy(Tag $tag)
+    public function destroy(Tag $campaign_tag)
     {
-        $tag->delete();
+        $campaign_tag->delete();
         return redirect()->back()->with('success', "Campaign Tag deleted successfully!");
     }
 

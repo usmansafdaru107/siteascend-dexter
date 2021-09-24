@@ -19,7 +19,7 @@ class CompanyController extends Controller
     public function index()
     {
         $data = [
-            'companies' => Company::all(),
+            'companies' => Company::withCount(['contacts'])->get(),
             'tags' => Tag::where('tag_category_id', Tag::COMPANY)->get()
         ];
         return view("company.index", $data);

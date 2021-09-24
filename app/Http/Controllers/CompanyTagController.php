@@ -11,7 +11,7 @@ class CompanyTagController extends Controller
     public function index()
     {
         $data = [
-            'tags' => Tag::where('tag_category_id', 2)->get()
+            'tags' => Tag::withCount(['companies'])->where('tag_category_id', 2)->get()
         ];
 
         return view("company_tag.index", $data);
@@ -36,31 +36,31 @@ class CompanyTagController extends Controller
             return redirect()->back()->with('success', 'New Company Tag created successfully!');
     }
 
-    public function edit(Tag $tag)
+    public function edit(Tag $company_tag)
     {
         $data = [
-            'tag' => $tag
+            'tag' => $company_tag
         ];
 
         return view("company_tag.edit", $data);
     }
 
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request, Tag $company_tag)
     {
         $request->validate([
             'name' => 'required'
         ]);
         
-            $tag->update([
+            $company_tag->update([
                 'tag_name' => $request->name
             ]);
 
             return redirect()->route('admin.company.tag.index')->with('success', 'Company Tag Updated successfully!');
     }
 
-    public function destroy(Tag $tag)
+    public function destroy(Tag $company_tag)
     {
-        $tag->delete();
+        $company_tag->delete();
         return redirect()->back()->with('success', "Company Tag deleted successfully!");
     }
 

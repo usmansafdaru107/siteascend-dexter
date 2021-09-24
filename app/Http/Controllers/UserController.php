@@ -12,7 +12,7 @@ class UserController extends Controller
     public function index() 
     {
         $data = [
-            'users' => User::with('role')->get(),
+            'users' => User::withCount(['campaigns'])->with('role')->get(),
         ];
 
         return view("user.index", $data);
