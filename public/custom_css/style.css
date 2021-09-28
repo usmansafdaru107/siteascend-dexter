@@ -13,3 +13,17 @@
 .top-padding {
     padding-top: 25px !important;
 }
+
+.filters-header {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px 20px!important;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.tag-width {
+    max-width: 240px;
+}

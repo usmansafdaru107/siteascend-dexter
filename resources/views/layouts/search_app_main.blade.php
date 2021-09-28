@@ -41,16 +41,17 @@
 
     </head>
 
-    <body data-topbar="light" data-layout="horizontal" data-layout-size="boxed">
+    <body data-topbar="light" data-sidebar="dark">
 
         <div id="layout-wrapper" style="min-height: 100vh;">
 
             @extends('layouts.navbar')
 
+            @extends('layouts.filters_sidebar')
+
             @yield('content')
 
             @extends('layouts.footer')
-
 
         </div>
 

@@ -2,7 +2,7 @@
     <div class="navbar-header">
         <div class="d-flex">
             <!-- LOGO -->
-            <div class="navbar-brand-box">
+            <div class="navbar-brand-box" style="background-color: #272d3e;">
                 <a href="{{route('home')}}" class="logo logo-dark">
                     <span class="logo-sm">
                         <img src="{{ asset('assets/images/logo-sm-dark.png') }}" alt="logo-sm-dark" height="22">
@@ -30,9 +30,11 @@
                 </div>
             </form>
 
-            <button type="button" class="btn header-item waves-effect" >
+           <a href=" {{route('admin.advanced.search') }}">
+           <button type="button" class="btn header-item waves-effect">
                 Advanced Search
             </button>
+           </a>
         </div>
 
         <div class="d-flex">

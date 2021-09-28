@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdvanceSearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CampaignController;
@@ -11,7 +12,6 @@ use App\Http\Controllers\ContactTagController;
 use App\Http\Controllers\CompanyTagController;
 use App\Http\Controllers\CampaignTagController;
 use App\Http\Controllers\ContactRequestController;
-use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DashboardController::class, "index"])->name('home')->middleware(["auth", "ensureProperRedirectToDashboard"]);
@@ -135,8 +135,10 @@ Route::prefix("admin")->name("admin.")->middleware(["auth", "admin"])->group(fun
     Route::get("/tag/{tag}/companies", [CompanyTagController::class, "tagCompanies"])->name("tag.company");
     Route::get("/tag/{tag}/campaigns", [CampaignTagController::class, "tagCampaigns"])->name("tag.campaign");
     
-    // Advanced filter
-    Route::get("advance/search", [SearchController::class, "index"])->name("advance.search");
+    // Advanced Search filter
+    Route::get("search-filter", [AdvanceSearchController::class, "index"])->name("advanced.search");
+    Route::get("search-filters", [AdvanceSearchController::class, "filter"])->name("advanced.filters");
+    Route::post("search-filter", [AdvanceSearchController::class, "filter"])->name("advanced.filter");
 });
 
 // User (Demand Generation Representative) Routes

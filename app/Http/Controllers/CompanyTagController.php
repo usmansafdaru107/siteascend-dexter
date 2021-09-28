@@ -11,7 +11,7 @@ class CompanyTagController extends Controller
     public function index()
     {
         $data = [
-            'tags' => Tag::withCount(['companies'])->where('tag_category_id', 2)->get()
+            'tags' => Tag::withCount(['companies'])->where('tag_category_id', Tag::COMPANY)->get()
         ];
 
         return view("company_tag.index", $data);

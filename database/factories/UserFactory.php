@@ -24,10 +24,10 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'Aleem Ahmad',
+            'name' => 'Admin User',
             'role_id' => '1',
-            'email' => 'aleemahmada107@gmail.com',
-            'password' => Hash::make('Incorrect786.'),
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('Incorrect123.'),
             'remember_token' => Str::random(10),
         ];
     }
